@@ -35,6 +35,8 @@ define('FOPEN_WRITE_CREATE',					'ab');
 define('FOPEN_READ_WRITE_CREATE',				'a+b');
 define('FOPEN_WRITE_CREATE_STRICT',				'xb');
 define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
+define('BB_API_KEY',		'OmU4YzJhYzJjLTU3YjEtNDA1MS04NzhkLTJlNzk5MTY0OGY4Mg==');
+define('BB_URL',		'https://api.blackboxx.biz/api/v0/');
 
 
 /* End of file constants.php */

@@ -2,7 +2,7 @@
 
 <footer class="footer">
   <div class="container">
-    <p class="pull-left">Copyright &copy; 2014 Confluence.</p>
+    <p class="pull-left">Copyright © 2014 Digital.Foundation</p>
   </div>
 </footer>
 
