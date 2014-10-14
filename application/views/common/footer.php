@@ -18,7 +18,7 @@
 <script src="<?php echo base_url();?>assets/js/plugins/flot/jquery.flot.resize.js"></script>
 <script src="<?php echo base_url();?>assets/js/plugins/flot/jquery.flot.stack.js"></script>
 <script src="<?php echo base_url();?>assets/js/plugins/flot/jquery.flot.orderBars.js"></script>
-
+ 
 
 <!-- App JS -->
 <script src="<?php echo base_url();?>assets/js/mvpready-core.js"></script>
