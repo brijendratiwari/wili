@@ -41,3 +41,11 @@ define('BB_URL',		'https://api.blackboxx.biz/api/v0/');
 
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */
+/* Location: ./application/config/constants.php */
+
+// Constant for ET API
+
+define('MDS_ET_APP_ID','');
+define('MDS_ET_CLIENT_ID','45nufj8andfq6yzq9nj89393');
+define('MDS_ET_CLIENT_SECRET','ranZbMDYdjwFGpbZrpwFhDh2');
+define('MDS_ET_URL','https://auth-test.exacttargetapis.com/v1/requestToken?legacy=1');
