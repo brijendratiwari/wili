@@ -10,6 +10,7 @@ class Home extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
+        $this->load->model('et_model');
     }
 
     public function index() {
@@ -39,10 +40,14 @@ class Home extends CI_Controller {
     public function exact_target() {
 
         if ($this->session->userdata('logged_in')) {
+            
+            $data['list']  = $this->et_model->getList();
+            $data['Subscriber']  = $this->et_model->get_etSubscriber();
+//            var_dump($data['Subscriber']);
             $this->load->view('/common/header.php');
             $this->load->view('/common/navbar.php');
             $this->load->view('/common/sub_navbar.php');
-            $this->load->view('/exact_target.php');
+            $this->load->view('/exact_target.php',$data);
             $this->load->view('/common/footer.php');
         } else {
             redirect('login/index');

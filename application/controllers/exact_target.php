@@ -31,7 +31,7 @@ class Exact_target extends CI_Controller {
         echo '<pre>';
         print_r($response->results);
         echo '</pre>';
-        
+
         $arr = array();
         if (count($response->results) && is_array($response->results)) {
             foreach ($response->results as $key => $value) {
@@ -114,7 +114,9 @@ class Exact_target extends CI_Controller {
 
                 $arr[$key]['EmailAddress'] = $value->EmailAddress;
                 $arr[$key]['CreatedDate'] = $value->CreatedDate;
-
+                $arr[$key]['SubscriberID'] = $value->SubscriberKey;
+                $arr[$key]['Status'] = $value->Status;
+                
                 if (is_array($value->Attributes)) {
                     foreach ($value->Attributes as $val) {
 
@@ -196,8 +198,8 @@ class Exact_target extends CI_Controller {
     public function add_email_list($list_id = FALSE, $data = FALSE) {
         try {
             $myclient = new ET_Client();
-            $subs[] = array("EmailAddress" => "SDKTest9091@bh.exacttarget.com","SubscriberKey"=>'99999', "Attributes" => array(array("Name" => "First Name", "Value" => "Mac"), array("Name" => "List Name", "Value" => "Testing")));
-            $subs[] = array("EmailAddress" => "SDKTest9092@bh.exacttarget.com","SubscriberKey"=>'99989', "Attributes" => array(array("Name" => "First Name", "Value" => "Mac"), array("Name" => "List Name", "Value" => "Testing")));
+            $subs[] = array("EmailAddress" => "SDKTest9091@bh.exacttarget.com", "SubscriberKey" => '99999', "Attributes" => array(array("Name" => "First Name", "Value" => "Mac"), array("Name" => "List Name", "Value" => "Testing")));
+            $subs[] = array("EmailAddress" => "SDKTest9092@bh.exacttarget.com", "SubscriberKey" => '99989', "Attributes" => array(array("Name" => "First Name", "Value" => "Mac"), array("Name" => "List Name", "Value" => "Testing")));
 
             $newListID = $list_id;
 //            $myclient->props = array("CustomerKey" => 'All Subscribers - 2435727');

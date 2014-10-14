@@ -29,7 +29,7 @@
 <script src="<?php echo base_url();?>assets/js/demos/flot/donut.js"></script>
 <script src="<?php echo base_url();?>assets/js/demos/flot/stacked-horizontal.js"></script>
 <script src="<?php echo base_url();?>assets/js/demos/flot/line.js"></script>
-<script src="<?php echo base_url();?>assets/js/demos/flot/pie.js"></script>
+<!--<script src="<?php echo base_url();?>assets/js/demos/flot/pie.js"></script>-->
 
 
 

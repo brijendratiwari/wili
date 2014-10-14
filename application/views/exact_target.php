@@ -1,5 +1,4 @@
-
-
+<script src="<?php echo base_url();?>assets/js/exacttarget.js"></script>
   <div class="content">
 
     <div class="container">
@@ -110,39 +109,24 @@
                 <u>Subscriber Lists</u>
               </h4>
 
-              <div class="portlet-body">                
+              <div class="portlet-body Subscriber_list">                
                
-                <table class="table keyvalue-table">
+                  <table id="SubscriberList" class="table keyvalue-table">
                   <tbody>
+                    <?php
+                        if($list != NULL)
+                        {
+                            foreach ($list as $list_val)
+                            {
+                    ?>
                     <tr>
-                      <td class="kv-key"><i class="fa fa-envelope-o kv-icon kv-icon-default"></i>Online Cellar Door</td>
-                      <td class="kv-value">17,583</td>
+                      <td class="kv-key" data-listname="<?php echo $list_val['ListName'] ; ?>"><i class="fa fa-envelope-o kv-icon kv-icon-default"></i><?php echo $list_val['ListName'] ; ?></td>
+                      <td class="kv-value" data-listcount="<?php echo $list_val['total']; ?>"><?php echo $list_val['total']; ?></td>
                     </tr>
-                    <tr>
-                      <td class="kv-key"><i class="fa fa-envelope-o kv-icon kv-icon-default"></i>Mount Pleasant</td>
-                      <td class="kv-value">7,430</td>
-                    </tr>
-                     <tr>
-                      <td class="kv-key"><i class="fa fa-envelope-o kv-icon kv-icon-default"></i>Evans And Tate</td>
-                      <td class="kv-value">4,716</td>
-                    </tr>
-                      <tr>
-                      <td class="kv-key"><i class="fa fa-envelope-o kv-icon kv-icon-default"></i>Mc Williams</td>
-                      <td class="kv-value">3842</td>
-                    </tr>
-                    <tr>
-                      <td class="kv-key"><i class="fa fa-envelope-o kv-icon kv-icon-default"></i>Brands Liara</td>
-                      <td class="kv-value">2,875</td>
-                    </tr>
-                    
-                      <tr>
-                      <td class="kv-key"><i class="fa fa-envelope-o kv-icon kv-icon-default"></i>Family And Friends</td>
-                      <td class="kv-value">2,086</td>
-                    </tr>
-                      <tr>
-                      <td class="kv-key"><i class="fa fa-envelope-o kv-icon kv-icon-default"></i>total Misc Lists</td>
-                      <td class="kv-value">1286</td>
-                    </tr>
+                    <?php
+                        }
+                    }
+                    ?>
                   </tbody>
                 </table>
 
@@ -355,23 +339,38 @@
                 <th style="width: 8%">UID</th>
                 <th style="width: 15%">First Name</th>
                 <th style="width: 15%">Last Name</th>
-                <th style="width: 25%">Email</th>
+                <th style="width: 20%">Email</th>
                 <th style="width: 10%">Created At</th>
-                <th style="width: 10%">Modified At</th>
-                <th style="width: 10%">System Sync</th>
+                <th style="width: 15%">System Sync</th>
                 <th style="width: 5%">Status</th>
               </tr>
             </thead>
+            <tbody>
+                <?php if($Subscriber != NULL)
 
+                    foreach ($Subscriber as $key => $value) {
+                        ?>
+                <tr>
+                            <td style="width: 8%"><?php echo $value['ID']?></td>
+                            <td style="width: 15%"><?php echo $value['FirstName']?></td>
+                            <td style="width: 15%"><?php echo $value['LastName']?></td>
+                            <td style="width: 20%"><?php echo $value['EmailAddress']?></td>
+                            <td style="width: 10%"><?php echo $value['CreatedDate']?></td>
+                            <td style="width: 15%"><?php echo $value['ID']?></td>
+                            <td style="width: 10%"><?php echo $value['Status']?></td>
+                </tr>
+                <?php
+                    }
+                    ?>
+            </tbody>
             <tfoot>
               <tr>
-                 <th style="width: 8%">UID</th>
+                <th style="width: 8%">UID</th>
                 <th style="width: 15%">First Name</th>
                 <th style="width: 15%">Last Name</th>
-                <th style="width: 25%">Email</th>
+                <th style="width: 20%">Email</th>
                 <th style="width: 10%">Created At</th>
-                <th style="width: 10%">Modified At</th>
-                <th style="width: 5%">System Sync</th>
+                <th style="width: 15%">System Sync</th>
                 <th style="width: 10%">Status</th>
               </tr>
             </tfoot>
@@ -389,16 +388,15 @@
 
         <div class="portlet-body">
 
-          <table id="table-exact-target" class="table table-striped table-bordered">
+          <table id="unSubscriber" class="table table-striped table-bordered">
             <thead>
               <tr>
                 <th style="width: 8%">UID</th>
                 <th style="width: 15%">First Name</th>
                 <th style="width: 15%">Last Name</th>
-                <th style="width: 25%">Email</th>
+                <th style="width: 20%">Email</th>
                 <th style="width: 10%">Created At</th>
-                <th style="width: 10%">Modified At</th>
-                <th style="width: 10%">System Sync</th>
+                <th style="width: 15%">System Sync</th>
                 <th style="width: 5%">Status</th>
               </tr>
             </thead>
@@ -408,10 +406,9 @@
                  <th style="width: 8%">UID</th>
                 <th style="width: 15%">First Name</th>
                 <th style="width: 15%">Last Name</th>
-                <th style="width: 25%">Email</th>
+                <th style="width: 20%">Email</th>
                 <th style="width: 10%">Created At</th>
-                <th style="width: 10%">Modified At</th>
-                <th style="width: 5%">System Sync</th>
+                <th style="width: 15%">System Sync</th>
                 <th style="width: 10%">Status</th>
               </tr>
             </tfoot>

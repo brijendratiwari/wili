@@ -24,9 +24,16 @@ class Et_model extends CI_Model {
 
         $res = $this->db->get('et_list');
         if ($res->num_rows() > 0) {
-            return $res->result_array();
+            $data =  $res->result_array();
+            
+            foreach ($data as $key => $value) {
+                $cou = $this->db->get_where('et_subscriber_list_rel','ListID ='.$value['ListID'] );
+                $data[$key]['total'] = $cou->num_rows();
+            }
+            return $data;
+            
         } else {
-            return FALSE;
+            return NULL;
         }
     }
 
@@ -54,6 +61,17 @@ class Et_model extends CI_Model {
             }
             $this->db->insert_batch('ms_to_store_rel', $rel_data);
             
+        }
+    }
+    
+    public function get_etSubscriber(){
+        $res = $this->db->get('et_subscriber');
+        if($res->num_rows() > 0)
+        {
+            return $res->result_array();
+        }
+        else{
+            return NULL;
         }
     }
 
