@@ -49,7 +49,8 @@ class Exact_target extends CI_Controller {
             }
         }
 
-        $this->et_model->insertList($arr);
+        return $arr;  
+       // $this->et_model->insertList($arr);
     }
 
     public function getSubscribersbylist($ListID = FALSE) {
@@ -63,7 +64,7 @@ class Exact_target extends CI_Controller {
 
         $getList->props = array("SubscriberKey", "CreatedDate", "Client.ID", "ListID", "Status");
         $response = $getList->get();
-
+//        var_dump($response);die;
         $arr = array();
         if (count($response->results) && is_array($response->results)) {
             foreach ($response->results as $key => $value) {
@@ -75,26 +76,22 @@ class Exact_target extends CI_Controller {
             }
         }
 
-        $this->et_model->blank_tab('et_subscriber_list_rel');
-        $this->et_model->insert_tab('et_subscriber_list_rel', $arr);
+        return $arr;
+//        $this->et_model->blank_tab('et_subscriber_list_rel');
+//        $this->et_model->insert_tab('et_subscriber_list_rel', $arr);
     }
 
     public function get_unSubscribe_list() {
 
         $myclient = new ET_Client();
         $retSub = new ET_Subscriber();
+        $arr = array();
         $retSub->authStub = $myclient;
-//        $retSub->filter = array('Property' => 'SubscriberKey', 'SimpleOperator' => 'equals', 'Value' => $SubscriberTestEmail);
-        $retSub->props = array("SubscriberKey", "EmailAddress", "Status");
+        $retSub->filter = array('Property' => 'Status', 'SimpleOperator' => 'equals', 'Value' => 'Unsubscribed');
         $getResult = $retSub->get();
-        print_r('Get Status: ' . ($getResult->status ? 'true' : 'false') . "\n");
-        print 'Code: ' . $getResult->code . "\n";
-        print 'Message: ' . $getResult->message . "\n";
-        print_r('More Results: ' . ($getResult->moreResults ? 'true' : 'false') . "\n");
-        print 'Results Length: ' . count($getResult->results) . "\n";
-        ECHO '<pre>';
-        print_r($getResult->results);
-        echo '</pre>';
+       
+        return $getResult->results;
+
     }
 
     public function get_Subscriber_detail() {
@@ -103,7 +100,7 @@ class Exact_target extends CI_Controller {
 
         $retSub = new ET_Subscriber();
         $retSub->authStub = $myclient;
-
+        $retSub->filter = array('Property' => 'Status', 'SimpleOperator' => 'equals', 'Value' => 'Active');
         $arr = array();
         $response = $retSub->get();
         echo '<pre>';
@@ -116,7 +113,7 @@ class Exact_target extends CI_Controller {
                 $arr[$key]['CreatedDate'] = $value->CreatedDate;
                 $arr[$key]['SubscriberID'] = $value->SubscriberKey;
                 $arr[$key]['Status'] = $value->Status;
-                
+
                 if (is_array($value->Attributes)) {
                     foreach ($value->Attributes as $val) {
 
@@ -136,8 +133,9 @@ class Exact_target extends CI_Controller {
                 }
             }
         }
-        $this->et_model->blank_tab('et_subscriber');
-        $this->et_model->insert_tab('et_subscriber', $arr);
+        return $arr;
+//        $this->et_model->blank_tab('et_subscriber');
+//        $this->et_model->insert_tab('et_subscriber', $arr);
     }
 
     public function updateemail() {
@@ -240,6 +238,21 @@ class Exact_target extends CI_Controller {
 
     public function et_mdb_update() {
         $this->et_model->update_mdb();
+    }
+
+    public function unsubscribe_email($email = 'danielbowling@gmail.com') {
+
+        $myclient = new ET_Client();
+        $subPatch = new ET_Subscriber();
+        $subPatch->authStub = $myclient;
+        $subPatch->props = array("EmailAddress" => $email, "SubscriberKey" => '0000002', "Status" => "Unsubscribed");
+        $patchResult = $subPatch->patch();
+        print_r('Patch Status: ' . ($patchResult->status ? 'true' : 'false') . "\n");
+        print 'Code: ' . $patchResult->code . "\n";
+        print 'Message: ' . $patchResult->message . "\n";
+        print 'Results Length: ' . count($patchResult->results) . "\n";
+        print 'Results: ' . "\n";
+        print_r($patchResult->results);
     }
 
 }
