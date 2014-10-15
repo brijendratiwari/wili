@@ -15,33 +15,34 @@
 
             <div class="col-sm-6 col-md-3">
               <div class="row-stat">
-                <p class="row-stat-label">Revenue Today</p>
-                <h3 class="row-stat-value">$890.00</h3>
-                <span class="label label-success row-stat-badge">+43%</span>
+                <p class="row-stat-label">Total Subscribers</p>
+                <h3 class="row-stat-value"><?php echo count($Subscriber); ?></h3>
+                <span class="label label-success row-stat-badge">+<?php echo number_format(((count($Subscriber)-$FilterSubscriber['year'])*100)/count($Subscriber),2); ?>% from previous year</span>
               </div> <!-- /.row-stat -->
             </div> <!-- /.col -->
 
             <div class="col-sm-6 col-md-3">
               <div class="row-stat">
-                <p class="row-stat-label">Revenue This Month</p>
-                <h3 class="row-stat-value">$8290.00</h3>
-                <span class="label label-success row-stat-badge">+17%</span>
+                <p class="row-stat-label">Subscribers Last Month</p>
+                <h3 class="row-stat-value"><?php echo $FilterSubscriber['month']; ?></h3>
+                <span class="label label-success row-stat-badge">+<?php echo number_format((( $FilterSubscriber['month'] - $FilterSubscriber['previous_month'])*100)/$FilterSubscriber['month'],2); ?>% from previous month</span>
               </div> <!-- /.row-stat -->
             </div> <!-- /.col -->
 
             <div class="col-sm-6 col-md-3">
               <div class="row-stat">
-                <p class="row-stat-label">Total Users</p>
-                <h3 class="row-stat-value">98,290</h3>
-                <span class="label label-success row-stat-badge">+26%</span>
+                <p class="row-stat-label">Last 30 Days</p>
+                <h3 class="row-stat-value"><?php echo $FilterSubscriber['last_thirty']; ?></h3>
+                <span class="label label-success row-stat-badge">+<?php echo number_format((($FilterSubscriber['last_thirty']-$FilterSubscriber['previous_thirty'])*100)/$FilterSubscriber['last_thirty'],2); ?>% from previous 30 days</span>
               </div> <!-- /.row-stat -->
             </div> <!-- /.col -->
 
             <div class="col-sm-6 col-md-3">
               <div class="row-stat">
-                <p class="row-stat-label">Currently Active Uses</p>
+                <p class="row-stat-label">System Subscriber Sync</p>
                 <h3 class="row-stat-value">19</h3>
-                <span class="label label-danger row-stat-badge">+5%</span>
+                <span class="label label-danger row-stat-badge">Error</span>
+                <span class="label label-success row-stat-badge">Success</span>
               </div> <!-- /.row-stat -->
             </div> <!-- /.col -->
             
@@ -63,33 +64,34 @@
 
             <div class="col-sm-6 col-md-3">
               <div class="row-stat">
-                <p class="row-stat-label">Revenue Today</p>
+                <p class="row-stat-label">Total UnSubscribed</p>
                 <h3 class="row-stat-value">$890.00</h3>
-                <span class="label label-success row-stat-badge">+43%</span>
+                <span class="label label-success row-stat-badge">+43% from previous year</span>
               </div> <!-- /.row-stat -->
             </div> <!-- /.col -->
 
             <div class="col-sm-6 col-md-3">
               <div class="row-stat">
-                <p class="row-stat-label">Revenue This Month</p>
+                <p class="row-stat-label">UnSubscribed Last 30 Days</p>
                 <h3 class="row-stat-value">$8290.00</h3>
-                <span class="label label-success row-stat-badge">+17%</span>
+                <span class="label label-success row-stat-badge">+17% from previous month</span>
               </div> <!-- /.row-stat -->
             </div> <!-- /.col -->
 
             <div class="col-sm-6 col-md-3">
               <div class="row-stat">
-                <p class="row-stat-label">Total Users</p>
+                <p class="row-stat-label">Last 4 Hours</p>
                 <h3 class="row-stat-value">98,290</h3>
-                <span class="label label-success row-stat-badge">+26%</span>
+                <span class="label label-success row-stat-badge">+26% from previous 30 days</span>
               </div> <!-- /.row-stat -->
             </div> <!-- /.col -->
 
             <div class="col-sm-6 col-md-3">
               <div class="row-stat">
-                <p class="row-stat-label">Currently Active Uses</p>
+                <p class="row-stat-label">System UnSubscriber Sync</p>
                 <h3 class="row-stat-value">19</h3>
-                <span class="label label-danger row-stat-badge">+5%</span>
+                <span class="label label-danger row-stat-badge">Error</span>
+                <span class="label label-success row-stat-badge">Success</span>
               </div> <!-- /.row-stat -->
             </div> <!-- /.col -->
             
@@ -328,7 +330,7 @@
 <div class="portlet">
 
         <h3 class="portlet-title">
-          <u>Subscribers List</u>
+          <u>Subscribers List -ET</u>
         </h3>
 
         <div class="portlet-body">
@@ -383,7 +385,7 @@
         <div class="portlet">
 
         <h3 class="portlet-title">
-          <u>UnSubscribers List</u>
+          <u>UnSubscribers List -ET</u>
         </h3>
 
         <div class="portlet-body">
@@ -395,12 +397,29 @@
                 <th style="width: 15%">First Name</th>
                 <th style="width: 15%">Last Name</th>
                 <th style="width: 20%">Email</th>
-                <th style="width: 10%">Created At</th>
+                <th style="width: 10%">UnSubscribed At</th>
                 <th style="width: 15%">System Sync</th>
                 <th style="width: 5%">Status</th>
               </tr>
             </thead>
+                        <tbody>
+                <?php if($UnSubscriber != NULL)
 
+                    foreach ($UnSubscriber as $key => $value) {
+                        ?>
+                <tr>
+                            <td style="width: 8%"><?php echo $value['id']?></td>
+                            <td style="width: 15%"><?php echo $value['firstname']?></td>
+                            <td style="width: 15%"><?php echo $value['lastname']?></td>
+                            <td style="width: 20%"><?php echo $value['email']?></td>
+                            <td style="width: 10%"><?php echo $value['unsubscribed_date']?></td>
+                            <td style="width: 15%"><?php echo $value['id']?></td>
+                            <td style="width: 10%">Unsubscribed</td>
+                </tr>
+                <?php
+                    }
+                    ?>
+            </tbody>
             <tfoot>
               <tr>
                  <th style="width: 8%">UID</th>
