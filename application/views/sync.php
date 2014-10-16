@@ -43,9 +43,9 @@
                     <div class="col-sm-6 col-md-4">
                         <h4>Master Switch</h4>
                         <div class="portlet">
-                            <a class="btn btn-success btn-jumbo btn-block disabled " href="javascript:;">AutoSync Active</a>
+                            <a class="btn btn-success btn-jumbo btn-block <?php if($autosync == 1) echo 'disabled'; ?>" href="javascript:stratsync(this);" id="syncstrat">AutoSync Active</a>
                             <br>
-                            <a class="btn btn-primary btn-small btn-block " href="javascript:;"><i class="fa fa-exclamation-triangle"></i> Deactivate Sync </a>
+                            <a class="btn btn-primary btn-small btn-block <?php if($autosync == 0) echo 'disabled'; ?>" href="javascript:stopsync(this);" id="syncstop"><i class="fa fa-exclamation-triangle"></i> Deactivate Sync </a>
                         </div> <!-- /.portlet -->
 
 
@@ -82,19 +82,19 @@
                                 </div>
 
                                 <div class="progress-stat-value">
-                                    77.7%
+                                    100%
                                 </div>
 
                                 <div class="progress progress-striped progress-sm active">
-                                    <div style="width: 77%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="77" role="progressbar" class="progress-bar progress-bar-success">
+                                    <div style="width: 100%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="100" role="progressbar" class="progress-bar progress-bar-success">
                                         <span class="sr-only">77.74% Sync Progress</span>
                                     </div>
                                 </div> <!-- /.progress -->
 
                             </div> <!-- Sync-stat End -->
-                            <div class="col-sm-12 col-md-6"> <p class="row-stat-label">Subscribed</p><h3 class="row-stat-value">121</h3><hr><p class="row-stat-label">Last Sync</p><h3 class="row-stat-value">12.45am</h3></div>
-                            <div class="col-sm-12  col-md-6"><p class="row-stat-label">UnSubscribers</p><h3 class="row-stat-value">21</h3><hr><p class="row-stat-label">Next Sync</p><h3 class="row-stat-value">85sec</h3></div> 
-                            <h3 class="row-stat-value">&nbsp;</h3><hr><a class="btn btn-primary" href="javascript:;">Stop Sync</a>   &nbsp;   <a class="btn btn-primary disabled" href="javascript:;">Manual Sync</a>
+                            <div class="col-sm-12 col-md-6"> <p class="row-stat-label">Subscribed</p><h3 class="row-stat-value" id="et_subscribe">121</h3><hr><p class="row-stat-label">Last Sync</p><h3 class="row-stat-value" id="et_lastsync">12.45am</h3></div>
+                            <div class="col-sm-12  col-md-6"><p class="row-stat-label">UnSubscribers</p><h3 class="row-stat-value" id="et_unsubscribe">21</h3><hr><p class="row-stat-label">Next Sync</p><h3 class="row-stat-value">85sec</h3></div> 
+                            <h3 class="row-stat-value">&nbsp;</h3><hr><a id="et_stopsync" class="btn btn-primary disabled" href="javascript:;">Stop Sync</a>   &nbsp;   <a id="et_startsync" class="btn btn-primary" href="javascript:startsync(1);">Manual Sync</a>
                         </div> <!-- /.row-stat -->
 
                     </div> <!-- /.col -->
@@ -273,3 +273,4 @@
     </div> <!-- /.container -->
 
 </div> <!-- .content -->
+<script src="<?php echo base_url();?>assets/js/sync.js"></script>
