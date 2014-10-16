@@ -1,5 +1,5 @@
 <div class="content">
-
+<?php // var_dump($UnSubscriber);die; ?>
     <div class="container">
 
         <div class="portlet">
@@ -18,9 +18,9 @@
                         <div class="well">
 
                             <ul class="icons-list text-md">
-                                <li><i class="icon-li fa fa-exchange text-success"></i>Sync 6 subscribers 12:32:012322</li>
-                                <li><i class="icon-li fa fa-exchange text-success"></i>Sync 12 subscribers, 4 unsubscribes 12:32:012322</li>
-                                <li><i class="icon-li fa fa-exchange text-success"></i>Sync Successful 12:32:012322</li>
+                                <li><i class="icon-li fa fa-exchange text-success"></i>Sync <?php echo $getLastSystemSyncsub[0]['SubscribedCount'];  ?> subscribers <?php echo $getLastSystemSyncsub[0]['SyncTime'];?></li>
+                                <li><i class="icon-li fa fa-exchange text-success"></i>Sync <?php echo $getLastSystemSyncsub[0]['UnSubscribedCount'];  ?> Unsubscribers <?php echo $getLastSystemSyncsub[0]['SyncTime'];?></li>
+                                <li><i class="icon-li fa fa-exchange text-success"></i>Sync Successful <?php echo $getLastSystemSyncsub[0]['SyncTime'];?></li>
                             </ul>
                         </div> <!-- /.well -->
 
@@ -34,7 +34,7 @@
                             <ul class="icons-list text-md">
                                 <li>
                                     <i class="icon-li fa fa-ban text-danger"></i>
-                                    Sync Fail 12:32:012322</li>
+                                    Sync Not Failed </li>
                             </ul>
                         </div> <!-- /.well -->
 
@@ -75,25 +75,25 @@
                             <hr>
 
                             <!-- Sync-stat -->
-                            <div class="progress-stat">
+                            <div class="progress-stat hide">
 
                                 <div class="progress-stat-label">
                                     Active Sync
                                 </div>
 
                                 <div class="progress-stat-value">
-                                    100%
+                                    
                                 </div>
 
-                                <div class="progress progress-striped progress-sm active">
-                                    <div style="width: 100%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="100" role="progressbar" class="progress-bar progress-bar-success">
+                                <div class="progress progress-striped progress-sm active" id="exact_progessbar">
+                                    <div style="width: 0%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="100" role="progressbar" class="progress-bar progress-bar-success">
                                         <span class="sr-only">77.74% Sync Progress</span>
                                     </div>
                                 </div> <!-- /.progress -->
 
                             </div> <!-- Sync-stat End -->
-                            <div class="col-sm-12 col-md-6"> <p class="row-stat-label">Subscribed</p><h3 class="row-stat-value" id="et_subscribe">121</h3><hr><p class="row-stat-label">Last Sync</p><h3 class="row-stat-value" id="et_lastsync">12.45am</h3></div>
-                            <div class="col-sm-12  col-md-6"><p class="row-stat-label">UnSubscribers</p><h3 class="row-stat-value" id="et_unsubscribe">21</h3><hr><p class="row-stat-label">Next Sync</p><h3 class="row-stat-value">85sec</h3></div> 
+                            <div class="col-sm-12 col-md-6"> <p class="row-stat-label">Subscribed</p><h3 class="row-stat-value" id="et_subscribe"><?php echo $getLastSystemSyncsub[0]['SubscribedCount'];  ?></h3><hr><p class="row-stat-label">Last Sync</p><h3 class="row-stat-value" id="et_lastsync"><?php echo date('h:ma',  strtotime($getLastSystemSyncsub[0]['SyncTime']));?></h3></div>
+                            <div class="col-sm-12  col-md-6"><p class="row-stat-label">UnSubscribers</p><h3 class="row-stat-value" id="et_unsubscribe"><?php echo $getLastSystemSyncsub[0]['UnSubscribedCount'];?></h3><hr><p class="row-stat-label">Next Sync</p><h3 class="row-stat-value">85sec</h3></div> 
                             <h3 class="row-stat-value">&nbsp;</h3><hr><a id="et_stopsync" class="btn btn-primary disabled" href="javascript:;">Stop Sync</a>   &nbsp;   <a id="et_startsync" class="btn btn-primary" href="javascript:startsync(1);">Manual Sync</a>
                         </div> <!-- /.row-stat -->
 
@@ -105,7 +105,7 @@
                             <hr>
 
                             <!-- Sync-stat -->
-                            <div class="progress-stat">
+                            <div class="progress-stat hide">
 
                                 <div class="progress-stat-label">
                                     Active Sync
@@ -135,7 +135,7 @@
                             <hr>
 
                             <!-- Sync-stat -->
-                            <div class="progress-stat">
+                            <div class="progress-stat hide">
 
                                 <div class="progress-stat-label">
                                     Active Sync
@@ -165,7 +165,7 @@
                             <hr>
 
                             <!-- Sync-stat -->
-                            <div class="progress-stat">
+                            <div class="progress-stat hide">
 
                                 <div class="progress-stat-label">
                                     Active Sync
@@ -220,38 +220,27 @@
                 <th style="width: 12%">CRM - MD</th>
               </tr>
             </thead>
-            <tbody>
+                         <tbody>
+                <?php if($UnSubscriber != NULL)
+
+                    foreach ($UnSubscriber as $key => $value) {
+                        $store_name=explode(",", $value['storename'])
+                        ?>
                 <tr>
-                    <td>432423</td>
-                    <td>Bill</td>
-                    <td>Stevens</td>
-                    <td>bsteven@gmail.com</td>
-                    <td>y</td>
-                    <td>y</td>
-                    <td>y</td>
-                    <td>n</td>
+                            <td style="width: 8%"><?php echo $value['id']?></td>
+                            <td style="width: 15%"><?php echo $value['firstname']?></td>
+                            <td style="width: 15%"><?php echo $value['lastname']?></td>
+                            <td style="width: 20%"><?php echo $value['email']?></td>
+                            <td style="width: 10%"><?php  if(in_array("ET",$store_name)){echo "y";}else{echo "n";}?></td>
+                            <td style="width: 15%"><?php  if(in_array("BB",$store_name)){echo "y";}else{echo "n";}?></td>
+                            <td style="width: 10%"><?php  if(in_array("BP",$store_name)){echo "y";}else{echo "n";}?></td>
+                            <td style="width: 10%"><?php  if(in_array("MDB",$store_name)){echo "y";}else{echo "n";}?></td>
                 </tr>
-                <tr>
-                    <td>4111423</td>
-                    <td>Dane</td>
-                    <td>Type</td>
-                    <td>dtyle@gmail.com</td>
-                    <td>y</td>
-                    <td>y</td>
-                    <td>y</td>
-                    <td>n</td>
-                </tr>
-                <tr>
-                    <td>4544423</td>
-                    <td>Ben</td>
-                    <td>Williams</td>
-                    <td>bwill@gmail.com</td>
-                    <td>y</td>
-                    <td>y</td>
-                    <td>y</td>
-                    <td>n</td>
-                </tr>
+                 <?php
+                    }
+                    ?> 
             </tbody>
+               
             <tfoot>
               <tr>
                <th style="width: 30%">ID</th>

@@ -17,7 +17,8 @@
               <div class="row-stat">
                 <p class="row-stat-label">Total Subscribers</p>
                 <h3 class="row-stat-value"><?php echo count($Subscriber); ?></h3>
-                <span class="label label-success row-stat-badge">+<?php echo number_format(((count($Subscriber)-$FilterSubscriber['year'])*100)/count($Subscriber),2); ?>% from previous year</span>
+                <span class="label label-success row-stat-badge">+
+                    <?php if(count($Subscriber) !=0 ){ echo number_format(((count($Subscriber)-$FilterSubscriber['year'])*100)/count($Subscriber),2); }else{ echo '0';} ?>% from previous year</span>
               </div> <!-- /.row-stat -->
             </div> <!-- /.col -->
 
@@ -25,7 +26,8 @@
               <div class="row-stat">
                 <p class="row-stat-label">Subscribers Last Month</p>
                 <h3 class="row-stat-value"><?php echo $FilterSubscriber['month']; ?></h3>
-                <span class="label label-success row-stat-badge">+<?php echo number_format((( $FilterSubscriber['month'] - $FilterSubscriber['previous_month'])*100)/$FilterSubscriber['month'],2); ?>% from previous month</span>
+                <span class="label label-success row-stat-badge">+
+                    <?php if($FilterSubscriber['month'] !=0 ){ echo number_format((( $FilterSubscriber['month'] - $FilterSubscriber['previous_month'])*100)/$FilterSubscriber['month'],2); } else{ echo '0';} ?>% from previous month</span>
               </div> <!-- /.row-stat -->
             </div> <!-- /.col -->
 
@@ -33,14 +35,15 @@
               <div class="row-stat">
                 <p class="row-stat-label">Last 30 Days</p>
                 <h3 class="row-stat-value"><?php echo $FilterSubscriber['last_thirty']; ?></h3>
-                <span class="label label-success row-stat-badge">+<?php echo number_format((($FilterSubscriber['last_thirty']-$FilterSubscriber['previous_thirty'])*100)/$FilterSubscriber['last_thirty'],2); ?>% from previous 30 days</span>
+                <span class="label label-success row-stat-badge">+
+                    <?php if($FilterSubscriber['last_thirty'] !=0 ) { echo number_format((($FilterSubscriber['last_thirty']-$FilterSubscriber['previous_thirty'])*100)/$FilterSubscriber['last_thirty'],2); } else{ echo '0';} ?>% from previous 30 days</span>
               </div> <!-- /.row-stat -->
             </div> <!-- /.col -->
 
             <div class="col-sm-6 col-md-3">
               <div class="row-stat">
                 <p class="row-stat-label">System Subscriber Sync</p>
-                <h3 class="row-stat-value">19</h3>
+                <h3 class="row-stat-value"><?php echo $checkSystemSync; ?></h3>
                 <span class="label label-danger row-stat-badge">Error</span>
                 <span class="label label-success row-stat-badge">Success</span>
               </div> <!-- /.row-stat -->
@@ -65,31 +68,34 @@
             <div class="col-sm-6 col-md-3">
               <div class="row-stat">
                 <p class="row-stat-label">Total UnSubscribed</p>
-                <h3 class="row-stat-value">$890.00</h3>
-                <span class="label label-success row-stat-badge">+43% from previous year</span>
+                <h3 class="row-stat-value"><?php echo count($UnSubscriber); ?></h3>
+                <span class="label label-success row-stat-badge">+
+                    <?php if(count($UnSubscriber) !=0){ echo number_format(((count($UnSubscriber)-$FilterUnSubscriber['year'])*100)/count($UnSubscriber),2);} else{ echo '0';} ?>% from previous year</span>
               </div> <!-- /.row-stat -->
             </div> <!-- /.col -->
 
             <div class="col-sm-6 col-md-3">
               <div class="row-stat">
                 <p class="row-stat-label">UnSubscribed Last 30 Days</p>
-                <h3 class="row-stat-value">$8290.00</h3>
-                <span class="label label-success row-stat-badge">+17% from previous month</span>
+                <h3 class="row-stat-value"><?php echo $FilterUnSubscriber['last_thirty']; ?></h3>
+                <span class="label label-success row-stat-badge">+
+                    <?php if($FilterUnSubscriber['last_thirty'] !=0) { echo number_format((($FilterUnSubscriber['last_thirty']-$FilterUnSubscriber['previous_thirty'])*100)/$FilterUnSubscriber['last_thirty'],2); }else{ echo '0';} ?> from previous 30 days</span>
               </div> <!-- /.row-stat -->
             </div> <!-- /.col -->
 
             <div class="col-sm-6 col-md-3">
               <div class="row-stat">
                 <p class="row-stat-label">Last 4 Hours</p>
-                <h3 class="row-stat-value">98,290</h3>
-                <span class="label label-success row-stat-badge">+26% from previous 30 days</span>
+                <h3 class="row-stat-value"><?php echo $FilterUnSubscriber['hours']; ?></h3>
+                <span class="label label-success row-stat-badge">+
+                    <?php if($FilterUnSubscriber['hours'] !=0) { echo number_format((($FilterUnSubscriber['hours']-$FilterUnSubscriber['previous_hours'])*100)/$FilterUnSubscriber['hours'],2);} else{ echo "0";} ?>% from previous 4 hours</span>
               </div> <!-- /.row-stat -->
             </div> <!-- /.col -->
 
             <div class="col-sm-6 col-md-3">
               <div class="row-stat">
                 <p class="row-stat-label">System UnSubscriber Sync</p>
-                <h3 class="row-stat-value">19</h3>
+                <h3 class="row-stat-value"><?php echo $checkSystemSync; ?></h3>
                 <span class="label label-danger row-stat-badge">Error</span>
                 <span class="label label-success row-stat-badge">Success</span>
               </div> <!-- /.row-stat -->
@@ -313,10 +319,10 @@
   <div class="well">
             
             <ul class="icons-list text-md">
-              <li><i class="icon-li fa fa-exchange text-success"></i>Sync 6 subscribers 12:32:012322</li>
-              <li><i class="icon-li fa fa-exchange text-success"></i>Sync 12 subscribers, 4 unsubscribes 12:32:012322</li>
+              <li><i class="icon-li fa fa-exchange text-success"></i>Sync <?php echo $getLastSystemSyncsub[0]['SubscribedCount'];  ?> subscribers <?php echo $getLastSystemSyncsub[0]['SyncTime'];?></li>
+              <li><i class="icon-li fa fa-exchange text-success"></i>Sync <?php echo $getLastSystemSyncsub[0]['UnSubscribedCount'];  ?> Unsubscribers <?php echo $getLastSystemSyncsub[0]['SyncTime'];?></li>
                <li><i class="icon-li fa fa-exchange text-success"></i>New List Created 12:32:012322</li>
-               <li><i class="icon-li fa fa-exchange text-success"></i>Sync Successful 12:32:012322</li>
+               <li><i class="icon-li fa fa-exchange text-success"></i>Sync Successful <?php echo $getLastSystemSyncsub[0]['SyncTime'];?></li>
 
             </ul>
           </div> <!-- /.well -->
