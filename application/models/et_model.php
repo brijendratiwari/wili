@@ -40,7 +40,15 @@ class Et_model extends CI_Model {
         $this->db->truncate($table_name);
     }
 
-    public function insert_tab($table_name, $data) {
+    public function get_count($table_name,$storeid = FALSE){
+        if($storeid != FALSE){
+            $this->db->where('unsubscriber_from', $storeid);
+        }
+        $res = $this->db->get($table_name);
+        return $res->num_rows();
+    }
+
+        public function insert_tab($table_name, $data) {
         if (is_array($data) && $data != NULL && (count($data) > 0)) {
             $this->db->insert_batch($table_name, $data);
         }
@@ -51,7 +59,7 @@ class Et_model extends CI_Model {
 
         if ($res->num_rows() > 0) {
             $data = $res->result_array();
-            var_dump($data);
+         
             $rel_data = array();
             foreach ($data as $key => $val) {
                 $this->db->insert('master_subscriber', $val);
