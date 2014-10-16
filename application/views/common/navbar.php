@@ -184,7 +184,7 @@
               <li class="divider"></li>
 
               <li>
-                <a href="<?php echo base_url();?>/index.php/login/logout">
+                <a href="<?php echo base_url();?>index.php/login/logout">
                   <i class="fa fa-sign-out"></i> 
                   &nbsp;&nbsp;Logout
                 </a>

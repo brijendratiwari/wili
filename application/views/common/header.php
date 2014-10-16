@@ -38,6 +38,7 @@
   <![endif]-->
  <!-- Placed at the end of the document so the pages load faster -->
 <script src="<?php echo base_url();?>assets/js/libs/jquery-1.10.2.min.js"></script>
+<script src="<?php echo base_url();?>assets/js/jquery.form.js"></script>
 <script src="<?php echo base_url();?>assets/js/libs/bootstrap.min.js"></script> 
 <script src="<?php echo base_url();?>assets/js/plugins/dataTables/jquery.dataTables.js"></script>
 <script src="<?php echo base_url();?>assets/js/plugins/dataTables/dataTables.bootstrap.js"></script>
