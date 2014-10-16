@@ -42,6 +42,8 @@
 <script src="<?php echo base_url();?>assets/js/plugins/dataTables/jquery.dataTables.js"></script>
 <script src="<?php echo base_url();?>assets/js/plugins/dataTables/dataTables.bootstrap.js"></script>
 <script src="<?php echo base_url();?>assets/js/custom.js"></script>
+<script src="<?php echo base_url();?>assets/noty/js/noty/packaged/jquery.noty.packaged.min.js"></script>
   <link rel="shortcut icon" href="favicon.ico">
 </head>
+
 
