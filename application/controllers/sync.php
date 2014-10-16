@@ -62,8 +62,11 @@ class Sync extends CI_Controller {
             $this->et_model->blank_tab('et_subscriber');    // updating the sus
             $this->et_model->insert_tab('et_subscriber', $get_Subscriber_detail);
 
+            if($old_sub > 0){
             $data['SubscribedCount'] = count($get_Subscriber_detail) - $old_sub;
-          
+            }else{
+                $data['SubscribedCount'] = 0;
+            }
             $this->et_model->blank_tab('et_subscriber_list_rel');
             $this->et_model->insert_tab('et_subscriber_list_rel', $getSubscribersbylist);
 

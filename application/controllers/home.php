@@ -30,6 +30,9 @@ class Home extends CI_Controller {
     public function sync() {
         if ($this->session->userdata('logged_in')) {
             $data['autosync'] = $this->sync_model->checkautosync();
+            $data['getLastSystemSyncsub'] = $this->sync_model->getLastSystemSyncsub();
+             $data['UnSubscriber'] = $this->sync_model->get_UnSubscriber();
+//            var_dump($data['UnSubscriber']);die;
             $this->load->view('/common/header.php');
             $this->load->view('/common/navbar.php');
             $this->load->view('/common/sub_navbar.php');
@@ -48,7 +51,10 @@ class Home extends CI_Controller {
             $data['Subscriber'] = $this->et_model->get_etSubscriber();
             $data['UnSubscriber'] = $this->et_model->get_UnSubscriber();
             $data['FilterSubscriber'] = $this->et_model->get_etFilterSubscriber();
-//            var_dump($data['UnSubscriber']);die;
+            $data['FilterUnSubscriber'] = $this->et_model->get_etFilterUnSubscriber();
+            $data['checkSystemSync'] = $this->et_model->checkSystemSync();
+            $data['getLastSystemSyncsub'] = $this->et_model->getLastSystemSyncsub();
+//            var_dump($data['getLastSystemSyncsub']);die;
             $this->load->view('/common/header.php');
             $this->load->view('/common/navbar.php');
             $this->load->view('/common/sub_navbar.php');
