@@ -28,9 +28,9 @@ class Exact_target extends CI_Controller {
         $list = new ET_List();
         $list->authStub = $myclient;
         $response = $list->get();
-        echo '<pre>';
-        print_r($response->results);
-        echo '</pre>';
+//        echo '<pre>';
+//        print_r($response->results);
+//        echo '</pre>';
 
         $arr = array();
         if (count($response->results) && is_array($response->results)) {
@@ -103,9 +103,9 @@ class Exact_target extends CI_Controller {
         $retSub->filter = array('Property' => 'Status', 'SimpleOperator' => 'equals', 'Value' => 'Active');
         $arr = array();
         $response = $retSub->get();
-        echo '<pre>';
-        print_r($response->results);
-        echo '</pre>';
+//        echo '<pre>';
+//        print_r($response->results);
+//        echo '</pre>';
         if (count($response->results) && is_array($response->results)) {
             foreach ($response->results as $key => $value) {
 

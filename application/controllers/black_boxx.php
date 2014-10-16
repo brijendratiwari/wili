@@ -17,6 +17,7 @@ class Black_boxx extends CI_Controller {
         $data = array();
         $res = $this->getListByCurl("users/");
         $data = json_decode($res, TRUE);
+        var_dump($data);
         $customer_data = array();
         if (!empty($data)) {
             foreach ($data as $key => $value) {

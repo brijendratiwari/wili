@@ -11,6 +11,7 @@ class Home extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('et_model');
+        $this->load->model('sync_model');
     }
 
     public function index() {
