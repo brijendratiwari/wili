@@ -79,7 +79,11 @@ class Et_model extends CI_Model {
         }
     }
     public function get_UnSubscriber() {
-        $res = $this->db->get('all_unsubscriber');
+        $this->db->select('all_unsubscriber.id,all_unsubscriber.email,all_unsubscriber.firstname,all_unsubscriber.lastname,all_unsubscriber.unsubscribed_date');
+         $this->db->where('store.name','ET'); 
+         $this->db->from('store'); 
+         $this->db->join('all_unsubscriber','store.id=all_unsubscriber.unsubscriber_from'); 
+         $res = $this->db->get();
         if ($res->num_rows() > 0) {
             return $res->result_array();
         } else {
@@ -96,7 +100,6 @@ class Et_model extends CI_Model {
         $query3 = "select * from et_subscriber where `CreatedDate` between '" . date("Y-m-d", strtotime("-30 days")) . "' and '" . date("Y-m-d", strtotime("-0 days")) . "'";
         $query4 = "select * from et_subscriber where `CreatedDate` between '" . date("Y-m-d", strtotime("-60 days")) . "' and '" . date("Y-m-d", strtotime("-30 days")) . "'";
 //        $query1 = "select count(id) from et_subscriber where CreatedDate >= DATEADD(MONTH, -1, GETDATE()) " ;
-
         $res = $this->db->query($query);
         $res1 = $this->db->query($query1);
         $res2 = $this->db->query($query2);
@@ -107,7 +110,29 @@ class Et_model extends CI_Model {
         $data['previous_month'] = $res2->num_rows();
         $data['last_thirty'] = $res3->num_rows();
         $data['previous_thirty'] = $res4->num_rows();
+         
+        return $data;
+    }
+    public function get_etFilterUnSubscriber() {
 
+        $data = array();
+        $query = "select * from all_unsubscriber where `unsubscribed_date` between '" . date("Y", strtotime("-1 year")) . "-01-01' and '" . date("Y", strtotime("-0 year")) . "-01-01'";
+        $query1 = "select * from all_unsubscriber where `unsubscribed_date` between '" . date("Y-m", strtotime("-4 hour")) . "-01' and '" . date("Y-m", strtotime("-0 hour")) . "-01'";
+        $query2 = "select * from all_unsubscriber where `unsubscribed_date` between '" . date("Y-m", strtotime("-4 hour")) . "-01' and '" . date("Y-m", strtotime("-2 hour")) . "-01'";
+        $query3 = "select * from all_unsubscriber where `unsubscribed_date` between '" . date("Y-m-d", strtotime("-30 days")) . "' and '" . date("Y-m-d", strtotime("-0 days")) . "'";
+        $query4 = "select * from all_unsubscriber where `unsubscribed_date` between '" . date("Y-m-d", strtotime("-60 days")) . "' and '" . date("Y-m-d", strtotime("-30 days")) . "'";
+//        $query1 = "select count(id) from et_subscriber where CreatedDate >= DATEADD(MONTH, -1, GETDATE()) " ;
+
+        $res = $this->db->query($query);
+        $res1 = $this->db->query($query1);
+        $res2 = $this->db->query($query2);
+        $res3 = $this->db->query($query3);
+        $res4 = $this->db->query($query4);
+        $data['year'] = $res->num_rows();
+        $data['hours'] = $res1->num_rows();
+        $data['previous_hours'] = $res2->num_rows();
+        $data['last_thirty'] = $res3->num_rows();
+        $data['previous_thirty'] = $res4->num_rows();
         return $data;
     }
 
@@ -141,6 +166,27 @@ class Et_model extends CI_Model {
         }
     }
 
+    public function checkSystemSync(){
+        $this->db->select('*');
+        $this->db->where('(store.name = "ET")');
+        $this->db->from('store');
+        $this->db->join('sync_updates','store.id=sync_updates.store_id');
+        $res=$this->db->get();
+        return $res->num_rows();
+    }
+    public function getLastSystemSyncsub(){
+              $query = "select max(sync_updates.SyncTime) as latest_sync from  (`store`) 
+                        join `sync_updates` on `store`.`id` = `sync_updates`.`store_id` where `store`.`name` = 'ET' ";
+        $res = $this->db->query($query);
+//        echo $this->db->last_query();
+        if($res ->num_rows() > 0){      
+        $data = $res->result_array();
+        $query1 = "select UnSubscribedCount,SubscribedCount,SyncTime from sync_updates where SyncTime = '".$data[0]['latest_sync']."'"; 
+        $res1 = $this->db->query($query1);
+//        var_dump($res1->result_array());die;
+     return $res1->result_array();
+    }
+   }
 }
 
 ?>
