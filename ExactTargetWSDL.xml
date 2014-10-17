@@ -3334,6 +3334,7 @@
               <element name="DestinationType" minOccurs="0" maxOccurs="1" type="xsd:int" />
               <element name="SubscriptionDefinitionId" minOccurs="0" maxOccurs="1" type="xsd:string" />
               <element name="EncodingCodePage" minOccurs="0" maxOccurs="1" type="xsd:int" />
+              <element name="SmsMemberSharedShortCodeId" minOccurs="0" maxOccurs="1" type="xsd:string" />
             </sequence>
           </extension>
         </complexContent>
@@ -3820,6 +3821,14 @@
               </element>
               <element name="ScheduledTime" minOccurs="0" maxOccurs="1" type="xsd:dateTime" />
               <element name="AutomationType" minOccurs="0" maxOccurs="1" type="xsd:string" />
+              <element name="UpdateModified" minOccurs="0" maxOccurs="1" type="xsd:boolean" />
+              <element name="LastRunInstanceID" minOccurs="0" maxOccurs="1" type="xsd:string" />
+              <element name="CreatedBy" minOccurs="0" maxOccurs="1" type="xsd:long" />
+              <element name="CategoryID" minOccurs="0" maxOccurs="1" type="xsd:string" />
+              <element name="LastRunTime" minOccurs="0" maxOccurs="1" type="xsd:dateTime" />
+              <element name="LastSaveDate" minOccurs="0" maxOccurs="1" type="xsd:dateTime" />
+              <element name="ModifiedBy" minOccurs="0" maxOccurs="1" type="xsd:long" />
+              <element name="RecurrenceID" minOccurs="0" maxOccurs="1" type="xsd:string" />
             </sequence>
           </extension>
         </complexContent>
