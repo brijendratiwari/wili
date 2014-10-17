@@ -65,8 +65,14 @@ class Black_boxx extends CI_Controller {
         print_r($data);
     }
 
-    // get all data by api using curl
-    public function getListByCurl($str) {
+    public function add_user(){
+        $data = array();
+        $res = $this->getListByCurl("users",array('email'=>'ankit@ignisitsolution.com','first_name'=>'test','last_name'=>'last_name','phone_number'=>'3-(108)809-7969','mobile_number'=>'','password'=>'12345','date_of_birth'=>'5/1/1947','send_signup_email'=>true));
+        var_dump($res);
+    }
+
+        // get all data by api using curl
+    public function getListByCurl($str,$data = FALSE) {
 
         $headers = array(
             'Authorization: Basic ' . BB_API_KEY
@@ -79,7 +85,13 @@ class Black_boxx extends CI_Controller {
         curl_setopt($handle, CURLOPT_URL, $url);
         curl_setopt($handle, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($handle, CURLOPT_SSL_VERIFYPEER, false);
+        
         curl_setopt($handle, CURLOPT_RETURNTRANSFER, 1);
+        if($data){
+            curl_setopt($handle, CURLOPT_CUSTOMREQUEST, "POST");
+//            $send = json_encode($data);
+           curl_setopt($handle, CURLOPT_POSTFIELDS, $data);  
+        }
 
         $response = curl_exec($handle);
         return $response;

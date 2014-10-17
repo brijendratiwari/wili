@@ -24,13 +24,10 @@ class Exact_target extends CI_Controller {
      */
     public function getList() {
 
-        $myclient = new ET_Client();
+        $myclient = new ET_Client(false);
         $list = new ET_List();
         $list->authStub = $myclient;
         $response = $list->get();
-//        echo '<pre>';
-//        print_r($response->results);
-//        echo '</pre>';
 
         $arr = array();
         if (count($response->results) && is_array($response->results)) {
@@ -48,15 +45,18 @@ class Exact_target extends CI_Controller {
                 $arr[$key]['CleintID'] = $value->Client->ID;
             }
         }
-
-        return $arr;  
-       // $this->et_model->insertList($arr);
+//        echo '<pre>';
+//        print_r($response->results);
+//        echo '</pre>';
+//        die;
+        return $arr;
+        // $this->et_model->insertList($arr);
     }
 
     public function getSubscribersbylist($ListID = FALSE) {
         // Retrieve all Subscribers on the List
 
-        $myclient = new ET_Client();
+        $myclient = new ET_Client(false);
         $getList = new ET_List_Subscriber();
         $getList->authStub = $myclient;
 
@@ -64,7 +64,7 @@ class Exact_target extends CI_Controller {
 
         $getList->props = array("SubscriberKey", "CreatedDate", "Client.ID", "ListID", "Status");
         $response = $getList->get();
-//        var_dump($response);die;
+
         $arr = array();
         if (count($response->results) && is_array($response->results)) {
             foreach ($response->results as $key => $value) {
@@ -83,19 +83,18 @@ class Exact_target extends CI_Controller {
 
     public function get_unSubscribe_list() {
 
-        $myclient = new ET_Client();
+        $myclient = new ET_Client(false);
         $retSub = new ET_Subscriber();
         $arr = array();
         $retSub->authStub = $myclient;
         $retSub->filter = array('Property' => 'Status', 'SimpleOperator' => 'equals', 'Value' => 'Unsubscribed');
         $getResult = $retSub->get();
-       
-        return $getResult->results;
 
+        return $getResult->results;
     }
 
     public function get_Subscriber_detail() {
-        $myclient = new ET_Client();
+        $myclient = new ET_Client(false);
 
 
         $retSub = new ET_Subscriber();
@@ -103,9 +102,7 @@ class Exact_target extends CI_Controller {
         $retSub->filter = array('Property' => 'Status', 'SimpleOperator' => 'equals', 'Value' => 'Active');
         $arr = array();
         $response = $retSub->get();
-//        echo '<pre>';
-//        print_r($response->results);
-//        echo '</pre>';
+
         if (count($response->results) && is_array($response->results)) {
             foreach ($response->results as $key => $value) {
 
@@ -140,7 +137,7 @@ class Exact_target extends CI_Controller {
 
     public function updateemail() {
 
-        $myclient = new ET_Client();
+        $myclient = new ET_Client(false);
         $patchEmail = new ET_Email();
         $patchEmail->authStub = $myclient;
         $patchEmail->props = array("CustomerKey" => $NameOfTestEmail, "Name" => $NameOfTestEmail, "Subject" => "Created with the SDK!!! Now with more !!!!", "HTMLBody" => "<b>Some HTML Content Goes here. NOW WITH NEW CONTENT</b>");
@@ -170,7 +167,7 @@ class Exact_target extends CI_Controller {
     }
 
     public function create_list($listname, $desc = 'This list was created with the PHPSDK', $type = 'Private') {
-        $myclient = new ET_Client();
+        $myclient = new ET_Client(false);
         $postContent = new ET_List();
         $postContent->authStub = $myclient;
         $postContent->props = array("ListName" => $listname, "Description" => $desc, "Type" => $type);
@@ -195,7 +192,7 @@ class Exact_target extends CI_Controller {
 
     public function add_email_list($list_id = FALSE, $data = FALSE) {
         try {
-            $myclient = new ET_Client();
+            $myclient = new ET_Client(false);
             $subs[] = array("EmailAddress" => "SDKTest9091@bh.exacttarget.com", "SubscriberKey" => '99999', "Attributes" => array(array("Name" => "First Name", "Value" => "Mac"), array("Name" => "List Name", "Value" => "Testing")));
             $subs[] = array("EmailAddress" => "SDKTest9092@bh.exacttarget.com", "SubscriberKey" => '99989', "Attributes" => array(array("Name" => "First Name", "Value" => "Mac"), array("Name" => "List Name", "Value" => "Testing")));
 
@@ -217,7 +214,7 @@ class Exact_target extends CI_Controller {
     }
 
     public function add() {
-        $myclient = new ET_Client();
+        $myclient = new ET_Client(false);
 // NOTE: These examples only work in accounts where the SubscriberKey functionality is not enabled
 // SubscriberKey will need to be included in the props if that feature is enabled
         $SubscriberTestEmail = "test@mail.com";
@@ -238,11 +235,12 @@ class Exact_target extends CI_Controller {
 
     public function et_mdb_update() {
         $this->et_model->update_mdb();
+        $this->et_model->update_mdb();
     }
 
     public function unsubscribe_email($email = 'danielbowling@gmail.com') {
 
-        $myclient = new ET_Client();
+        $myclient = new ET_Client(false);
         $subPatch = new ET_Subscriber();
         $subPatch->authStub = $myclient;
         $subPatch->props = array("EmailAddress" => $email, "SubscriberKey" => '0000002', "Status" => "Unsubscribed");
@@ -253,6 +251,122 @@ class Exact_target extends CI_Controller {
         print 'Results Length: ' . count($patchResult->results) . "\n";
         print 'Results: ' . "\n";
         print_r($patchResult->results);
+    }
+
+    public function get_bounce() {
+        $myclient = new ET_Client(false);
+// Modify the date below to reduce the number of results returned from the request
+// Setting this too far in the past could result in a very large response size
+        $retrieveDate = "2011-01-15T13:00:00.000";
+// Retrieve Filtered BounceEvent with GetMoreResults
+
+        $getBounceEvent = new ET_BounceEvent();
+        $getBounceEvent->authStub = $myclient;
+        $getBounceEvent->props = array("SendID", "SubscriberKey", "EventDate", "Client.ID", "EventType", "BatchID", "TriggeredSendDefinitionObjectID", "PartnerKey");
+        $getBounceEvent->filter = array('Property' => 'EventDate', 'SimpleOperator' => 'greaterThan', 'DateValue' => $retrieveDate);
+        $getBounceEvent->getSinceLastBatch = false;
+        $getResponse = $getBounceEvent->get();
+        echo '<pre>';
+        print_r($getResponse->results);
+        echo '</pre>';
+
+        print "\n---------------\n";
+        while ($getResponse->moreResults) {
+            print "Continue Retrieve All BounceEvent with GetMoreResults \n";
+            $getResponse = $getBounceEvent->GetMoreResults();
+            echo '<pre>';
+            print 'Results Length: ' . count($getResponse->results) . "\n";
+            echo '</pre>';
+        }
+    }
+
+    public function get_click() {
+
+        try {
+            $myclient = new ET_Client(false);
+// Modify the date below to reduce the number of results returned from the request
+// Setting this too far in the past could result in a very large response size
+            $retrieveDate = "2012-01-15T13:00:00.000";
+// Retrieve Filtered ClickEvent with GetMoreResults
+            print "Retrieve Filtered ClickEvent with GetMoreResults \n";
+            $getClickEvent = new ET_ClickEvent();
+            $getClickEvent->authStub = $myclient;
+            $getClickEvent->props = array("SendID", "SubscriberKey", "EventDate", "Client.ID", "EventType", "BatchID", "TriggeredSendDefinitionObjectID", "PartnerKey");
+            $getClickEvent->filter = array('Property' => 'EventDate', 'SimpleOperator' => 'greaterThan', 'DateValue' => $retrieveDate);
+            $getClickEvent->getSinceLastBatch = false;
+            $getResponse = $getClickEvent->get();
+            print_r('Get Status: ' . ($getResponse->status ? 'true' : 'false') . "\n");
+            print 'Code: ' . $getResponse->code . "\n";
+            print 'Message: ' . $getResponse->message . "\n";
+            print_r('More Results: ' . ($getResponse->moreResults ? 'true' : 'false') . "\n");
+            print 'Results Length: ' . count($getResponse->results) . "\n";
+            print "\n---------------\n";
+            while ($getResponse->moreResults) {
+                print "Continue Retrieve All ClickEvent with GetMoreResults \n";
+                $getResponse = $getClickEvent->GetMoreResults();
+                print_r('Get Status: ' . ($getResponse->status ? 'true' : 'false') . "\n");
+                print 'Code: ' . $getResponse->code . "\n";
+                print 'Message: ' . $getResponse->message . "\n";
+                print_r('More Results: ' . ($getResponse->moreResults ? 'true' : 'false') . "\n");
+                print 'Results Length: ' . count($getResponse->results) . "\n";
+                print "\n---------------\n";
+            }
+// The following request could potentially bring back large amounts of data if run against a production account
+            /*
+              // Retrieve All ClickEvent with GetMoreResults
+              print "Retrieve All ClickEvent with GetMoreResults \n";
+              $getClickEvent = new ET_ClickEvent();
+              $getClickEvent->authStub = $myclient;
+              $getClickEvent->props = array("SendID","SubscriberKey","EventDate","Client.ID","EventType","BatchID","TriggeredSendDefinitionObjectID","PartnerKey");
+              $getResponse = $getClickEvent->get();
+              print_r('Get Status: '.($getResponse->status ? 'true' : 'false')."\n");
+              print 'Code: '.$getResponse->code."\n";
+              print 'Message: '.$getResponse->message."\n";
+              print_r('More Results: '.($getResponse->moreResults ? 'true' : 'false')."\n");
+              print 'Results Length: '. count($getResponse->results)."\n";
+              print "\n---------------\n";
+              while ($getResponse->moreResults) {
+              print "Continue Retrieve All ClickEvent with GetMoreResults \n";
+              $getResponse = $getClickEvent->GetMoreResults();
+              print_r('Get Status: '.($getResponse->status ? 'true' : 'false')."\n");
+              print 'Code: '.$getResponse->code."\n";
+              print 'Message: '.$getResponse->message."\n";
+              print_r('More Results: '.($getResponse->moreResults ? 'true' : 'false')."\n");
+              print 'Results Length: '. count($getResponse->results)."\n";
+              print "\n---------------\n";
+              }
+             */
+        } catch (Exception $e) {
+            echo 'Caught exception: ', $e->getMessage(), "\n";
+        }
+    }
+
+    public function test() {
+        $myclient = new ET_Client(false);
+        $getFolder = new ET_Folder();
+        $getFolder->authStub = $myclient;
+        $getFolder->filter = array('Property' => 'ContentType', 'SimpleOperator' => 'equals', 'Value' => 'list');
+        $getFolder->props = array("ID", "Client.ID", "ParentFolder.ID", "ParentFolder.CustomerKey", "ParentFolder.ObjectID", "ParentFolder.Name", "ParentFolder.Description", "ParentFolder.ContentType", "ParentFolder.IsActive", "ParentFolder.IsEditable", "ParentFolder.AllowChildren", "Name", "Description", "ContentType", "IsActive", "IsEditable", "AllowChildren", "CreatedDate", "ModifiedDate", "Client.ModifiedBy", "ObjectID", "CustomerKey", "Client.EnterpriseID", "Client.CreatedBy");
+        $getResponse = $getFolder->get();
+        print_r('Get Status: ' . ($getResponse->status ? 'true' : 'false') . "\n");
+        print 'Code: ' . $getResponse->code . "\n";
+        print 'Message: ' . $getResponse->message . "\n";
+        print_r('More Results: ' . ($getResponse->moreResults ? 'true' : 'false') . "\n");
+        print 'Results Length: ' . count($getResponse->results) . "\n";
+        print "\n---------------\n";
+        while ($getResponse->moreResults) {
+            print "Continue Retrieve All Folder with GetMoreResults \n";
+            $getResponse = $getFolder->GetMoreResults();
+            print_r('Get Status: ' . ($getResponse->status ? 'true' : 'false') . "\n");
+            print 'Code: ' . $getResponse->code . "\n";
+            print 'Message: ' . $getResponse->message . "\n";
+            print_r('More Results: ' . ($getResponse->moreResults ? 'true' : 'false') . "\n");
+            print 'Results Length: ' . count($getResponse->results) . "\n";
+            print "\n---------------\n";
+        }
+        echo '<pre>';
+        print_r($getResponse->results);
+        echo '</pre>';
     }
 
 }
