@@ -319,10 +319,10 @@
   <div class="well">
             
             <ul class="icons-list text-md">
-              <li><i class="icon-li fa fa-exchange text-success"></i>Sync <?php echo $getLastSystemSyncsub[0]['SubscribedCount'];  ?> subscribers <?php echo $getLastSystemSyncsub[0]['SyncTime'];?></li>
-              <li><i class="icon-li fa fa-exchange text-success"></i>Sync <?php echo $getLastSystemSyncsub[0]['UnSubscribedCount'];  ?> Unsubscribers <?php echo $getLastSystemSyncsub[0]['SyncTime'];?></li>
+                <li><i class="icon-li fa fa-exchange text-success"></i>Sync <?php if(!empty($getLastSystemSyncsub)){ echo $getLastSystemSyncsub[0]['SubscribedCount']; }else{ echo '0';} ?> subscribers <?php if(!empty($getLastSystemSyncsub)){echo $getLastSystemSyncsub[0]['SyncTime']; } else{ echo "0";}?></li>
+              <li><i class="icon-li fa fa-exchange text-success"></i>Sync <?php if(!empty($getLastSystemSyncsub)){ echo $getLastSystemSyncsub[0]['UnSubscribedCount']; } else{ echo '0';}  ?> Unsubscribers <?php if(!empty($getLastSystemSyncsub)){ echo $getLastSystemSyncsub[0]['SyncTime']; } else{ echo '0';}?></li>
                <li><i class="icon-li fa fa-exchange text-success"></i>New List Created 12:32:012322</li>
-               <li><i class="icon-li fa fa-exchange text-success"></i>Sync Successful <?php echo $getLastSystemSyncsub[0]['SyncTime'];?></li>
+               <li><i class="icon-li fa fa-exchange text-success"></i>Sync Successful <?php if(!empty($getLastSystemSyncsub)){ echo $getLastSystemSyncsub[0]['SyncTime']; } else{ echo '0';}?></li>
 
             </ul>
           </div> <!-- /.well -->

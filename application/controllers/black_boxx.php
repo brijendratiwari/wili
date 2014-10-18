@@ -17,7 +17,6 @@ class Black_boxx extends CI_Controller {
         $data = array();
         $res = $this->getListByCurl("users/");
         $data = json_decode($res, TRUE);
-        var_dump($data);
         $customer_data = array();
         if (!empty($data)) {
             foreach ($data as $key => $value) {
@@ -65,10 +64,10 @@ class Black_boxx extends CI_Controller {
         print_r($data);
     }
 
-    public function add_user(){
-        $data = array();
-        $res = $this->getListByCurl("users",array('email'=>'ankit@ignisitsolution.com','first_name'=>'test','last_name'=>'last_name','phone_number'=>'3-(108)809-7969','mobile_number'=>'','password'=>'12345','date_of_birth'=>'5/1/1947','send_signup_email'=>true));
-        var_dump($res);
+    public function add_user($data = FALSE){
+//        $data = array();
+        $res = $this->getListByCurl("users",$data);
+        return $res;
     }
 
         // get all data by api using curl
@@ -80,7 +79,6 @@ class Black_boxx extends CI_Controller {
 
         $params_str = array();
         $url = BB_URL . $str;
-        echo $url;
         $handle = curl_init();
         curl_setopt($handle, CURLOPT_URL, $url);
         curl_setopt($handle, CURLOPT_HTTPHEADER, $headers);

@@ -41,7 +41,7 @@
           
             <li class="dropdown">
 
-            <a href="javascript:;" >
+            <a href="<?php echo base_url();?>index.php/home/black_boxx">
             BlackBoxx
             </a>
 

@@ -18,9 +18,9 @@
                         <div class="well">
 
                             <ul class="icons-list text-md">
-                                <li><i class="icon-li fa fa-exchange text-success"></i>Sync <?php echo $getLastSystemSyncsub[0]['SubscribedCount'];  ?> subscribers <?php echo $getLastSystemSyncsub[0]['SyncTime'];?></li>
-                                <li><i class="icon-li fa fa-exchange text-success"></i>Sync <?php echo $getLastSystemSyncsub[0]['UnSubscribedCount'];  ?> Unsubscribers <?php echo $getLastSystemSyncsub[0]['SyncTime'];?></li>
-                                <li><i class="icon-li fa fa-exchange text-success"></i>Sync Successful <?php echo $getLastSystemSyncsub[0]['SyncTime'];?></li>
+                                <li><i class="icon-li fa fa-exchange text-success"></i>Sync <?php if(!empty($getLastSystemSyncsub)){ echo $getLastSystemSyncsub[0]['SubscribedCount'];} else{ echo 'test';}  ?> subscribers <?php if(!empty($getLastSystemSyncsub)){ echo $getLastSystemSyncsub[0]['SyncTime'];} else{ echo "0";}?></li>
+                                <li><i class="icon-li fa fa-exchange text-success"></i>Sync <?php if(!empty($getLastSystemSyncsub)){ echo $getLastSystemSyncsub[0]['UnSubscribedCount'];} else{ echo 'test';}  ?> Unsubscribers <?php if(!empty($getLastSystemSyncsub)){ echo $getLastSystemSyncsub[0]['SyncTime'];} else{ echo "0";}?></li>
+                                <li><i class="icon-li fa fa-exchange text-success"></i>Sync Successful <?php if(!empty($getLastSystemSyncsub)){ echo $getLastSystemSyncsub[0]['SyncTime']; } else{ echo '0';}?></li>
                             </ul>
                         </div> <!-- /.well -->
 
@@ -92,8 +92,8 @@
                                 </div> <!-- /.progress -->
 
                             </div> <!-- Sync-stat End -->
-                            <div class="col-sm-12 col-md-6"> <p class="row-stat-label">Subscribed</p><h3 class="row-stat-value" id="et_subscribe"><?php echo $getLastSystemSyncsub[0]['SubscribedCount'];  ?></h3><hr><p class="row-stat-label">Last Sync</p><h3 class="row-stat-value" id="et_lastsync"><?php echo date('h:ma',  strtotime($getLastSystemSyncsub[0]['SyncTime']));?></h3></div>
-                            <div class="col-sm-12  col-md-6"><p class="row-stat-label">UnSubscribers</p><h3 class="row-stat-value" id="et_unsubscribe"><?php echo $getLastSystemSyncsub[0]['UnSubscribedCount'];?></h3><hr><p class="row-stat-label">Next Sync</p><h3 class="row-stat-value">85sec</h3></div> 
+                            <div class="col-sm-12 col-md-6"> <p class="row-stat-label">Subscribed</p><h3 class="row-stat-value" id="et_subscribe"><?php if(!empty($getLastSystemSyncsub)){ echo $getLastSystemSyncsub[0]['SubscribedCount'];} else{ echo "0";}  ?></h3><hr><p class="row-stat-label">Last Sync</p><h3 class="row-stat-value" id="et_lastsync"><?php if(!empty($getLastSystemSyncsub)){ echo date('h:ma',  strtotime($getLastSystemSyncsub[0]['SyncTime']));}else{ echo "00:00";}?></h3></div>
+                            <div class="col-sm-12  col-md-6"><p class="row-stat-label">UnSubscribers</p><h3 class="row-stat-value" id="et_unsubscribe"><?php if(!empty($getLastSystemSyncsub)){ echo $getLastSystemSyncsub[0]['UnSubscribedCount'];}else{ echo "0";}?></h3><hr><p class="row-stat-label">Next Sync</p><h3 class="row-stat-value" id="exact_target_timer"></h3></div> 
                             <h3 class="row-stat-value">&nbsp;</h3><hr><a id="et_stopsync" class="btn btn-primary disabled" href="javascript:;">Stop Sync</a>   &nbsp;   <a id="et_startsync" class="btn btn-primary" href="javascript:startsync(1);">Manual Sync</a>
                         </div> <!-- /.row-stat -->
 
@@ -262,4 +262,17 @@
     </div> <!-- /.container -->
 
 </div> <!-- .content -->
+<?php 
+  if(!empty($getLastSystemSyncsub)){ $time=  date("h:m:sa",strtotime($getLastSystemSyncsub[0]['SyncTime']));}
+  if(!empty($getAutoSyncUpdate)){ $next=$getAutoSyncUpdate[0]['time_duration'];
+$endTime = strtotime("+30'".$next."'minutes", strtotime($time));
+//echo $next_time = strtotime(date('h:i:s', $time))."<br>";
+$current_time=strtotime(date('h:i:sa',time()));
+$diff = $endTime-$current_time;
+if($diff){
+    $timer_time= date('m', $diff);
+}
+  }
+?>
+<input type="hidden" name="auto_sync_time" value="<?php   echo $timer_time; ?>" id="auto_sync_time">
 <script src="<?php echo base_url();?>assets/js/sync.js"></script>

@@ -32,7 +32,8 @@ class Home extends CI_Controller {
             $data['autosync'] = $this->sync_model->checkautosync();
             $data['getLastSystemSyncsub'] = $this->sync_model->getLastSystemSyncsub();
              $data['UnSubscriber'] = $this->sync_model->get_UnSubscriber();
-//            var_dump($data['UnSubscriber']);die;
+             $data['getAutoSyncUpdate'] = $this->sync_model->get_getAutoSyncUpdate();
+//            var_dump($data['getAutoSyncUpdate']);die;
             $this->load->view('/common/header.php');
             $this->load->view('/common/navbar.php');
             $this->load->view('/common/sub_navbar.php');
@@ -59,6 +60,27 @@ class Home extends CI_Controller {
             $this->load->view('/common/navbar.php');
             $this->load->view('/common/sub_navbar.php');
             $this->load->view('/exact_target.php', $data);
+            $this->load->view('/common/footer.php');
+        } else {
+            redirect('login/index');
+        }
+    }
+    public function black_boxx() {
+
+        if ($this->session->userdata('logged_in')) {
+
+            $data['list'] = $this->et_model->getList();
+            $data['Subscriber'] = $this->et_model->get_etSubscriber();
+            $data['UnSubscriber'] = $this->et_model->get_UnSubscriber();
+            $data['FilterSubscriber'] = $this->et_model->get_etFilterSubscriber();
+            $data['FilterUnSubscriber'] = $this->et_model->get_etFilterUnSubscriber();
+            $data['checkSystemSync'] = $this->et_model->checkSystemSync();
+            $data['getLastSystemSyncsub'] = $this->et_model->getLastSystemSyncsub();
+//            var_dump($data['getLastSystemSyncsub']);die;
+            $this->load->view('/common/header.php');
+            $this->load->view('/common/navbar.php');
+            $this->load->view('/common/sub_navbar.php');
+            $this->load->view('/blackboxx.php', $data);
             $this->load->view('/common/footer.php');
         } else {
             redirect('login/index');
