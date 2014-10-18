@@ -21,7 +21,7 @@ class Et_model extends CI_Model {
     }
 
     public function getList() {
-
+        $this->db->where(array('ListClassification' => 'ExactTargetList'));
         $res = $this->db->get('et_list');
         if ($res->num_rows() > 0) {
             $data = $res->result_array();
@@ -36,19 +36,38 @@ class Et_model extends CI_Model {
         }
     }
 
+    public function getListNew() {
+
+        $res = $this->db->get('et_category');
+        if ($res->num_rows() > 0) {
+            $data = $res->result_array();
+
+            foreach ($data as $key => $value) {
+                $this->db->where(array('et_list.Category' => $value['Category_ID']));
+                $this->db->from('et_list');
+                $this->db->join('et_subscriber_list_rel', 'et_subscriber_list_rel.ListID = et_list.Category');
+                $cou = $this->db->get();
+                $data[$key]['total'] = $cou->num_rows();
+            }
+            return $data;
+        } else {
+            return NULL;
+        }
+    }
+
     public function blank_tab($table_name) {
         $this->db->truncate($table_name);
     }
 
-    public function get_count($table_name,$storeid = FALSE){
-        if($storeid != FALSE){
+    public function get_count($table_name, $storeid = FALSE) {
+        if ($storeid != FALSE) {
             $this->db->where('unsubscriber_from', $storeid);
         }
         $res = $this->db->get($table_name);
         return $res->num_rows();
     }
 
-        public function insert_tab($table_name, $data) {
+    public function insert_tab($table_name, $data) {
         if (is_array($data) && $data != NULL && (count($data) > 0)) {
             $this->db->insert_batch($table_name, $data);
         }
@@ -59,7 +78,7 @@ class Et_model extends CI_Model {
 
         if ($res->num_rows() > 0) {
             $data = $res->result_array();
-         
+
             $rel_data = array();
             foreach ($data as $key => $val) {
                 $this->db->insert('master_subscriber', $val);
@@ -78,12 +97,13 @@ class Et_model extends CI_Model {
             return NULL;
         }
     }
+
     public function get_UnSubscriber() {
         $this->db->select('all_unsubscriber.id,all_unsubscriber.email,all_unsubscriber.firstname,all_unsubscriber.lastname,all_unsubscriber.unsubscribed_date');
-         $this->db->where('store.name','ET'); 
-         $this->db->from('store'); 
-         $this->db->join('all_unsubscriber','store.id=all_unsubscriber.unsubscriber_from'); 
-         $res = $this->db->get();
+        $this->db->where('store.name', 'ET');
+        $this->db->from('store');
+        $this->db->join('all_unsubscriber', 'store.id=all_unsubscriber.unsubscriber_from');
+        $res = $this->db->get();
         if ($res->num_rows() > 0) {
             return $res->result_array();
         } else {
@@ -110,9 +130,10 @@ class Et_model extends CI_Model {
         $data['previous_month'] = $res2->num_rows();
         $data['last_thirty'] = $res3->num_rows();
         $data['previous_thirty'] = $res4->num_rows();
-         
+
         return $data;
     }
+
     public function get_etFilterUnSubscriber() {
 
         $data = array();
@@ -142,7 +163,7 @@ class Et_model extends CI_Model {
         if ($res->num_rows() > 0) {
             $arr = array('status' => 0);
             $this->db->where('email', $email)
-                     ->update('master_subscriber', $arr);
+                    ->update('master_subscriber', $arr);
             $data = $res->result_array();
             return $data[0]['id'];
         } else {
@@ -161,32 +182,50 @@ class Et_model extends CI_Model {
                 
             } else {
                 $this->db->insert('all_unsubscriber', $unsubscribed);
-               
             }
         }
     }
 
-    public function checkSystemSync(){
+    public function checkSystemSync() {
         $this->db->select('*');
         $this->db->where('(store.name = "ET")');
         $this->db->from('store');
-        $this->db->join('sync_updates','store.id=sync_updates.store_id');
-        $res=$this->db->get();
+        $this->db->join('sync_updates', 'store.id=sync_updates.store_id');
+        $res = $this->db->get();
         return $res->num_rows();
     }
-    public function getLastSystemSyncsub(){
-              $query = "select max(sync_updates.SyncTime) as latest_sync from  (`store`) 
+
+    public function getLastSystemSyncsub() {
+        $query = "select max(sync_updates.SyncTime) as latest_sync from  (`store`) 
                         join `sync_updates` on `store`.`id` = `sync_updates`.`store_id` where `store`.`name` = 'ET' ";
         $res = $this->db->query($query);
 //        echo $this->db->last_query();
-        if($res ->num_rows() > 0){      
-        $data = $res->result_array();
-        $query1 = "select UnSubscribedCount,SubscribedCount,SyncTime from sync_updates where SyncTime = '".$data[0]['latest_sync']."'"; 
-        $res1 = $this->db->query($query1);
+        if ($res->num_rows() > 0) {
+            $data = $res->result_array();
+            $query1 = "select UnSubscribedCount,SubscribedCount,SyncTime from sync_updates where SyncTime = '" . $data[0]['latest_sync'] . "'";
+            $res1 = $this->db->query($query1);
 //        var_dump($res1->result_array());die;
-     return $res1->result_array();
+            return $res1->result_array();
+        }
     }
-   }
+
+    public function add_etsubscriber($data) {
+        $this->db->insert("et_subscriber", $data);
+    }
+
+    public function add_etsubscriber_rel($list_id, $subscriber_id) {
+        foreach ($list_id as $val) {
+            $this->db->where(array("ListID" => $val, "SubscriberID" => $subscriber_id));
+            $res = $this->db->get('et_subscriber_list_rel');
+            if ($res->num_rows() > 0) {
+                $this->db->where(array("ListID" => $val, "SubscriberID" => $subscriber_id));
+                $this->db->update("et_subscriber_list_rel", array("Status" => "Active"));
+            } else {
+                $this->db->insert('et_subscriber_list_rel', array("ListID" => $val, "SubscriberID" => $subscriber_id, "CreatedDate" => date("Y-m-d h:m:s", time()), "Status" => "Active"));
+            }
+        }
+    }
+
 }
 
 ?>

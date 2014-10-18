@@ -58,8 +58,7 @@ class Sync_model extends CI_Model {
         if ($res->num_rows > 0) {
             $data = $res->result_array();
             return $data[0]['status'];
-        }
-        else
+        } else
             return 0;
     }
 
@@ -68,12 +67,12 @@ class Sync_model extends CI_Model {
     }
 
     public function getLastSystemSyncsub() {
-        $query = "select max(sync_updates.SyncTime) as latest_sync from  (`store`) 
+        $query = "select max(sync_updates.id) as latest_sync from  (`store`) 
                         join `sync_updates` on `store`.`id` = `sync_updates`.`store_id` where `store`.`name` = 'ET' ";
         $res = $this->db->query($query);
         if ($res->num_rows() > 0) {
             $data = $res->result_array();
-            $query1 = "select UnSubscribedCount,SubscribedCount,SyncTime from sync_updates where SyncTime = '" . $data[0]['latest_sync'] . "'";
+            $query1 = "select UnSubscribedCount,SubscribedCount,SyncTime from sync_updates where id = '" . $data[0]['latest_sync'] . "'";
             $res1 = $this->db->query($query1);
             return $res1->result_array();
         }
@@ -94,19 +93,28 @@ class Sync_model extends CI_Model {
 //                $res1=$this->db->get('store');
 //                if($res1->num_rows() > 0){
 //                   $data['store_name'] = $res1->result_array();    
-                
+
                 if (isset($result[$unsubscribe_deatail['email']]['storename'])) {
-                    $result[$unsubscribe_deatail['email']]['storename'] = $result[$unsubscribe_deatail['email']]['storename'].','.$unsubscribe_deatail['storename'];
+                    $result[$unsubscribe_deatail['email']]['storename'] = $result[$unsubscribe_deatail['email']]['storename'] . ',' . $unsubscribe_deatail['storename'];
 //                    echo $result[$unsubscribe_deatail['email']]['storename'];
                 } else {
                     $result[$unsubscribe_deatail['email']] = $unsubscribe_deatail;
                 }
-                
+
 //                var_dump($result[$unsubs  cribe_deatail['email']]['storename']);
             }
             return $result;
         } else {
             return NULL;
+        }
+    }
+
+    public function get_getAutoSyncUpdate() {
+        $res = $this->db->get('autosyncdetail');
+        if ($res->num_rows() > 0) {
+            return $res->result_array();
+        } else {
+            return FALSE;
         }
     }
 
