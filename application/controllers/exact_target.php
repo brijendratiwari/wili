@@ -22,7 +22,7 @@ class Exact_target extends CI_Controller {
      * map to /index.php/welcome/<method_name>
      * @see http://codeigniter.com/user_guide/general/urls.html
      */
-    public function getList() {
+    public function getList($arr = FALSE) {
 
         $myclient = new ET_Client(false);
         $list = new ET_List();
@@ -31,7 +31,9 @@ class Exact_target extends CI_Controller {
 
         $arr = array();
         if (count($response->results) && is_array($response->results)) {
-            foreach ($response->results as $key => $value) {
+            foreach ($response->results as $value) {
+
+                $key = count($arr);
 
                 $arr[$key]['ListID'] = $value->ID;
                 $arr[$key]['CustomerKey'] = $value->CustomerKey;
@@ -45,30 +47,32 @@ class Exact_target extends CI_Controller {
                 $arr[$key]['CleintID'] = $value->Client->ID;
             }
         }
-//        echo '<pre>';
-//        print_r($response->results);
-//        echo '</pre>';
-//        die;
+
         return $arr;
-        // $this->et_model->insertList($arr);
     }
 
-    public function getSubscribersbylist($ListID = FALSE) {
+    public function getSubscribersbylist($arr = FALSE, $time = 1, $next = FALSE) {
         // Retrieve all Subscribers on the List
-
+        set_time_limit(0);
         $myclient = new ET_Client(false);
         $getList = new ET_List_Subscriber();
         $getList->authStub = $myclient;
 
-//        $getList->filter = array('Property' => 'ListID', 'SimpleOperator' => 'equals', 'Value' => $ListID);
+        if ($next != FALSE)
+            $getList->filter = array('Property' => 'ID', 'SimpleOperator' => 'greaterThan', 'Value' => $next);
 
-        $getList->props = array("SubscriberKey", "CreatedDate", "Client.ID", "ListID", "Status");
+        if ($arr == FALSE)
+            $arr = array();
+
         $response = $getList->get();
 
-        $arr = array();
-        if (count($response->results) && is_array($response->results)) {
-            foreach ($response->results as $key => $value) {
 
+        if (count($response->results) && is_array($response->results)) {
+            foreach ($response->results as $value) {
+
+                $key = count($arr);
+
+                $arr[$key]['main_id'] = $value->ID;
                 $arr[$key]['ListID'] = $value->ListID;
                 $arr[$key]['SubscriberID'] = $value->SubscriberKey;
                 $arr[$key]['Status'] = $value->Status;
@@ -76,9 +80,11 @@ class Exact_target extends CI_Controller {
             }
         }
 
-        return $arr;
-//        $this->et_model->blank_tab('et_subscriber_list_rel');
-//        $this->et_model->insert_tab('et_subscriber_list_rel', $arr);
+        if (count($arr) == 2500 * $time) {
+            return $this->getSubscribersbylist($arr, $time + 1, $arr[count($arr) - 1]['main_id']);
+        } else {
+            return $arr;
+        }
     }
 
     public function get_unSubscribe_list() {
@@ -93,19 +99,29 @@ class Exact_target extends CI_Controller {
         return $getResult->results;
     }
 
-    public function get_Subscriber_detail() {
+    public function get_Subscriber_detail($arr = FALSE, $time = 1, $next = FALSE) {
+        set_time_limit(0);
         $myclient = new ET_Client(false);
 
 
         $retSub = new ET_Subscriber();
         $retSub->authStub = $myclient;
         $retSub->filter = array('Property' => 'Status', 'SimpleOperator' => 'equals', 'Value' => 'Active');
-        $arr = array();
+
+        if ($next != FALSE)
+            $retSub->filter = array('Property' => 'ID', 'SimpleOperator' => 'greaterThan', 'Value' => $next);
+
+        if ($arr == FALSE)
+            $arr = array();
+
         $response = $retSub->get();
 
-        if (count($response->results) && is_array($response->results)) {
-            foreach ($response->results as $key => $value) {
 
+
+        if (count($response->results) && is_array($response->results)) {
+            foreach ($response->results as $value) {
+                $key = count($arr);
+                $arr[$key]['main_id'] = $value->ID;
                 $arr[$key]['EmailAddress'] = $value->EmailAddress;
                 $arr[$key]['CreatedDate'] = $value->CreatedDate;
                 $arr[$key]['SubscriberID'] = $value->SubscriberKey;
@@ -130,9 +146,13 @@ class Exact_target extends CI_Controller {
                 }
             }
         }
-        return $arr;
-//        $this->et_model->blank_tab('et_subscriber');
-//        $this->et_model->insert_tab('et_subscriber', $arr);
+
+
+        if (count($arr) == 2500 * $time) {
+            return $this->get_Subscriber_detail($arr, $time + 1, $arr[count($arr) - 1]['main_id']);
+        } else {
+            return $arr;
+        }
     }
 
     public function updateemail() {
@@ -193,21 +213,11 @@ class Exact_target extends CI_Controller {
     public function add_email_list($list_id = FALSE, $data = FALSE) {
         try {
             $myclient = new ET_Client(false);
-            $subs[] = array("EmailAddress" => "SDKTest9091@bh.exacttarget.com", "SubscriberKey" => '99999', "Attributes" => array(array("Name" => "First Name", "Value" => "Mac"), array("Name" => "List Name", "Value" => "Testing")));
-            $subs[] = array("EmailAddress" => "SDKTest9092@bh.exacttarget.com", "SubscriberKey" => '99989', "Attributes" => array(array("Name" => "First Name", "Value" => "Mac"), array("Name" => "List Name", "Value" => "Testing")));
-
             $newListID = $list_id;
-//            $myclient->props = array("CustomerKey" => 'All Subscribers - 2435727');
             // Adding Multiple Subscribers To a List in Bulk
-            $response = $myclient->AddSubscribersToLists($subs, array('340876'));
-            print 'Code: ' . $response->code . "\n";
-            print 'Message: ' . $response->message . "\n";
-            print 'Results Length: ' . count($response->results) . "\n";
-            print "Results: \n";
-            echo '<pre>';
-            print_r($response->results);
-            echo '</pre>';
-            print "\n---------------\n";
+            $response = $myclient->AddSubscribersToLists($data, $list_id);
+
+            return $response->results;
         } catch (Exception $e) {
             echo 'Caught exception: ', $e->getMessage(), "\n";
         }
@@ -341,31 +351,65 @@ class Exact_target extends CI_Controller {
         }
     }
 
-    public function test() {
+    public function get_Category() {
         $myclient = new ET_Client(false);
         $getFolder = new ET_Folder();
         $getFolder->authStub = $myclient;
         $getFolder->filter = array('Property' => 'ContentType', 'SimpleOperator' => 'equals', 'Value' => 'list');
         $getFolder->props = array("ID", "Client.ID", "ParentFolder.ID", "ParentFolder.CustomerKey", "ParentFolder.ObjectID", "ParentFolder.Name", "ParentFolder.Description", "ParentFolder.ContentType", "ParentFolder.IsActive", "ParentFolder.IsEditable", "ParentFolder.AllowChildren", "Name", "Description", "ContentType", "IsActive", "IsEditable", "AllowChildren", "CreatedDate", "ModifiedDate", "Client.ModifiedBy", "ObjectID", "CustomerKey", "Client.EnterpriseID", "Client.CreatedBy");
         $getResponse = $getFolder->get();
-        print_r('Get Status: ' . ($getResponse->status ? 'true' : 'false') . "\n");
-        print 'Code: ' . $getResponse->code . "\n";
-        print 'Message: ' . $getResponse->message . "\n";
-        print_r('More Results: ' . ($getResponse->moreResults ? 'true' : 'false') . "\n");
-        print 'Results Length: ' . count($getResponse->results) . "\n";
-        print "\n---------------\n";
-        while ($getResponse->moreResults) {
-            print "Continue Retrieve All Folder with GetMoreResults \n";
-            $getResponse = $getFolder->GetMoreResults();
-            print_r('Get Status: ' . ($getResponse->status ? 'true' : 'false') . "\n");
-            print 'Code: ' . $getResponse->code . "\n";
-            print 'Message: ' . $getResponse->message . "\n";
-            print_r('More Results: ' . ($getResponse->moreResults ? 'true' : 'false') . "\n");
-            print 'Results Length: ' . count($getResponse->results) . "\n";
-            print "\n---------------\n";
+//        print_r('Get Status: ' . ($getResponse->status ? 'true' : 'false') . "\n");
+//        print 'Code: ' . $getResponse->code . "\n";
+//        print 'Message: ' . $getResponse->message . "\n";
+//        print_r('More Results: ' . ($getResponse->moreResults ? 'true' : 'false') . "\n");
+//        print 'Results Length: ' . count($getResponse->results) . "\n";
+//        print "\n---------------\n";
+//        while ($getResponse->moreResults) {
+//            print "Continue Retrieve All Folder with GetMoreResults \n";
+//            $getResponse = $getFolder->GetMoreResults();
+//            print_r('Get Status: ' . ($getResponse->status ? 'true' : 'false') . "\n");
+//            print 'Code: ' . $getResponse->code . "\n";
+//            print 'Message: ' . $getResponse->message . "\n";
+//            print_r('More Results: ' . ($getResponse->moreResults ? 'true' : 'false') . "\n");
+//            print 'Results Length: ' . count($getResponse->results) . "\n";
+//            print "\n---------------\n";
+//        }
+
+
+
+        $arr = array();
+        foreach ($getResponse->results as $key => $val) {
+            $arr[$key]['Category_ID'] = $val->ID;
+            $arr[$key]['Name'] = $val->Name;
+            $arr[$key]['IsActive'] = $val->IsActive;
+            $arr[$key]['CreatedDate'] = $val->CreatedDate;
+            $arr[$key]['CustomerKey'] = $val->CustomerKey;
+            $arr[$key]['Date'] = date("Y-m-d H:i:s", time());
         }
+
+//        echo '<pre>';
+//        print_r($arr);
+//        echo '</pre>';
+        $this->et_model->blank_tab('et_category');
+        $this->et_model->insert_tab('et_category', $arr);
+
+        $data = $this->et_model->getListNew();
+        var_dump($data);
+//        return $arr;
+    }
+
+    public function test() {
+        $myclient = new ET_Client(false);
+        $subCreate = new ET_Subscriber();
+        $subCreate->authStub = $myclient;
+        $subCreate->props = array("EmailAddress" => 'SDKTest9091@bh.exacttarget.com', "SubscriberKey" => 99989, "Lists" => array("ID" => 351485));
+        $postResult = $subCreate->post();
+        print_r('Post Status: ' . ($postResult->status ? 'true' : 'false') . "\n");
+        print 'Code: ' . $postResult->code . "\n";
+        print 'Message: ' . $postResult->message . "\n";
+        print 'Results Length: ' . count($postResult->results) . "\n";
         echo '<pre>';
-        print_r($getResponse->results);
+        print_r($postResult->results);
         echo '</pre>';
     }
 
