@@ -11,6 +11,11 @@ class Black_boxx extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('bb_model');
+        $this->load->model('et_model');
+    }
+    
+    public function test(){
+        $this->et_model->checkstore(0000002);
     }
 
     public function get_user_list() {
@@ -30,7 +35,8 @@ class Black_boxx extends CI_Controller {
                     "merchant_id" => $value['merchant_id'],
                 );
             }
-            $this->bb_model->insert_customer($customer_data);
+//            $this->bb_model->insert_customer($customer_data);
+            return $data;
         }
     }
 
@@ -64,14 +70,20 @@ class Black_boxx extends CI_Controller {
         print_r($data);
     }
 
-    public function add_user($data = FALSE){
+    public function add_user($data = FALSE) {
 //        $data = array();
         $res = $this->getListByCurl("users",$data);
         return $res;
     }
 
-        // get all data by api using curl
-    public function getListByCurl($str,$data = FALSE) {
+    public function update_user($data, $user_id) {
+//        $data = array();
+        $res = $this->getListByCurl("users/" . $user_id, $data, "update");
+        return $res;
+    }
+
+    // get all data by api using curl
+    public function getListByCurl($str, $data = FALSE, $update = FALSE) {
 
         $headers = array(
             'Authorization: Basic ' . BB_API_KEY
@@ -83,14 +95,16 @@ class Black_boxx extends CI_Controller {
         curl_setopt($handle, CURLOPT_URL, $url);
         curl_setopt($handle, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($handle, CURLOPT_SSL_VERIFYPEER, false);
-        
-        curl_setopt($handle, CURLOPT_RETURNTRANSFER, 1);
-        if($data){
-            curl_setopt($handle, CURLOPT_CUSTOMREQUEST, "POST");
-//            $send = json_encode($data);
-           curl_setopt($handle, CURLOPT_POSTFIELDS, $data);  
-        }
 
+        curl_setopt($handle, CURLOPT_RETURNTRANSFER, 1);
+        if ($data) {
+            curl_setopt($handle, CURLOPT_CUSTOMREQUEST, "POST");
+            curl_setopt($handle, CURLOPT_POSTFIELDS, $data);
+        }
+        if ($data && $update) {
+            curl_setopt($handle, CURLOPT_CUSTOMREQUEST, 'PUT');
+            curl_setopt($handle, CURLOPT_POSTFIELDS, $data);
+        }
         $response = curl_exec($handle);
         return $response;
     }
