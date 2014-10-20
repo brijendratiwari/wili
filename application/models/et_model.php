@@ -61,9 +61,12 @@ class Et_model extends CI_Model {
 
     public function get_count($table_name, $storeid = FALSE) {
         if ($storeid != FALSE) {
-            $this->db->where('unsubscriber_from', $storeid);
+            $query = "select * from " . $table_name . " where unsubscriber_from REGEXP '" . $storeid . "'";
+            $res = $this->db->query($query);
+            $manager = $res->result_array();
         }
-        $res = $this->db->get($table_name);
+        else
+            $res = $this->db->get($table_name);
         return $res->num_rows();
     }
 
@@ -99,11 +102,10 @@ class Et_model extends CI_Model {
     }
 
     public function get_UnSubscriber() {
-        $this->db->select('all_unsubscriber.id,all_unsubscriber.email,all_unsubscriber.firstname,all_unsubscriber.lastname,all_unsubscriber.unsubscribed_date');
-        $this->db->where('store.name', 'ET');
-        $this->db->from('store');
-        $this->db->join('all_unsubscriber', 'store.id=all_unsubscriber.unsubscriber_from');
-        $res = $this->db->get();
+
+        $query = "SELECT `all_unsubscriber`.`id`, `all_unsubscriber`.`email`, `all_unsubscriber`.`firstname`, `all_unsubscriber`.`lastname`, `all_unsubscriber`.`unsubscribed_date` FROM (`store`) JOIN `all_unsubscriber` ON `all_unsubscriber`.`unsubscriber_from` REGEXP `store`.`id` WHERE `store`.`name` = 'ET' ";
+
+        $res = $this->db->query($query);
         if ($res->num_rows() > 0) {
             return $res->result_array();
         } else {
@@ -112,25 +114,27 @@ class Et_model extends CI_Model {
     }
 
     public function get_etFilterSubscriber() {
-
         $data = array();
         $query = "select * from et_subscriber where `CreatedDate` between '" . date("Y", strtotime("-1 year")) . "-01-01' and '" . date("Y", strtotime("-0 year")) . "-01-01'";
         $query1 = "select * from et_subscriber where `CreatedDate` between '" . date("Y-m", strtotime("-1 months")) . "-01' and '" . date("Y-m", strtotime("-0 months")) . "-01'";
         $query2 = "select * from et_subscriber where `CreatedDate` between '" . date("Y-m", strtotime("-2 months")) . "-01' and '" . date("Y-m", strtotime("-1 months")) . "-01'";
         $query3 = "select * from et_subscriber where `CreatedDate` between '" . date("Y-m-d", strtotime("-30 days")) . "' and '" . date("Y-m-d", strtotime("-0 days")) . "'";
         $query4 = "select * from et_subscriber where `CreatedDate` between '" . date("Y-m-d", strtotime("-60 days")) . "' and '" . date("Y-m-d", strtotime("-30 days")) . "'";
+        $query5 = "select * from et_subscriber where `CreatedDate` between '" . date("Y-m-d", strtotime("-7 days")) . "' and '" . date("Y-m-d", strtotime("-0 days")) . "'";
+
 //        $query1 = "select count(id) from et_subscriber where CreatedDate >= DATEADD(MONTH, -1, GETDATE()) " ;
         $res = $this->db->query($query);
         $res1 = $this->db->query($query1);
         $res2 = $this->db->query($query2);
         $res3 = $this->db->query($query3);
         $res4 = $this->db->query($query4);
+        $res5 = $this->db->query($query5);
         $data['year'] = $res->num_rows();
         $data['month'] = $res1->num_rows();
         $data['previous_month'] = $res2->num_rows();
         $data['last_thirty'] = $res3->num_rows();
         $data['previous_thirty'] = $res4->num_rows();
-
+        $data['last_seven'] = $res5->num_rows();
         return $data;
     }
 
@@ -142,6 +146,8 @@ class Et_model extends CI_Model {
         $query2 = "select * from all_unsubscriber where `unsubscribed_date` between '" . date("Y-m", strtotime("-4 hour")) . "-01' and '" . date("Y-m", strtotime("-2 hour")) . "-01'";
         $query3 = "select * from all_unsubscriber where `unsubscribed_date` between '" . date("Y-m-d", strtotime("-30 days")) . "' and '" . date("Y-m-d", strtotime("-0 days")) . "'";
         $query4 = "select * from all_unsubscriber where `unsubscribed_date` between '" . date("Y-m-d", strtotime("-60 days")) . "' and '" . date("Y-m-d", strtotime("-30 days")) . "'";
+        $query5 = "select * from all_unsubscriber where `unsubscribed_date` between '" . date("Y-m-d", strtotime("-7 days")) . "' and '" . date("Y-m-d", strtotime("-0 days")) . "'";
+
 //        $query1 = "select count(id) from et_subscriber where CreatedDate >= DATEADD(MONTH, -1, GETDATE()) " ;
 
         $res = $this->db->query($query);
@@ -149,11 +155,13 @@ class Et_model extends CI_Model {
         $res2 = $this->db->query($query2);
         $res3 = $this->db->query($query3);
         $res4 = $this->db->query($query4);
+        $res5 = $this->db->query($query5);
         $data['year'] = $res->num_rows();
         $data['hours'] = $res1->num_rows();
         $data['previous_hours'] = $res2->num_rows();
         $data['last_thirty'] = $res3->num_rows();
         $data['previous_thirty'] = $res4->num_rows();
+        $data['last_seven'] = $res5->num_rows();
         return $data;
     }
 
@@ -173,11 +181,10 @@ class Et_model extends CI_Model {
     }
 
     public function insert_all_unsubscriber($data) {
-//      var_dump($data);die;
         foreach ($data as $unsubscribed) {
-            $this->db->where('email', $unsubscribed["email"]);
-            $this->db->where('unsubscriber_from', $unsubscribed["unsubscriber_from"]);
-            $res = $this->db->get('all_unsubscriber');
+
+            $sql = "SELECT * FROM (`all_unsubscriber`) WHERE `email` = '" . $unsubscribed["email"] . "' AND `unsubscriber_from` REGEXP '" . $unsubscribed["unsubscriber_from"] . "'";
+            $res = $this->db->query($sql);
             if ($res->num_rows() > 0) {
                 
             } else {
@@ -209,6 +216,17 @@ class Et_model extends CI_Model {
         }
     }
 
+    public function get_et_subscriber($email) {
+
+        $this->db->where('EmailAddress', $email);
+        $res = $this->db->get('et_subscriber');
+        if ($res->num_rows() > 0) {
+            return $res->result_array();
+        } else {
+            return FALSE;
+        }
+    }
+
     public function add_etsubscriber($data) {
         $this->db->insert("et_subscriber", $data);
     }
@@ -223,6 +241,46 @@ class Et_model extends CI_Model {
             } else {
                 $this->db->insert('et_subscriber_list_rel', array("ListID" => $val, "SubscriberID" => $subscriber_id, "CreatedDate" => date("Y-m-d h:m:s", time()), "Status" => "Active"));
             }
+        }
+    }
+
+    public function checkstore($id) {
+
+        $temp = array('351484', '351485', '351486', '351487', '351488');
+//        340876
+//        $arr ['one'] = 
+        $arr = array();
+        $this->db->select('ListID');
+        $res = $this->db->get_where('et_subscriber_list_rel', array('main_id' => $id));
+        if ($res->num_rows() > 0) {
+            $data = $res->result_array();
+            foreach ($data as $val) {
+                if ($val['ListID'] != '340876') {
+                    if (in_array($val['ListID'], $temp)) {
+                        $arr['two'] = 2;
+                    } else {
+                        $arr['one'] = 1;
+                    }
+                } else {
+                    $arr['one'] = 1;
+                }
+            }
+        } else {
+            $arr['one'] = 0;
+        }
+
+        return implode(',', $arr);
+    }
+
+    public function unsubscribedfromlist($id) {
+        $this->db->select('ListId');
+        $this->db->distinct('ListId');
+        $this->db->where(array('SubscriberID' => $id, 'Status' => 'Active'));
+        $res = $this->db->get('et_subscriber');
+        if ($res->num_rows() > 0) {
+            return $res->result_array();
+        } else {
+            return FALSE;
         }
     }
 
