@@ -112,19 +112,20 @@
                                 </div>
 
                                 <div class="progress-stat-value">
-                                    77.7%
+                                   0% 
                                 </div>
 
-                                <div class="progress progress-striped progress-sm active">
-                                    <div style="width: 77%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="77" role="progressbar" class="progress-bar progress-bar-success">
-                                        <span class="sr-only">77.74% Sync Progress</span>
+                             
+                                <div class="progress progress-striped progress-sm active" id="bb_progessbar">
+                                    <div style="width: 0%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="100" role="progressbar" class="progress-bar progress-bar-success">
+                                        <span class="sr-only"></span>
                                     </div>
                                 </div> <!-- /.progress -->
 
                             </div> <!-- Sync-stat End -->
-                            <div class="col-sm-12 col-md-6"> <p class="row-stat-label">Subscribed</p><h3 class="row-stat-value">121</h3><hr><p class="row-stat-label">Last Sync</p><h3 class="row-stat-value">12.45am</h3></div>
-                            <div class="col-sm-12  col-md-6"><p class="row-stat-label">UnSubscribers</p><h3 class="row-stat-value">21</h3><hr><p class="row-stat-label">Next Sync</p><h3 class="row-stat-value">85sec</h3></div> 
-                            <h3 class="row-stat-value">&nbsp;</h3><hr><a class="btn btn-primary" href="javascript:;">Stop Sync</a>   &nbsp;   <a class="btn btn-primary disabled" href="javascript:;">Manual Sync</a>
+                             <div class="col-sm-12 col-md-6"> <p class="row-stat-label">Subscribed</p><h3 class="row-stat-value" id="bb_subscribe"><?php if(!empty($bbSyncsub)){ echo $bbSyncsub[0]['SubscribedCount'];} else{ echo "0";}  ?></h3><hr><p class="row-stat-label">Last Sync</p><h3 class="row-stat-value" id="bb_lastsync"><?php if(!empty($bbSyncsub)){ echo date('h:ma',  strtotime($bbSyncsub[0]['SyncTime']));}else{ echo "00:00";}?></h3></div>
+                            <div class="col-sm-12  col-md-6"><p class="row-stat-label">UnSubscribers</p><h3 class="row-stat-value" id="bb_unsubscribe"><?php if(!empty($bbSyncsub)){ echo $bbSyncsub[0]['UnSubscribedCount'];}else{ echo "0";}?></h3><hr><p class="row-stat-label">Next Sync</p><h3 class="row-stat-value">85sec</h3></div> 
+                            <h3 class="row-stat-value">&nbsp;</h3><hr><a id="bb_stopsync" class="btn btn-primary disabled" href="javascript:;">Stop Sync</a>   &nbsp;   <a id="bb_startsync" class="btn btn-primary" href="javascript:startblackboxxsync(2);">Manual Sync</a>
                         </div> <!-- /.row-stat -->
 
                     </div> <!-- /.col -->
@@ -154,7 +155,7 @@
                             </div> <!-- Sync-stat End -->
                             <div class="col-sm-12 col-md-6"> <p class="row-stat-label">Subscribed</p><h3 class="row-stat-value">121</h3><hr><p class="row-stat-label">Last Sync</p><h3 class="row-stat-value">12.45am</h3></div>
                             <div class="col-sm-12  col-md-6"><p class="row-stat-label">UnSubscribers</p><h3 class="row-stat-value">21</h3><hr><p class="row-stat-label">Next Sync</p><h3 class="row-stat-value">85sec</h3></div> 
-                            <h3 class="row-stat-value">&nbsp;</h3><hr><a class="btn btn-primary" href="javascript:;">Stop Sync</a>   &nbsp;   <a class="btn btn-primary disabled" href="javascript:;">Manual Sync</a>
+                            <h3 class="row-stat-value">&nbsp;</h3><hr><a class="btn btn-primary disabled" href="javascript:;">Stop Sync</a>   &nbsp;   <a class="btn btn-primary disabled" href="javascript:;">Manual Sync</a>
                         </div> <!-- /.row-stat -->
 
                     </div> <!-- /.col -->
