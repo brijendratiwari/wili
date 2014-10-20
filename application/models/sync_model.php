@@ -38,23 +38,25 @@ class Sync_model extends CI_Model {
     }
 
     public function setTempSync($store_id) {
+        $user = $this->session->userdata('logged_in');
         $res = $this->db->get_where('temp_sync_check', array('store_id' => $store_id));
         if ($res->num_rows() == 0) {
-            $this->db->insert('temp_sync_check', array('store_id' => $store_id, 'status' => 1));
+            $this->db->insert('temp_sync_check', array('store_id' => $store_id, 'status' => 1,'user_id'=>$user['id']));
             return $this->db->insert_id();
         } else {
-            $this->db->update('temp_sync_check', array('status' => 1), array('store_id' => $store_id));
+            $this->db->update('temp_sync_check', array('status' => 1), array('store_id' => $store_id,'user_id'=>$user['id']));
             $data = $res->result_array();
             return $data[0]['id'];
         }
     }
 
     public function delTempSync($id) {
-        $this->db->delete('temp_sync_check', array('id' => $id));
+        $user = $this->session->userdata('logged_in');
+        $this->db->delete('temp_sync_check', array('store_id' => $id,'user_id'=>$user['id']));
     }
 
     public function check($id) {
-        $res = $this->db->get_where('temp_sync_check', array('id' => $id));
+        $res = $this->db->get_where('temp_sync_check', array('id' => $id,'status' => 1));
         if ($res->num_rows > 0) {
             $data = $res->result_array();
             return $data[0]['status'];
@@ -115,6 +117,15 @@ class Sync_model extends CI_Model {
             return $res->result_array();
         } else {
             return FALSE;
+        }
+    }
+    
+    public function get_AllUnSubscriber() {
+        $res = $this->db->get("all_unsubscriber");
+        if ($res->num_rows() > 0) {
+            return $res->result_array();
+        } else {
+            return NULL;
         }
     }
 
