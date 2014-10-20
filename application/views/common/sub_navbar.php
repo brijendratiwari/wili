@@ -16,15 +16,15 @@
 
         <ul class="mainnav-menu" id="sub_navbar">
 
-          <li class="dropdown" data-target="index">
+<!--          <li class="dropdown" data-target="index">
               <a href="<?php echo base_url();?>index.php/home/index">
           	Overview
           	</a>
-          </li>
+          </li>-->
 
 
           <li class="dropdown">
-            <a href="javascript:;">
+            <a href="<?php echo base_url();?>index.php/home/master">
             Master DB
             </a>
 
