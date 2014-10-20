@@ -212,7 +212,7 @@
                                                 </td>    
                                             <td width="200"><p> Mobile Number *<br />
                                                         <label for="mobile_number">
-                                                            <input type="text" required="" placeholder="Phone Number" id="txtMobile" name="mobile_number" style="width:190px !important;"/>
+                                                            <input type="text" required="" placeholder="Mobile Number" id="txtMobile" name="mobile_number" style="width:190px !important;"/>
                                                         </label>
                                                         <span id="emailerror2" style="font-family: Arial, Helvetica, sans-serif; font-size: 10px; color: #ff0000; display:none;">Please enter a Mobile Number.</span> </p>
                                                 </td>
