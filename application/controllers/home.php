@@ -19,11 +19,12 @@ class Home extends CI_Controller {
     public function index() {
 
         if ($this->session->userdata('logged_in')) {
-            $this->load->view('/common/header.php');
-            $this->load->view('/common/navbar.php');
-            $this->load->view('/common/sub_navbar.php');
-            $this->load->view('/home.php');
-            $this->load->view('/common/footer.php');
+            redirect('home/master');
+//            $this->load->view('/common/header.php');
+//            $this->load->view('/common/navbar.php');
+//            $this->load->view('/common/sub_navbar.php');
+//            $this->load->view('/master.php');
+//            $this->load->view('/common/footer.php');
         } else {
             redirect('login/index');
         }
