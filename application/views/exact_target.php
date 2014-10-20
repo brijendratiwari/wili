@@ -41,11 +41,12 @@
             </div> <!-- /.col -->
 
             <div class="col-sm-6 col-md-3">
-              <div class="row-stat">
-                <p class="row-stat-label">System Subscriber Sync</p>
-                <h3 class="row-stat-value"><?php echo $checkSystemSync; ?></h3>
-                <span class="label label-danger row-stat-badge">Error</span>
-                <span class="label label-success row-stat-badge">Success</span>
+         <div class="row-stat">
+                <p class="row-stat-label">Last 7 days</p>
+                <h3 class="row-stat-value"><?php echo $FilterSubscriber['last_seven']; ?></h3>
+                <span class="label label-success row-stat-badge">+
+              <?php if($FilterSubscriber['last_seven'] !=0 ) { echo number_format(((count($Subscriber)-$FilterSubscriber['last_seven'])*100)/count($Subscriber),2); } else{ echo '0';} ?>%                    
+                </span>
               </div> <!-- /.row-stat -->
             </div> <!-- /.col -->
             
@@ -94,10 +95,11 @@
 
             <div class="col-sm-6 col-md-3">
               <div class="row-stat">
-                <p class="row-stat-label">System UnSubscriber Sync</p>
-                <h3 class="row-stat-value"><?php echo $checkSystemSync; ?></h3>
-                <span class="label label-danger row-stat-badge">Error</span>
-                <span class="label label-success row-stat-badge">Success</span>
+                <p class="row-stat-label">Last 7 days</p>
+                <h3 class="row-stat-value"><?php echo $FilterUnSubscriber['last_seven']; ?></h3>
+                <span class="label label-success row-stat-badge">+
+              <?php if($FilterUnSubscriber['last_seven'] !=0 ) { echo number_format(((count($UnSubscriber)-$FilterUnSubscriber['last_seven'])*100)/count($UnSubscriber),2); } else{ echo '0';} ?>%                    
+                </span>
               </div> <!-- /.row-stat -->
             </div> <!-- /.col -->
             

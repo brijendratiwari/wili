@@ -6,7 +6,7 @@
               <div class="portlet">
 
         <h4 class="portlet-title">
-          <u>Total Subscribers</u>
+          <u>Total Customers All Stores</u>
         </h4>
 
         <div class="portlet-body">
@@ -15,7 +15,7 @@
 
             <div class="col-sm-6 col-md-3">
               <div class="row-stat">
-                <p class="row-stat-label">Total Subscribers</p>
+                <p class="row-stat-label">Total Customers</p>
                 <h3 class="row-stat-value"><?php echo count($Subscriber); ?></h3>
                 <span class="label label-success row-stat-badge">+
                     <?php if(count($Subscriber) !=0 ){ echo number_format(((count($Subscriber)-$FilterSubscriber['year'])*100)/count($Subscriber),2); }else{ echo '0';} ?>% from previous year</span>
@@ -24,28 +24,29 @@
 
             <div class="col-sm-6 col-md-3">
               <div class="row-stat">
-                <p class="row-stat-label">Subscribers Last Month</p>
-                <h3 class="row-stat-value"><?php echo $FilterSubscriber['month']; ?></h3>
-                <span class="label label-success row-stat-badge">+
-                    <?php if($FilterSubscriber['month'] !=0 ){ echo number_format((( $FilterSubscriber['month'] - $FilterSubscriber['previous_month'])*100)/$FilterSubscriber['month'],2); } else{ echo '0';} ?>% from previous month</span>
-              </div> <!-- /.row-stat -->
-            </div> <!-- /.col -->
-
-            <div class="col-sm-6 col-md-3">
-              <div class="row-stat">
                 <p class="row-stat-label">Last 30 Days</p>
                 <h3 class="row-stat-value"><?php echo $FilterSubscriber['last_thirty']; ?></h3>
                 <span class="label label-success row-stat-badge">+
-                    <?php if($FilterSubscriber['last_thirty'] !=0 ) { echo number_format((($FilterSubscriber['last_thirty']-$FilterSubscriber['previous_thirty'])*100)/$FilterSubscriber['last_thirty'],2); } else{ echo '0';} ?>% from previous 30 days</span>
+                    <?php if($FilterSubscriber['last_thirty'] !=0 ){ echo number_format((( $FilterSubscriber['last_thirty'] - $FilterSubscriber['previous_month'])*100)/$FilterSubscriber['last_thirty'],2); } else{ echo '0';} ?>% from previous month</span>
               </div> <!-- /.row-stat -->
             </div> <!-- /.col -->
 
             <div class="col-sm-6 col-md-3">
               <div class="row-stat">
-                <p class="row-stat-label">System Subscriber Sync</p>
-                <h3 class="row-stat-value"><?php echo $checkSystemSync; ?></h3>
-                <span class="label label-danger row-stat-badge">Error</span>
-                <span class="label label-success row-stat-badge">Success</span>
+                <p class="row-stat-label">This Month</p>
+                <h3 class="row-stat-value"><?php echo $FilterSubscriber['month']; ?></h3>
+                <span class="label label-success row-stat-badge">+
+                    <?php if($FilterSubscriber['month'] !=0 ) { echo number_format((($FilterSubscriber['month']-$FilterSubscriber['last_thirty'])*100)/$FilterSubscriber['month'],2); } else{ echo '0';} ?>% from previous 30 days</span>
+              </div> <!-- /.row-stat -->
+            </div> <!-- /.col -->
+
+            <div class="col-sm-6 col-md-3">
+              <div class="row-stat">
+                <p class="row-stat-label">Today</p>
+                <h3 class="row-stat-value"><?php echo $FilterSubscriber['today']; ?></h3>
+                <span class="label label-success row-stat-badge">+
+              <?php if($FilterSubscriber['today'] !=0 ) { echo number_format(((count($Subscriber)-$FilterSubscriber['today'])*100)/count($Subscriber),2); } else{ echo '0';} ?>%                    
+                </span>
               </div> <!-- /.row-stat -->
             </div> <!-- /.col -->
             
@@ -58,46 +59,46 @@
             <div class="portlet">
 
         <h4 class="portlet-title">
-          <u>Total UnSubscribers</u>
+          <u>McWilliams Online Store</u>
         </h4>
 
         <div class="portlet-body">
-
           <div class="row">
 
             <div class="col-sm-6 col-md-3">
               <div class="row-stat">
-                <p class="row-stat-label">Total UnSubscribed</p>
-                <h3 class="row-stat-value"><?php echo count($UnSubscriber); ?></h3>
+                <p class="row-stat-label">Total Customers</p>
+                <h3 class="row-stat-value"><?php echo count($mcSubscriber); ?></h3>
                 <span class="label label-success row-stat-badge">+
-                    <?php if(count($UnSubscriber) !=0){ echo number_format(((count($UnSubscriber)-$FilterUnSubscriber['year'])*100)/count($UnSubscriber),2);} else{ echo '0';} ?>% from previous year</span>
+                    <?php if(count($mcSubscriber) !=0){ echo number_format(((count($mcSubscriber)-$mcSubscriber['year'])*100)/count($mcSubscriber),2);} else{ echo '0';} ?>% from previous year</span>
               </div> <!-- /.row-stat -->
             </div> <!-- /.col -->
 
             <div class="col-sm-6 col-md-3">
               <div class="row-stat">
-                <p class="row-stat-label">UnSubscribed Last 30 Days</p>
-                <h3 class="row-stat-value"><?php echo $FilterUnSubscriber['last_thirty']; ?></h3>
+                <p class="row-stat-label">Last 30 Days</p>
+                <h3 class="row-stat-value"><?php echo $mcSubscriber['last_thirty']; ?></h3>
                 <span class="label label-success row-stat-badge">+
-                    <?php if($FilterUnSubscriber['last_thirty'] !=0) { echo number_format((($FilterUnSubscriber['last_thirty']-$FilterUnSubscriber['previous_thirty'])*100)/$FilterUnSubscriber['last_thirty'],2); }else{ echo '0';} ?> from previous 30 days</span>
+                    <?php if($mcSubscriber['last_thirty'] !=0) { echo number_format((($mcSubscriber['last_thirty']-$mcSubscriber['previous_month'])*100)/$mcSubscriber['last_thirty'],2); }else{ echo '0';} ?> from previous 30 days</span>
               </div> <!-- /.row-stat -->
             </div> <!-- /.col -->
 
             <div class="col-sm-6 col-md-3">
               <div class="row-stat">
-                <p class="row-stat-label">Last 4 Hours</p>
-                <h3 class="row-stat-value"><?php echo $FilterUnSubscriber['hours']; ?></h3>
+                <p class="row-stat-label">This Month</p>
+                <h3 class="row-stat-value"><?php echo $mcSubscriber['month']; ?></h3>
                 <span class="label label-success row-stat-badge">+
-                    <?php if($FilterUnSubscriber['hours'] !=0) { echo number_format((($FilterUnSubscriber['hours']-$FilterUnSubscriber['previous_hours'])*100)/$FilterUnSubscriber['hours'],2);} else{ echo "0";} ?>% from previous 4 hours</span>
+                    <?php if($mcSubscriber['month'] !=0) { echo number_format((($mcSubscriber['month']-$mcSubscriber['last_thirty'])*100)/$mcSubscriber['month'],2);} else{ echo "0";} ?>% from previous 4 hours</span>
               </div> <!-- /.row-stat -->
             </div> <!-- /.col -->
 
             <div class="col-sm-6 col-md-3">
               <div class="row-stat">
-                <p class="row-stat-label">System UnSubscriber Sync</p>
-                <h3 class="row-stat-value"><?php echo $checkSystemSync; ?></h3>
-                <span class="label label-danger row-stat-badge">Error</span>
-                <span class="label label-success row-stat-badge">Success</span>
+                <p class="row-stat-label">Today</p>
+                <h3 class="row-stat-value"><?php echo $mcSubscriber['today']; ?></h3>
+                <span class="label label-success row-stat-badge">+
+              <?php if($mcSubscriber['today'] !=0 ) { echo number_format(((count($mcSubscriber)-$mcSubscriber['today'])*100)/count($mcSubscriber),2); } else{ echo '0';} ?>%                    
+                </span>
               </div> <!-- /.row-stat -->
             </div> <!-- /.col -->
             
@@ -109,7 +110,7 @@
             <div class="portlet">
 
         <h4 class="portlet-title">
-          <u>Total UnSubscribers</u>
+          <u>Entertainment Book</u>
         </h4>
 
         <div class="portlet-body">
@@ -118,37 +119,38 @@
 
             <div class="col-sm-6 col-md-3">
               <div class="row-stat">
-                <p class="row-stat-label">Total UnSubscribed</p>
-                <h3 class="row-stat-value"><?php echo count($UnSubscriber); ?></h3>
+                <p class="row-stat-label">Total Customers</p>
+                <h3 class="row-stat-value"><?php echo count($brandsSubscriber); ?></h3>
                 <span class="label label-success row-stat-badge">+
-                    <?php if(count($UnSubscriber) !=0){ echo number_format(((count($UnSubscriber)-$FilterUnSubscriber['year'])*100)/count($UnSubscriber),2);} else{ echo '0';} ?>% from previous year</span>
+                    <?php if(count($brandsSubscriber) !=0){ echo number_format((count($brandsSubscriber)-$brandsSubscriber['year'])*100)/count($brandsSubscriber);} else{ echo '0';} ?>% from previous year</span>
               </div> <!-- /.row-stat -->
             </div> <!-- /.col -->
 
             <div class="col-sm-6 col-md-3">
               <div class="row-stat">
-                <p class="row-stat-label">UnSubscribed Last 30 Days</p>
-                <h3 class="row-stat-value"><?php echo $FilterUnSubscriber['last_thirty']; ?></h3>
+                <p class="row-stat-label">Last 30 Days</p>
+                <h3 class="row-stat-value"><?php echo $brandsSubscriber['last_thirty']; ?></h3>
                 <span class="label label-success row-stat-badge">+
-                    <?php if($FilterUnSubscriber['last_thirty'] !=0) { echo number_format((($FilterUnSubscriber['last_thirty']-$FilterUnSubscriber['previous_thirty'])*100)/$FilterUnSubscriber['last_thirty'],2); }else{ echo '0';} ?> from previous 30 days</span>
+                    <?php if($brandsSubscriber['last_thirty'] !=0) { echo number_format((($brandsSubscriber['last_thirty']-$brandsSubscriber['previous_month'])*100)/$brandsSubscriber['last_thirty'],2); }else{ echo '0';} ?> from previous 30 days</span>
               </div> <!-- /.row-stat -->
             </div> <!-- /.col -->
 
             <div class="col-sm-6 col-md-3">
               <div class="row-stat">
-                <p class="row-stat-label">Last 4 Hours</p>
-                <h3 class="row-stat-value"><?php echo $FilterUnSubscriber['hours']; ?></h3>
+                <p class="row-stat-label">This Month</p>
+                <h3 class="row-stat-value"><?php echo $brandsSubscriber['month']; ?></h3>
                 <span class="label label-success row-stat-badge">+
-                    <?php if($FilterUnSubscriber['hours'] !=0) { echo number_format((($FilterUnSubscriber['hours']-$FilterUnSubscriber['previous_hours'])*100)/$FilterUnSubscriber['hours'],2);} else{ echo "0";} ?>% from previous 4 hours</span>
+                    <?php if($brandsSubscriber['month'] !=0) { echo number_format((($brandsSubscriber['month']-$brandsSubscriber['last_thirty'])*100)/$brandsSubscriber['month'],2);} else{ echo "0";} ?>% from previous 4 hours</span>
               </div> <!-- /.row-stat -->
             </div> <!-- /.col -->
 
             <div class="col-sm-6 col-md-3">
               <div class="row-stat">
-                <p class="row-stat-label">System UnSubscriber Sync</p>
-                <h3 class="row-stat-value"><?php echo $checkSystemSync; ?></h3>
-                <span class="label label-danger row-stat-badge">Error</span>
-                <span class="label label-success row-stat-badge">Success</span>
+                <p class="row-stat-label">Today</p>
+                <h3 class="row-stat-value"><?php echo $brandsSubscriber['today']; ?></h3>
+                <span class="label label-success row-stat-badge">+
+    <?php if($brandsSubscriber['today'] !=0 ) { echo number_format(((count($brandsSubscriber)-$brandsSubscriber['today'])*100)/count($brandsSubscriber),2); } else{ echo '0';} ?>%                    
+</span>
               </div> <!-- /.row-stat -->
             </div> <!-- /.col -->
             
@@ -160,7 +162,7 @@
             <div class="portlet">
 
         <h4 class="portlet-title">
-          <u>Total UnSubscribers</u>
+          <u>Family and Friends</u>
         </h4>
 
         <div class="portlet-body">
@@ -169,37 +171,38 @@
 
             <div class="col-sm-6 col-md-3">
               <div class="row-stat">
-                <p class="row-stat-label">Total UnSubscribed</p>
-                <h3 class="row-stat-value"><?php echo count($UnSubscriber); ?></h3>
+                <p class="row-stat-label">Total Customers</p>
+                <h3 class="row-stat-value"><?php echo count($celldoorSubscriber); ?></h3>
                 <span class="label label-success row-stat-badge">+
-                    <?php if(count($UnSubscriber) !=0){ echo number_format(((count($UnSubscriber)-$FilterUnSubscriber['year'])*100)/count($UnSubscriber),2);} else{ echo '0';} ?>% from previous year</span>
+                    <?php if(count($celldoorSubscriber) !=0){ echo number_format(((count($celldoorSubscriber)-$celldoorSubscriber['year'])*100)/count($celldoorSubscriber),2);} else{ echo '0';} ?>% from previous year</span>
               </div> <!-- /.row-stat -->
             </div> <!-- /.col -->
 
             <div class="col-sm-6 col-md-3">
               <div class="row-stat">
-                <p class="row-stat-label">UnSubscribed Last 30 Days</p>
-                <h3 class="row-stat-value"><?php echo $FilterUnSubscriber['last_thirty']; ?></h3>
+                <p class="row-stat-label">Last 30 Days</p>
+                <h3 class="row-stat-value"><?php echo $celldoorSubscriber['last_thirty']; ?></h3>
                 <span class="label label-success row-stat-badge">+
-                    <?php if($FilterUnSubscriber['last_thirty'] !=0) { echo number_format((($FilterUnSubscriber['last_thirty']-$FilterUnSubscriber['previous_thirty'])*100)/$FilterUnSubscriber['last_thirty'],2); }else{ echo '0';} ?> from previous 30 days</span>
+                    <?php if($celldoorSubscriber['last_thirty'] !=0) { echo number_format((($celldoorSubscriber['last_thirty']-$celldoorSubscriber['previous_month'])*100)/$celldoorSubscriber['last_thirty'],2); }else{ echo '0';} ?> from previous 30 days</span>
               </div> <!-- /.row-stat -->
             </div> <!-- /.col -->
 
             <div class="col-sm-6 col-md-3">
               <div class="row-stat">
-                <p class="row-stat-label">Last 4 Hours</p>
-                <h3 class="row-stat-value"><?php echo $FilterUnSubscriber['hours']; ?></h3>
+                <p class="row-stat-label">This Month</p>
+                <h3 class="row-stat-value"><?php echo $celldoorSubscriber['month']; ?></h3>
                 <span class="label label-success row-stat-badge">+
-                    <?php if($FilterUnSubscriber['hours'] !=0) { echo number_format((($FilterUnSubscriber['hours']-$FilterUnSubscriber['previous_hours'])*100)/$FilterUnSubscriber['hours'],2);} else{ echo "0";} ?>% from previous 4 hours</span>
+                    <?php if($celldoorSubscriber['month'] !=0) { echo number_format((($celldoorSubscriber['last_thirty']-$celldoorSubscriber['month'])*100)/$celldoorSubscriber['month'],2);} else{ echo "0";} ?>% from previous 4 hours</span>
               </div> <!-- /.row-stat -->
             </div> <!-- /.col -->
 
             <div class="col-sm-6 col-md-3">
               <div class="row-stat">
-                <p class="row-stat-label">System UnSubscriber Sync</p>
-                <h3 class="row-stat-value"><?php echo $checkSystemSync; ?></h3>
-                <span class="label label-danger row-stat-badge">Error</span>
-                <span class="label label-success row-stat-badge">Success</span>
+                <p class="row-stat-label">Today</p>
+                <h3 class="row-stat-value"><?php echo $celldoorSubscriber['today']; ?></h3>
+                <span class="label label-success row-stat-badge">+
+    <?php if($celldoorSubscriber['today'] !=0 ) { echo number_format(((count($celldoorSubscriber)-$celldoorSubscriber['today'])*100)/count($celldoorSubscriber),2); } else{ echo '0';} ?>%                    
+                </span>
               </div> <!-- /.row-stat -->
             </div> <!-- /.col -->
             
@@ -216,7 +219,7 @@
             <div class="portlet">
 
               <h4 class="portlet-title">
-                <u>Subscriber Lists</u>
+                <u>Customers Lists</u>
               </h4>
 
               <div class="portlet-body Subscriber_list">                
@@ -246,101 +249,7 @@
             
           </div> <!-- /.col -->
 
-
-          <div class="col-md-8 col-sm-7">
-            <div class="portlet">
-
-              <h4 class="portlet-title">
-                <u>Monthly Subscriptions</u>
-              </h4>
-                
-              <div class="portlet-body">
-
-                <div id="line-chart" class="chart-holder-300"></div>
-              </div> <!-- /.portlet-body -->          
-
-            </div> <!-- /.portlet -->
-           <hr>
-            <div class="portlet">
-            
-            <div class="portlet-body">              
-
-              <div class="row">
-              
-                <div class="col-md-2 col-xs-6 text-center">  
-                  <div>
-                    <h3><small><i class="fa fa-caret-up text-success"></i></small> &nbsp;10%</h3>
-                    <small class="text-muted">Cellar Door</small>
-                  </div>     
-                </div> <!-- /.col --> 
-              
-                <div class="col-md-2 col-xs-8 text-center">      
-                  <div>
-                    <h3><small><i class="fa fa-caret-down text-danger "></i></small> &nbsp;4%</h3>
-                    <small class="text-muted">Mount Pleasant</small>
-                  </div>   
-                </div> <!-- /.col --> 
-
-                <div class="col-md-2 col-xs-8 text-center">            
-                  <div>
-                    <h3><small><i class="fa fa-minus text-warning"></i></small> &nbsp;0%</h3>
-                    <small class="text-muted">Evans And Tate</small>
-                  </div>
-                </div> <!-- /.col --> 
-
-                <div class="col-md-2 col-xs-8 text-center">        
-                  <div>
-                    <h3><small><i class="fa fa-caret-up text-success"></i></small> &nbsp;976%</h3>
-                    <small class="text-muted">Mc Williams</small>
-                  </div>  
-                </div> <!-- /.col --> 
-                   <div class="col-md-2 col-xs-8 text-center">        
-                  <div>
-                    <h3><small><i class="fa fa-caret-up text-success"></i></small> &nbsp;43%</h3>
-                    <small class="text-muted">Brand Laira</small>
-                  </div>  
-                </div> <!-- /.col --> 
-                  <div class="col-md-2 col-xs-8 text-center">        
-                  <div>
-                    <h3><small><i class="fa fa-caret-up text-success"></i></small> &nbsp;32%</h3>
-                    <small class="text-muted">Misc Lists</small>
-                  </div>  
-                </div> <!-- /.col --> 
-
-              </div> <!-- /.row -->
-              <hr>
-              
-            </div> <!-- /.portlet-body -->
-
-          </div>
-            
-            
-          </div> <!-- /.col -->
-
-        </div> <!-- /.row -->
-
-            
-
-        <div class="row">
-
-            <div class="col-md-4">
-
-              <div class="portlet">
-
-                <h4 class="portlet-title">
-                  <u>Subscriber Lists</u>
-                </h4>
-                
-                <div class="portlet-body">
-
-                  <div id="pie-chart" class="chart-holder-250"></div>
-                </div> <!-- /.portlet-body -->
-                
-              </div> <!-- /.portlet -->
-
-            </div> <!-- /.col -->
-
-            <div class="col-md-3">
+          <div class="col-md-3">
 
               <div class="portlet">
 
@@ -433,12 +342,29 @@
               </div>
             
           </div> <!-- /.col -->
+<!--            <div class="portlet">
+
+              <h4 class="portlet-title">
+                <u>Monthly Subscriptions</u>
+              </h4>
+                
+              <div class="portlet-body">
+
+                <div id="line-chart" class="chart-holder-300"></div>
+              </div>  /.portlet-body           
+
+            </div>  /.portlet -->
+
+            
+            
 
         </div> <!-- /.row -->
+
+
 <div class="portlet">
 
         <h3 class="portlet-title">
-          <u>Subscribers List -ET</u>
+          <u>Subscribers List -BB</u>
         </h3>
 
         <div class="portlet-body">
@@ -456,9 +382,9 @@
               </tr>
             </thead>
             <tbody>
-                <?php if($Subscriber != NULL)
+                <?php if($Subscriberdetail != NULL)
 
-                    foreach ($Subscriber as $key => $value) {
+                    foreach ($Subscriberdetail as $key => $value) {
                         ?>
                 <tr>
                             <td style="width: 8%"><?php echo $value['ID']?></td>
@@ -493,7 +419,7 @@
         <div class="portlet">
 
         <h3 class="portlet-title">
-          <u>UnSubscribers List -ET</u>
+          <u>UnSubscribers List -BB</u>
         </h3>
 
         <div class="portlet-body">
