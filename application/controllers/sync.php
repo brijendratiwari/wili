@@ -40,6 +40,11 @@ class Sync extends CI_Controller {
         $this->ExactTargetSync($str_id, $type, $storeid);
     }
 
+    public function StopSync() {
+        $storeid = $this->input->post('sync');
+        $str_id = $this->sync_model->delTempSync($storeid);
+    }
+
     public function ExactTargetSync($id, $type, $storeid) {
 
         $controller_et = new Exact_target();
@@ -47,15 +52,34 @@ class Sync extends CI_Controller {
 
         if ($this->sync_model->check($id))
             $et_list = $controller_et->getList();
-
+        else {
+//            $type->sync_model->delTempSync($id);
+            echo 'stop';
+            die;
+        }
         if ($this->sync_model->check($id))
             $get_Subscriber_detail = $controller_et->get_Subscriber_detail();
+        else {
+//            $type->sync_model->delTempSync($id);
+            echo 'stop';
+            die;
+        }
 
         if ($this->sync_model->check($id))
             $getSubscribersbylist = $controller_et->getSubscribersbylist();
+        else {
+//            $type->sync_model->delTempSync($id);
+            echo 'stop';
+            die;
+        }
 
         if ($this->sync_model->check($id))
             $get_unSubscribe_list = $controller_et->get_unSubscribe_list();
+        else {
+//            $type->sync_model->delTempSync($id);
+            echo 'stop';
+            die;
+        }
 
         if ($this->sync_model->check($id)) {
             $this->et_model->insertList($et_list);  // updating the list
@@ -114,10 +138,15 @@ class Sync extends CI_Controller {
             $data['store_id'] = $storeid;
 
             $controller_et->et_mdb_update();
-            $this->sync_model->delTempSync($id);
+            $this->sync_model->delTempSync($storeid);
             $this->sync_model->insert_sync_updates($data);
             $data['SyncTime'] = date('h:ma', time());
+        } else {
+//            $type->sync_model->delTempSync($id);
+            echo 'stop';
+            die;
         }
+
         echo json_encode($data);
         die;
     }
@@ -133,7 +162,7 @@ class Sync extends CI_Controller {
 
         $bb = new Black_boxx();
         $controller_et = new Exact_target();
-        
+
         $data = array();
 
         if ($this->sync_model->check($id)) {
@@ -143,7 +172,7 @@ class Sync extends CI_Controller {
             $new_count = count($user);
             $this->bb_model->update_bb($user);
 
-            $sub_diff =   $count - $new_count;
+            $sub_diff = $new_count - $count;
             if ($sub_diff > 0) {
                 $data['SubscribedCount'] = $sub_diff;
             } else {
@@ -154,8 +183,13 @@ class Sync extends CI_Controller {
 //            $this->et_model->blank_tab('all_unsubscriber');
 
             if ($this->sync_model->check($id))
-            $get_unSubscribe_list = $controller_et->get_unSubscribe_list();
-            
+                $get_unSubscribe_list = $controller_et->get_unSubscribe_list();
+            else {
+                $type->sync_model->delTempSync($id);
+                echo 'stop';
+                die;
+            }
+
             if (count($get_unSubscribe_list) && is_array($get_unSubscribe_list)) {
                 foreach ($get_unSubscribe_list as $key => $value) {
 
@@ -185,25 +219,29 @@ class Sync extends CI_Controller {
                         }
                     }
                     $mid = $this->et_model->insert_mastersubscriber($value->EmailAddress, $arr1[$key]);
-                    
-                    $controller_et->unsubscribe_email($value->EmailAddress,$value->SubscriberKey);
-                    
+
+                    $controller_et->unsubscribe_email($value->EmailAddress, $value->SubscriberKey);
+
                     $arr[$key]['ms_id'] = $mid;
                 }
             }
-            
-            
+
+
             $this->et_model->insert_all_unsubscriber($arr);
             $new_unsub = $this->et_model->get_count('all_unsubscriber', $storeid);
-            $data['UnSubscribedCount'] = $old_unsub -$new_unsub ;
+            $data['UnSubscribedCount'] = $old_unsub - $new_unsub;
             $data['type'] = $type;
             $data['SyncTime'] = date('Y-m-d h:m:s', time());
             $data['store_id'] = $storeid;
 
-            $this->sync_model->delTempSync($id);
+            $this->sync_model->delTempSync($storeid);
             $this->sync_model->insert_sync_updates($data);
             $data['SyncTime'] = date('h:ma', time());
             echo json_encode($data);
+            die;
+        } else {
+//            $type->sync_model->delTempSync($id);
+            echo 'stop';
             die;
         }
     }
