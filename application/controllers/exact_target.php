@@ -59,29 +59,33 @@ class Exact_target extends CI_Controller {
         $getList->authStub = $myclient;
 
         if ($next != FALSE)
-            $getList->filter = array('Property' => 'ID', 'SimpleOperator' => 'greaterThan', 'Value' => $next);
+            $getList->filter = array('Property' => 'ObjectID', 'SimpleOperator' => 'greaterThan', 'Value' => $next);
 
         if ($arr == FALSE)
+        {
             $arr = array();
-
+            $arr1 = array();
+        }
+        else{
+            $arr1 = $arr;
+        }
         $response = $getList->get();
-
-
+        
         if (count($response->results) && is_array($response->results)) {
             foreach ($response->results as $value) {
-
-                $key = count($arr);
-
-                $arr[$key]['main_id'] = $value->ID;
-                $arr[$key]['ListID'] = $value->ListID;
-                $arr[$key]['SubscriberID'] = $value->SubscriberKey;
-                $arr[$key]['Status'] = $value->Status;
-                $arr[$key]['CreatedDate'] = $value->CreatedDate;
+                
+                $arr1[count($arr1)]['ObjectID'] = $value->ObjectID;
+                $arr[$value->ObjectID]['ObjectID'] = $value->ObjectID;
+                $arr[$value->ObjectID]['main_id'] = $value->ID;
+                $arr[$value->ObjectID]['ListID'] = $value->ListID;
+                $arr[$value->ObjectID]['SubscriberID'] = $value->SubscriberKey;
+                $arr[$value->ObjectID]['Status'] = $value->Status;
+                $arr[$value->ObjectID]['CreatedDate'] = $value->CreatedDate;
             }
         }
 
-        if (count($arr) == 2500 * $time) {
-            return $this->getSubscribersbylist($arr, $time + 1, $arr[count($arr) - 1]['main_id']);
+        if (count($arr1) == 2500 * $time) {
+            return $this->getSubscribersbylist($arr, $time + 1, $arr1[count($arr1) - 1]['ObjectID']);
         } else {
             return $arr;
         }
@@ -95,7 +99,10 @@ class Exact_target extends CI_Controller {
         $retSub->authStub = $myclient;
         $retSub->filter = array('Property' => 'Status', 'SimpleOperator' => 'equals', 'Value' => 'Unsubscribed');
         $getResult = $retSub->get();
-
+//        echo '<pre>';
+//        print_r($getResult);
+//        echo '</pre>';
+//        die;
         return $getResult->results;
     }
 
@@ -248,19 +255,14 @@ class Exact_target extends CI_Controller {
         $this->et_model->update_mdb();
     }
 
-    public function unsubscribe_email($email = 'danielbowling@gmail.com') {
+    public function unsubscribe_email($email,$subkey) {
 
         $myclient = new ET_Client(false);
         $subPatch = new ET_Subscriber();
         $subPatch->authStub = $myclient;
-        $subPatch->props = array("EmailAddress" => $email, "SubscriberKey" => '0000002', "Status" => "Unsubscribed");
+        $subPatch->props = array("EmailAddress" => $email, "SubscriberKey" =>$subkey, "Status" => "Unsubscribed");
         $patchResult = $subPatch->patch();
-        print_r('Patch Status: ' . ($patchResult->status ? 'true' : 'false') . "\n");
-        print 'Code: ' . $patchResult->code . "\n";
-        print 'Message: ' . $patchResult->message . "\n";
-        print 'Results Length: ' . count($patchResult->results) . "\n";
-        print 'Results: ' . "\n";
-        print_r($patchResult->results);
+      
     }
 
     public function get_bounce() {
@@ -394,23 +396,66 @@ class Exact_target extends CI_Controller {
         $this->et_model->insert_tab('et_category', $arr);
 
         $data = $this->et_model->getListNew();
-        var_dump($data);
-//        return $arr;
+//        var_dump($data);
+        return $arr;
+    }
+
+    public function unSubscriberfromlist($SubscriberTestEmail) {
+        
+        $subPatch = new ET_Subscriber();
+        $subPatch->authStub = $myclient;
+        $subPatch->props = array("EmailAddress" => $SubscriberTestEmail, "Status" => "Unsubscribed");
+        $patchResult = $subPatch->patch();
+        print_r('Patch Status: ' . ($patchResult->status ? 'true' : 'false') . "\n");
+        print 'Code: ' . $patchResult->code . "\n";
+        print 'Message: ' . $patchResult->message . "\n";
+        print 'Results Length: ' . count($patchResult->results) . "\n";
+        print 'Results: ' . "\n";
+        print_r($patchResult->results);
+        print "\n---------------\n";
     }
 
     public function test() {
+//        $myclient = new ET_Client(false);
+//        $subCreate = new ET_Subscriber();
+//        $subCreate->authStub = $myclient;
+//        $subCreate->props = array("EmailAddress" => 'SDKTest9091@bh.exacttarget.com', "SubscriberKey" => 99989, "Lists" => array("ID" => 351485));
+//        $postResult = $subCreate->post();
+//        print_r('Post Status: ' . ($postResult->status ? 'true' : 'false') . "\n");
+//        print 'Code: ' . $postResult->code . "\n";
+//        print 'Message: ' . $postResult->message . "\n";
+//        print 'Results Length: ' . count($postResult->results) . "\n";
+//        echo '<pre>';
+//        print_r($postResult->results);
+//        echo '</pre>';
+
         $myclient = new ET_Client(false);
-        $subCreate = new ET_Subscriber();
-        $subCreate->authStub = $myclient;
-        $subCreate->props = array("EmailAddress" => 'SDKTest9091@bh.exacttarget.com', "SubscriberKey" => 99989, "Lists" => array("ID" => 351485));
-        $postResult = $subCreate->post();
-        print_r('Post Status: ' . ($postResult->status ? 'true' : 'false') . "\n");
-        print 'Code: ' . $postResult->code . "\n";
-        print 'Message: ' . $postResult->message . "\n";
-        print 'Results Length: ' . count($postResult->results) . "\n";
+        $retSub = new ET_Subscriber();
+        $arr = array();
+        $retSub->authStub = $myclient;
+        $retSub->filter = array('Property' => 'Status', 'SimpleOperator' => 'equals', 'Value' => 'Unsubscribed');
+        $getResult = $retSub->get();
+//        echo '<pre>';
+//        print_r($getResult);
+//        echo '</pre>';
+//        die;
+         $getResult->results;
+        
         echo '<pre>';
-        print_r($postResult->results);
+        print_r($getResult->results);
         echo '</pre>';
+        
+//        $myclient = new ET_Client(false);
+//        $retSub = new ET_Subscriber();
+//        $arr = array();
+//        $retSub->authStub = $myclient;
+//        $retSub->filter = array('Property' => 'Status', 'SimpleOperator' => 'equals', 'Value' => 'Unsubscribed');
+//        $getResult = $retSub->get();
+//        echo '<pre>';
+//        print_r($getResult);
+//        echo '</pre>';
+//        die;
+//        return $getResult->results;
     }
 
 }
