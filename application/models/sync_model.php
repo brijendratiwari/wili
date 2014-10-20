@@ -66,9 +66,9 @@ class Sync_model extends CI_Model {
         $this->db->insert("sync_updates", $data);
     }
 
-    public function getLastSystemSyncsub() {
+    public function getLastSystemSyncsub($name) {
         $query = "select max(sync_updates.id) as latest_sync from  (`store`) 
-                        join `sync_updates` on `store`.`id` = `sync_updates`.`store_id` where `store`.`name` = 'ET' ";
+                        join `sync_updates` on `store`.`id` = `sync_updates`.`store_id` where `store`.`name` = '".$name."' ";
         $res = $this->db->query($query);
         if ($res->num_rows() > 0) {
             $data = $res->result_array();
