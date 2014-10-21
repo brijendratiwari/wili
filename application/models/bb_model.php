@@ -111,6 +111,7 @@ class Bb_model extends CI_Model {
     public function get_bbListFilterSubscriber($list_id) {
 //        echo date("Y-m", strtotime("-0 months"));die;
         $data = array();
+        $query6 = "select * from et_subscriber_list_rel where `ListID` = '" . $list_id . "' ";
         $query = "select * from et_subscriber_list_rel where `CreatedDate` between '" . date("Y", strtotime("-1 year")) . "-01-01' and '" . date("Y", strtotime("-0 year")) . "-01-01' and `ListID` = '" . $list_id . "' ";
         $query1 = "select * from et_subscriber_list_rel where `CreatedDate` > DATE_SUB(NOW(), INTERVAL 1 MONTH) and `ListID`  = '" . $list_id . "'";
         $query2 = "select * from et_subscriber_list_rel where `CreatedDate` between '" . date("Y-m", strtotime("-2 months")) . "-01' and '" . date("Y-m", strtotime("-1 months")) . "-01' and `ListID`  = '" . $list_id . "'";
@@ -125,12 +126,14 @@ class Bb_model extends CI_Model {
         $res3 = $this->db->query($query3);
         $res4 = $this->db->query($query4);
         $res5 = $this->db->query($query5);
+        $res6 = $this->db->query($query6);
         $data['year'] = $res->num_rows();
         $data['month'] = $res1->num_rows();
         $data['previous_month'] = $res2->num_rows();
         $data['last_thirty'] = $res3->num_rows();
         $data['previous_thirty'] = $res4->num_rows();
         $data['today'] = $res5->num_rows();
+        $data['total'] = $res6->num_rows();
 
         return $data;
     }

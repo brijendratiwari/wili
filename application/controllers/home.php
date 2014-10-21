@@ -36,6 +36,7 @@ class Home extends CI_Controller {
             $data['getLastSystemSyncsub'] = $this->sync_model->getLastSystemSyncsub('ET');
             $data['bbSyncsub'] = $this->sync_model->getLastSystemSyncsub('BB');
              $data['UnSubscriber'] = $this->sync_model->get_UnSubscriber();
+             $data['AllUnSubscriber'] = $this->sync_model->get_AllUnSubscriber();
              $data['getAutoSyncUpdate'] = $this->sync_model->get_getAutoSyncUpdate();
 //            var_dump($data['getAutoSyncUpdate']);die;
             $this->load->view('/common/header.php');
@@ -75,7 +76,7 @@ class Home extends CI_Controller {
             $data['list'] = $this->et_model->getList();
             $data['Subscriberdetail'] = $this->bb_model->get_bbSubscriberDetail();
             $data['Subscriber'] = $this->bb_model->get_bbSubscriber();
-            $data['mcSubscriber'] = $this->bb_model->get_bbListFilterSubscriber(351426);
+            $data['mcSubscriber'] = $this->bb_model->get_bbListFilterSubscriber(351487);
             $data['brandsSubscriber'] = $this->bb_model->get_bbListFilterSubscriber(351484);
             $data['celldoorSubscriber'] = $this->bb_model->get_bbListFilterSubscriber(351485);
 //            var_dump($data['Subscriberdetail']);die;

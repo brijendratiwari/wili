@@ -5,10 +5,16 @@
         <group>
             <file>file:/D:/wamp/www/wili/wili/application/controllers/exact_target.php</file>
             <file>file:/D:/wamp/www/wili/wili/application/views/sync.php</file>
+            <file>file:/D:/wamp/www/wili/wili/application/views/blackboxx.php</file>
             <file>file:/D:/wamp/www/wili/wili/application/models/bb_model.php</file>
-            <file>file:/D:/wamp/www/wili/wili/assets/js/sync.js</file>
-            <file>file:/D:/wamp/www/wili/wili/application/controllers/sync.php</file>
+            <file>file:/D:/wamp/www/wili/wili/application/views/common/sub_navbar.php</file>
+            <file>file:/D:/wamp/www/wili/wili/application/views/exact_target.php</file>
+            <file>file:/D:/wamp/www/wili/wili/application/models/mdb_model.php</file>
+            <file>file:/D:/wamp/www/wili/wili/application/controllers/home.php</file>
             <file>file:/D:/wamp/www/wili/wili/application/models/et_model.php</file>
+            <file>file:/D:/wamp/www/wili/wili/application/views/master.php</file>
+            <file>file:/D:/wamp/www/wili/wili/application/controllers/black_boxx.php</file>
+            <file>file:/D:/wamp/www/wili/wili/application/controllers/login.php</file>
         </group>
     </open-files>
 </project-private>

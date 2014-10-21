@@ -93,8 +93,8 @@
 
                             </div> <!-- Sync-stat End -->
                             <div class="col-sm-12 col-md-6"> <p class="row-stat-label">Subscribed</p><h3 class="row-stat-value" id="et_subscribe"><?php if(!empty($getLastSystemSyncsub)){ echo $getLastSystemSyncsub[0]['SubscribedCount'];} else{ echo "0";}  ?></h3><hr><p class="row-stat-label">Last Sync</p><h3 class="row-stat-value" id="et_lastsync"><?php if(!empty($getLastSystemSyncsub)){ echo date('h:ma',  strtotime($getLastSystemSyncsub[0]['SyncTime']));}else{ echo "00:00";}?></h3></div>
-                            <div class="col-sm-12  col-md-6"><p class="row-stat-label">UnSubscribers</p><h3 class="row-stat-value" id="et_unsubscribe"><?php if(!empty($getLastSystemSyncsub)){ echo $getLastSystemSyncsub[0]['UnSubscribedCount'];}else{ echo "0";}?></h3><hr><p class="row-stat-label">Next Sync</p><h3 class="row-stat-value" id="exact_target_timer"></h3></div> 
-                            <h3 class="row-stat-value">&nbsp;</h3><hr><a id="et_stopsync" class="btn btn-primary disabled" href="javascript:;">Stop Sync</a>   &nbsp;   <a id="et_startsync" class="btn btn-primary" href="javascript:startsync(1);">Manual Sync</a>
+                            <div class="col-sm-12  col-md-6"><p class="row-stat-label">UnSubscribers</p><h3 class="row-stat-value" id="et_unsubscribe"><?php if(!empty($getLastSystemSyncsub)){ echo $getLastSystemSyncsub[0]['UnSubscribedCount'];}else{ echo "0";}?></h3><hr><p class="row-stat-label">Next Sync</p><h3 class="row-stat-value" id="exact_target_timer">85Sec</h3></div> 
+                            <h3 class="row-stat-value">&nbsp;</h3><hr><a id="et_stopsync" class="btn btn-primary disabled" href="javascript:stopallsync(1);">Stop Sync</a>   &nbsp;   <a id="et_startsync" class="btn btn-primary" href="javascript:startsync(1);">Manual Sync</a>
                         </div> <!-- /.row-stat -->
 
                     </div> <!-- /.col -->
@@ -125,7 +125,7 @@
                             </div> <!-- Sync-stat End -->
                              <div class="col-sm-12 col-md-6"> <p class="row-stat-label">Subscribed</p><h3 class="row-stat-value" id="bb_subscribe"><?php if(!empty($bbSyncsub)){ echo $bbSyncsub[0]['SubscribedCount'];} else{ echo "0";}  ?></h3><hr><p class="row-stat-label">Last Sync</p><h3 class="row-stat-value" id="bb_lastsync"><?php if(!empty($bbSyncsub)){ echo date('h:ma',  strtotime($bbSyncsub[0]['SyncTime']));}else{ echo "00:00";}?></h3></div>
                             <div class="col-sm-12  col-md-6"><p class="row-stat-label">UnSubscribers</p><h3 class="row-stat-value" id="bb_unsubscribe"><?php if(!empty($bbSyncsub)){ echo $bbSyncsub[0]['UnSubscribedCount'];}else{ echo "0";}?></h3><hr><p class="row-stat-label">Next Sync</p><h3 class="row-stat-value">85sec</h3></div> 
-                            <h3 class="row-stat-value">&nbsp;</h3><hr><a id="bb_stopsync" class="btn btn-primary disabled" href="javascript:;">Stop Sync</a>   &nbsp;   <a id="bb_startsync" class="btn btn-primary" href="javascript:startblackboxxsync(2);">Manual Sync</a>
+                            <h3 class="row-stat-value">&nbsp;</h3><hr><a id="bb_stopsync" class="btn btn-primary disabled" href="javascript:stopallsync(2);">Stop Sync</a>   &nbsp;   <a id="bb_startsync" class="btn btn-primary" href="javascript:startblackboxxsync(2);">Manual Sync</a>
                         </div> <!-- /.row-stat -->
 
                     </div> <!-- /.col -->
@@ -153,8 +153,8 @@
                                 </div> <!-- /.progress -->
 
                             </div> <!-- Sync-stat End -->
-                            <div class="col-sm-12 col-md-6"> <p class="row-stat-label">Subscribed</p><h3 class="row-stat-value">121</h3><hr><p class="row-stat-label">Last Sync</p><h3 class="row-stat-value">12.45am</h3></div>
-                            <div class="col-sm-12  col-md-6"><p class="row-stat-label">UnSubscribers</p><h3 class="row-stat-value">21</h3><hr><p class="row-stat-label">Next Sync</p><h3 class="row-stat-value">85sec</h3></div> 
+                            <div class="col-sm-12 col-md-6"> <p class="row-stat-label">Subscribed</p><h3 class="row-stat-value">0</h3><hr><p class="row-stat-label">Last Sync</p><h3 class="row-stat-value">00:00</h3></div>
+                            <div class="col-sm-12  col-md-6"><p class="row-stat-label">UnSubscribers</p><h3 class="row-stat-value">0</h3><hr><p class="row-stat-label">Next Sync</p><h3 class="row-stat-value">0sec</h3></div> 
                             <h3 class="row-stat-value">&nbsp;</h3><hr><a class="btn btn-primary disabled" href="javascript:;">Stop Sync</a>   &nbsp;   <a class="btn btn-primary disabled" href="javascript:;">Manual Sync</a>
                         </div> <!-- /.row-stat -->
 
@@ -183,7 +183,7 @@
                                 </div> <!-- /.progress -->
 
                             </div> <!-- Sync-stat End -->
-                            <div class="col-sm-12 col-md-6"> <p class="row-stat-label">Subscribed</p><h3 class="row-stat-value">0</h3><hr><p class="row-stat-label">Last Sync</p><h3 class="row-stat-value">00.00am</h3></div>
+                            <div class="col-sm-12 col-md-6"> <p class="row-stat-label">Subscribed</p><h3 class="row-stat-value">0</h3><hr><p class="row-stat-label">Last Sync</p><h3 class="row-stat-value">00:00am</h3></div>
                             <div class="col-sm-12  col-md-6"><p class="row-stat-label">UnSubscribers</p><h3 class="row-stat-value">0</h3><hr><p class="row-stat-label">Next Sync</p><h3 class="row-stat-value">0sec</h3></div> 
                             <h3 class="row-stat-value">&nbsp;</h3><hr><a class="btn btn-primary  disabled" href="javascript:;">Stop Sync</a>   &nbsp;   <a class="btn btn-primary disabled" href="javascript:;">Manual Sync</a>
                         </div> <!-- /.row-stat -->
@@ -207,7 +207,7 @@
         </h3>
 
         <div class="portlet-body">
-
+  <?php // var_dump($AllUnSubscriber); ?>
           <table class="table table-striped table-bordered" id="table-1">
             <thead>
               <tr>
@@ -222,20 +222,19 @@
               </tr>
             </thead>
                          <tbody>
-                <?php if($UnSubscriber != NULL)
-
-                    foreach ($UnSubscriber as $key => $value) {
-                        $store_name=explode(",", $value['storename'])
+                <?php if($AllUnSubscriber != NULL)
+                    foreach ($AllUnSubscriber as $key => $value) {
+                       $store_name =  explode(",", $value['unsubscriber_from']);
                         ?>
                 <tr>
                             <td style="width: 8%"><?php echo $value['id']?></td>
                             <td style="width: 15%"><?php echo $value['firstname']?></td>
                             <td style="width: 15%"><?php echo $value['lastname']?></td>
                             <td style="width: 20%"><?php echo $value['email']?></td>
-                            <td style="width: 10%"><?php  if(in_array("ET",$store_name)){echo "y";}else{echo "n";}?></td>
-                            <td style="width: 15%"><?php  if(in_array("BB",$store_name)){echo "y";}else{echo "n";}?></td>
-                            <td style="width: 10%"><?php  if(in_array("BP",$store_name)){echo "y";}else{echo "n";}?></td>
-                            <td style="width: 10%"><?php  if(in_array("MDB",$store_name)){echo "y";}else{echo "n";}?></td>
+                            <td style="width: 10%"><?php  if(in_array("1",$store_name)){echo "y";}else{echo "n";}?></td>
+                            <td style="width: 15%"><?php  if(in_array("2",$store_name)){echo "y";}else{echo "n";}?></td>
+                            <td style="width: 10%"><?php  if(in_array("3",$store_name)){echo "y";}else{echo "n";}?></td>
+                            <td style="width: 10%"><?php  if(in_array("4",$store_name)){echo "y";}else{echo "n";}?></td>
                 </tr>
                  <?php
                     }
@@ -264,16 +263,16 @@
 
 </div> <!-- .content -->
 <?php 
-  if(!empty($getLastSystemSyncsub)){ $time=  date("h:m:sa",strtotime($getLastSystemSyncsub[0]['SyncTime']));}
-  if(!empty($getAutoSyncUpdate)){ $next=$getAutoSyncUpdate[0]['time_duration'];
-$endTime = strtotime("+30'".$next."'minutes", strtotime($time));
-//echo $next_time = strtotime(date('h:i:s', $time))."<br>";
-$current_time=strtotime(date('h:i:sa',time()));
-$diff = $endTime-$current_time;
-if($diff){
-    $timer_time= date('m', $diff);
-}
-  }
+//  if(!empty($getLastSystemSyncsub)){ $time=  date("h:m:sa",strtotime($getLastSystemSyncsub[0]['SyncTime']));}
+//  if(!empty($getAutoSyncUpdate)){ $next=$getAutoSyncUpdate[0]['time_duration'];
+//$endTime = strtotime("+30'".$next."'minutes", strtotime($time));
+////echo $next_time = strtotime(date('h:i:s', $time))."<br>";
+//$current_time=strtotime(date('h:i:sa',time()));
+//$diff = $endTime-$current_time;
+//if($diff){
+//    $timer_time= date('m', $diff);
+//}
+//  }
 ?>
-<input type="hidden" name="auto_sync_time" value="<?php   echo $timer_time; ?>" id="auto_sync_time">
+<!--<input type="hidden" name="auto_sync_time" value="<?php   echo $timer_time; ?>" id="auto_sync_time">-->
 <script src="<?php echo base_url();?>assets/js/sync.js"></script>

@@ -83,7 +83,7 @@ class Login extends CI_Controller {
             $update_info = $this->bb_model->update_bb_customer($_POST['email'], $data);
             //*********************************
             if ($update_info) {
-                 
+                 redirect('login/thank_you');
             }
         } else {
             // add customer in BB .....
@@ -129,6 +129,7 @@ class Login extends CI_Controller {
                 }
             }
         }
+        redirect('login/thank_you');
     }
 
 }

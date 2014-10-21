@@ -147,7 +147,7 @@
           </div> <!-- /.col -->
 
 
-          <div class="col-md-8 col-sm-7">
+<!--          <div class="col-md-8 col-sm-7">
             <div class="portlet">
 
               <h4 class="portlet-title">
@@ -157,11 +157,11 @@
               <div class="portlet-body">
 
                 <div id="line-chart" class="chart-holder-300"></div>
-              </div> <!-- /.portlet-body -->          
+              </div>  /.portlet-body           
 
-            </div> <!-- /.portlet -->
-           <hr>
-            <div class="portlet">
+            </div>  /.portlet 
+           <hr>-->
+<!--            <div class="portlet">
             
             <div class="portlet-body">              
 
@@ -172,52 +172,52 @@
                     <h3><small><i class="fa fa-caret-up text-success"></i></small> &nbsp;10%</h3>
                     <small class="text-muted">Cellar Door</small>
                   </div>     
-                </div> <!-- /.col --> 
+                </div>  /.col  
               
                 <div class="col-md-2 col-xs-8 text-center">      
                   <div>
                     <h3><small><i class="fa fa-caret-down text-danger "></i></small> &nbsp;4%</h3>
                     <small class="text-muted">Mount Pleasant</small>
                   </div>   
-                </div> <!-- /.col --> 
+                </div>  /.col  
 
                 <div class="col-md-2 col-xs-8 text-center">            
                   <div>
                     <h3><small><i class="fa fa-minus text-warning"></i></small> &nbsp;0%</h3>
                     <small class="text-muted">Evans And Tate</small>
                   </div>
-                </div> <!-- /.col --> 
+                </div>  /.col  
 
                 <div class="col-md-2 col-xs-8 text-center">        
                   <div>
                     <h3><small><i class="fa fa-caret-up text-success"></i></small> &nbsp;976%</h3>
                     <small class="text-muted">Mc Williams</small>
                   </div>  
-                </div> <!-- /.col --> 
+                </div>  /.col  
                    <div class="col-md-2 col-xs-8 text-center">        
                   <div>
                     <h3><small><i class="fa fa-caret-up text-success"></i></small> &nbsp;43%</h3>
                     <small class="text-muted">Brand Laira</small>
                   </div>  
-                </div> <!-- /.col --> 
+                </div>  /.col  
                   <div class="col-md-2 col-xs-8 text-center">        
                   <div>
                     <h3><small><i class="fa fa-caret-up text-success"></i></small> &nbsp;32%</h3>
                     <small class="text-muted">Misc Lists</small>
                   </div>  
-                </div> <!-- /.col --> 
+                </div>  /.col  
 
-              </div> <!-- /.row -->
+              </div>  /.row 
               <hr>
               
-            </div> <!-- /.portlet-body -->
+            </div>  /.portlet-body 
 
-          </div>
+          </div>-->
             
-            
-          </div> <!-- /.col -->
+<!--            
+          </div>  /.col 
 
-        </div> <!-- /.row -->
+        </div>  /.row 
 
             
 
@@ -234,11 +234,11 @@
                 <div class="portlet-body">
 
                   <div id="pie-chart" class="chart-holder-250"></div>
-                </div> <!-- /.portlet-body -->
+                </div>  /.portlet-body 
                 
-              </div> <!-- /.portlet -->
-
-            </div> <!-- /.col -->
+              </div>  /.portlet 
+-->
+            <!--</div>  /.col -->
 
             <div class="col-md-3">
 
@@ -257,11 +257,11 @@
                     </div>
                     
                     <div class="progress-stat-value">
-                      77.7%
+                      0%
                     </div>
                     
                     <div class="progress progress-striped progress-sm active">
-                      <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="77" aria-valuemin="0" aria-valuemax="100" style="width: 77%">
+                      <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="77" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
                         <span class="sr-only">77.74% Visit Rate</span>
                       </div>
                     </div> <!-- /.progress -->
@@ -278,7 +278,7 @@
                     </div>
                     
                     <div class="progress progress-striped progress-sm active">
-                      <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100" style="width: 34%">
+                      <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
                         <span class="sr-only">33% Mobile Visitors</span>
                       </div>
                     </div> <!-- /.progress -->
@@ -292,11 +292,11 @@
                     </div>
                     
                     <div class="progress-stat-value">
-                      2.7%
+                     0%
                     </div>
                     
                     <div class="progress progress-striped progress-sm active">
-                      <div class="progress-bar progress-bar-secondary" role="progressbar" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100" style="width:8%">
+                      <div class="progress-bar progress-bar-secondary" role="progressbar" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100" style="width:0%">
                         <span class="sr-only">2.7% Bounce Rate</span>
                       </div>
                     </div> <!-- /.progress -->
@@ -321,9 +321,8 @@
   <div class="well">
             
             <ul class="icons-list text-md">
-                <li><i class="icon-li fa fa-exchange text-success"></i>Sync <?php if(!empty($getLastSystemSyncsub)){ echo $getLastSystemSyncsub[0]['SubscribedCount']; }else{ echo '0';} ?> subscribers <?php if(!empty($getLastSystemSyncsub)){echo $getLastSystemSyncsub[0]['SyncTime']; } else{ echo "0";}?></li>
-              <li><i class="icon-li fa fa-exchange text-success"></i>Sync <?php if(!empty($getLastSystemSyncsub)){ echo $getLastSystemSyncsub[0]['UnSubscribedCount']; } else{ echo '0';}  ?> Unsubscribers <?php if(!empty($getLastSystemSyncsub)){ echo $getLastSystemSyncsub[0]['SyncTime']; } else{ echo '0';}?></li>
-               <li><i class="icon-li fa fa-exchange text-success"></i>New List Created 12:32:012322</li>
+                <li><i class="icon-li fa fa-exchange text-success"></i>Sync <?php if(!empty($getLastSystemSyncsub)){ echo $getLastSystemSyncsub[0]['SubscribedCount']; }else{ echo '0';} ?> subscribers <?php if(!empty($getLastSystemSyncsub)){echo $getLastSystemSyncsub[0]['SyncTime']; } else{ echo "00:00";}?></li>
+              <li><i class="icon-li fa fa-exchange text-success"></i>Sync <?php if(!empty($getLastSystemSyncsub)){ echo $getLastSystemSyncsub[0]['UnSubscribedCount']; } else{ echo '0';}  ?> Unsubscribers <?php if(!empty($getLastSystemSyncsub)){ echo $getLastSystemSyncsub[0]['SyncTime']; } else{ echo '00:00';}?></li>
                <li><i class="icon-li fa fa-exchange text-success"></i>Sync Successful <?php if(!empty($getLastSystemSyncsub)){ echo $getLastSystemSyncsub[0]['SyncTime']; } else{ echo '0';}?></li>
 
             </ul>
@@ -366,7 +365,7 @@
                             <td style="width: 15%"><?php echo $value['LastName']?></td>
                             <td style="width: 20%"><?php echo $value['EmailAddress']?></td>
                             <td style="width: 10%"><?php echo $value['CreatedDate']?></td>
-                            <td style="width: 15%"><?php echo $value['ID']?></td>
+                            <td style="width: 15%"><?php if(!empty($getLastSystemSyncsub)){ echo $getLastSystemSyncsub[0]['SyncTime']; } else{ echo '00:00';}?></td>
                             <td style="width: 10%"><?php echo $value['Status']?></td>
                 </tr>
                 <?php
@@ -421,7 +420,7 @@
                             <td style="width: 15%"><?php echo $value['lastname']?></td>
                             <td style="width: 20%"><?php echo $value['email']?></td>
                             <td style="width: 10%"><?php echo $value['unsubscribed_date']?></td>
-                            <td style="width: 15%"><?php echo $value['id']?></td>
+                            <td style="width: 15%"><?php if(!empty($getLastSystemSyncsub)){ echo $getLastSystemSyncsub[0]['SyncTime']; } else{ echo '00:00';}?></td>
                             <td style="width: 10%">Unsubscribed</td>
                 </tr>
                 <?php

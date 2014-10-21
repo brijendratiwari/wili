@@ -416,46 +416,26 @@ class Exact_target extends CI_Controller {
     }
 
     public function test() {
-//        $myclient = new ET_Client(false);
-//        $subCreate = new ET_Subscriber();
-//        $subCreate->authStub = $myclient;
-//        $subCreate->props = array("EmailAddress" => 'SDKTest9091@bh.exacttarget.com', "SubscriberKey" => 99989, "Lists" => array("ID" => 351485));
-//        $postResult = $subCreate->post();
-//        print_r('Post Status: ' . ($postResult->status ? 'true' : 'false') . "\n");
-//        print 'Code: ' . $postResult->code . "\n";
-//        print 'Message: ' . $postResult->message . "\n";
-//        print 'Results Length: ' . count($postResult->results) . "\n";
-//        echo '<pre>';
-//        print_r($postResult->results);
-//        echo '</pre>';
-
-        $myclient = new ET_Client(false);
-        $retSub = new ET_Subscriber();
-        $arr = array();
-        $retSub->authStub = $myclient;
-        $retSub->filter = array('Property' => 'Status', 'SimpleOperator' => 'equals', 'Value' => 'Unsubscribed');
-        $getResult = $retSub->get();
-//        echo '<pre>';
-//        print_r($getResult);
-//        echo '</pre>';
-//        die;
-         $getResult->results;
-        
+        $myclient = new ET_Client();
+        $bounceevent = new ET_BounceEvent();
+        $bounceevent->authStub = $myclient;         
+        $response = $bounceevent->get();
         echo '<pre>';
-        print_r($getResult->results);
-        echo '</pre>';
+        print_r($response);   
         
-//        $myclient = new ET_Client(false);
-//        $retSub = new ET_Subscriber();
-//        $arr = array();
-//        $retSub->authStub = $myclient;
-//        $retSub->filter = array('Property' => 'Status', 'SimpleOperator' => 'equals', 'Value' => 'Unsubscribed');
-//        $getResult = $retSub->get();
-//        echo '<pre>';
-//        print_r($getResult);
-//        echo '</pre>';
-//        die;
-//        return $getResult->results;
+        
+        $myclient = new ET_Client();
+        $clickevent = new ET_ClickEvent();
+        $clickevent->authStub = $myclient;
+        $response = $clickevent->get();
+        print_r($response);
+        
+        $myclient = new ET_Client();
+        $openevent = new ET_OpenEvent();
+        $openevent->authStub = $myclient;           
+        $response = $openevent->get();
+        print_r($response);   
+        echo '</pre>';
     }
 
 }

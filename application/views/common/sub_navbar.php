@@ -59,7 +59,7 @@
         
 
 
-          <li class="dropdown ">
+<!--          <li class="dropdown ">
 
             <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
             Extras
@@ -228,7 +228,7 @@
 
             </ul>
 
-          </li>
+          </li>-->
 
         </ul>
 
