@@ -61,7 +61,7 @@ class Bb_model extends CI_Model {
     }
 
     public function get_bbSubscriber() {
-        $list_id = array('351484', '351485', '351486', '351487', '351488');
+        $list_id = array('351484', '351485','351487');
         $this->db->where_in('ListID', $list_id);
         $res = $this->db->get('et_subscriber_list_rel');
         if ($res->num_rows() > 0) {
@@ -86,12 +86,12 @@ class Bb_model extends CI_Model {
     public function get_bbFilterSubscriber() {
 
         $data = array();
-        $query = "select * from et_subscriber_list_rel where `CreatedDate` between '" . date("Y", strtotime("-1 year")) . "-01-01' and '" . date("Y", strtotime("-0 year")) . "-01-01' and `ListID` IN('351484', '351485', '351486', '351487', '351488') ";
-        $query1 = "select * from et_subscriber_list_rel where `CreatedDate` > DATE_SUB(NOW(), INTERVAL 1 MONTH) and  `ListID` IN('351484', '351485', '351486', '351487', '351488')";
-        $query2 = "select * from et_subscriber_list_rel where `CreatedDate` between '" . date("Y-m", strtotime("-2 months")) . "-01' and '" . date("Y-m", strtotime("-1 months")) . "-01' and `ListID` IN('351484', '351485', '351486', '351487', '351488')";
-        $query3 = "select * from et_subscriber_list_rel where `CreatedDate` between '" . date("Y-m-d", strtotime("-30 days")) . "' and '" . date("Y-m-d", strtotime("-0 days")) . "' and `ListID` IN('351484', '351485', '351486', '351487', '351488')";
-        $query4 = "select * from et_subscriber_list_rel where `CreatedDate` between '" . date("Y-m-d", strtotime("-60 days")) . "' and '" . date("Y-m-d", strtotime("-30 days")) . "' and `ListID` IN('351484', '351485', '351486', '351487', '351488')";
-        $query5 = "select * from et_subscriber_list_rel where `CreatedDate` > DATE_SUB(NOW(), INTERVAL 1 DAY) and `ListID` IN('351484', '351485', '351486', '351487', '351488')";
+        $query = "select * from et_subscriber_list_rel where `CreatedDate` between '" . date("Y", strtotime("-1 year")) . "-01-01' and '" . date("Y", strtotime("-0 year")) . "-01-01' and `ListID` IN('351484', '351485','351487') ";
+        $query1 = "select * from et_subscriber_list_rel where `CreatedDate` > DATE_SUB(NOW(), INTERVAL 1 MONTH) and  `ListID` IN('351484', '351485','351487')";
+        $query2 = "select * from et_subscriber_list_rel where `CreatedDate` between '" . date("Y-m", strtotime("-2 months")) . "-01' and '" . date("Y-m", strtotime("-1 months")) . "-01' and `ListID` IN('351484', '351485','351487')";
+        $query3 = "select * from et_subscriber_list_rel where `CreatedDate` between '" . date("Y-m-d", strtotime("-30 days")) . "' and '" . date("Y-m-d", strtotime("-0 days")) . "' and `ListID` IN('351484', '351485','351487')";
+        $query4 = "select * from et_subscriber_list_rel where `CreatedDate` between '" . date("Y-m-d", strtotime("-60 days")) . "' and '" . date("Y-m-d", strtotime("-30 days")) . "' and `ListID` IN('351484', '351485','351487')";
+        $query5 = "select * from et_subscriber_list_rel where `CreatedDate` > DATE_SUB(NOW(), INTERVAL 1 DAY) and `ListID` IN('351484', '351485','351487')";
 //        $query1 = "select count(id) from et_subscriber where CreatedDate >= DATEADD(MONTH, -1, GETDATE()) " ;
         $res = $this->db->query($query);
         $res1 = $this->db->query($query1);
@@ -140,7 +140,8 @@ class Bb_model extends CI_Model {
 
     public function get_bbSubscriberDetail() {
         $this->db->select('*');
-        $this->db->where_in('ListID', array('351484', '351485', '351486', '351487', '351488'));
+        $this->db->group_by('`et_subscriber_list_rel`.`SubscriberID`');
+        $this->db->where_in('ListID', array('351484', '351485', '351487'));
         $this->db->from('et_subscriber_list_rel');
         $this->db->join('et_subscriber','et_subscriber.SubscriberID=et_subscriber_list_rel.SubscriberID');
         $res = $this->db->get();

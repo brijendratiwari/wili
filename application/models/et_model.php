@@ -77,7 +77,7 @@ class Et_model extends CI_Model {
     }
 
     public function update_mdb() {
-        $res = $this->db->query('SELECT FirstName,LastName,EmailAddress as email,DOB,1 as status FROM et_subscriber WHERE et_subscriber.EmailAddress NOT IN (SELECT email FROM master_subscriber)');
+        $res = $this->db->query('SELECT FirstName,LastName,EmailAddress as email,DOB,CreatedDate,1 as status FROM et_subscriber WHERE et_subscriber.EmailAddress NOT IN (SELECT email FROM master_subscriber)');
 
         if ($res->num_rows() > 0) {
             $data = $res->result_array();
@@ -228,7 +228,8 @@ class Et_model extends CI_Model {
     }
 
     public function add_etsubscriber($data) {
-        $this->db->insert("et_subscriber", $data);
+       $res = $this->db->insert("et_subscriber", $data);
+       echo $res;
     }
 
     public function add_etsubscriber_rel($list_id, $subscriber_id) {
