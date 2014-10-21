@@ -192,7 +192,7 @@
                 <p class="row-stat-label">This Month</p>
                 <h3 class="row-stat-value"><?php echo $celldoorSubscriber['month']; ?></h3>
                 <span class="label label-success row-stat-badge">+
-                    <?php if($celldoorSubscriber['month'] !=0) { echo number_format((($celldoorSubscriber['last_thirty']-$celldoorSubscriber['month'])*100)/$celldoorSubscriber['month'],2);} else{ echo "0";} ?>% from previous previous 30 days</span>
+                    <?php if($celldoorSubscriber['month'] !=0) { echo number_format((($celldoorSubscriber['month']-$celldoorSubscriber['last_thirty'])*100)/$celldoorSubscriber['month'],2);} else{ echo "0";} ?>% from previous 30 days</span>
               </div> <!-- /.row-stat -->
             </div> <!-- /.col -->
 

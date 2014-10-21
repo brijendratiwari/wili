@@ -250,7 +250,7 @@
 <div class="portlet">
 
         <h3 class="portlet-title">
-          <u>Subscribers List -ET</u>
+          <u>Subscribers List -MDB</u>
         </h3>
 
         <div class="portlet-body">
@@ -306,7 +306,7 @@
         <div class="portlet">
 
         <h3 class="portlet-title">
-          <u>UnSubscribers List -ET</u>
+          <u>UnSubscribers List -MDB</u>
         </h3>
 
         <div class="portlet-body">
