@@ -252,7 +252,6 @@ class Exact_target extends CI_Controller {
 
     public function et_mdb_update() {
         $this->et_model->update_mdb();
-        $this->et_model->update_mdb();
     }
 
     public function unsubscribe_email($email,$subkey) {
