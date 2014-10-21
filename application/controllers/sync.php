@@ -132,7 +132,11 @@ class Sync extends CI_Controller {
             $old_unsub = $this->et_model->get_count('all_unsubscriber', $storeid);    // counting the old sub data
 //            $this->et_model->blank_tab('all_unsubscriber');
             $this->et_model->insert_all_unsubscriber($arr);
+            if(count($arr)> 0){
             $data['UnSubscribedCount'] = count($arr) - $old_unsub;
+            }else{
+                $data['UnSubscribedCount']=0;
+            }
             $data['type'] = $type;
             $data['SyncTime'] = date('Y-m-d h:m:s', time());
             $data['store_id'] = $storeid;
@@ -229,7 +233,7 @@ class Sync extends CI_Controller {
 
             $this->et_model->insert_all_unsubscriber($arr);
             $new_unsub = $this->et_model->get_count('all_unsubscriber', $storeid);
-            $data['UnSubscribedCount'] = $old_unsub - $new_unsub;
+            $data['UnSubscribedCount'] = $new_unsub - $old_unsub;
             $data['type'] = $type;
             $data['SyncTime'] = date('Y-m-d h:m:s', time());
             $data['store_id'] = $storeid;

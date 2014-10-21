@@ -113,6 +113,7 @@ class Login extends CI_Controller {
                 if ($res1) {
                     $data = array("EmailAddress" => $_POST['email'], "SubscriberKey" => $res1[0]['SubscriberID']);
                     $response = $exact_target->add_email_list($_POST['pref'], $data);
+                    var_dump($response);
                     if ($response[0]->StatusCode == "OK") {
                         $this->et_model->add_etsubscriber_rel($_POST['pref'],$res1[0]['SubscriberID']);
                     }
@@ -124,7 +125,7 @@ class Login extends CI_Controller {
                     if ($response[0]->StatusCode == "OK") {
                         $data = array("FirstName" => $_POST['firstname'], "LastName" => $_POST['lastname'], "DOB" => $_POST['birthDay'] . "/" . $_POST['birthMonth'] . "/" . $_POST['birthYear'], "SubscriberID" => $subkey, "EmailAddress" => $_POST['email'], "Status" => "Active", "CreatedDate" => date("Y-m-d h:m:s", time()));
                         $this->et_model->add_etsubscriber($data);
-//                        $this->et_model->add_etsubscriber_rel($_POST['pref'],$subkey);
+                        $this->et_model->add_etsubscriber_rel($_POST['pref'],$subkey);
                     }
                 }
             }
