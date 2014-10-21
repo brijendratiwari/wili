@@ -140,7 +140,7 @@
                 <p class="row-stat-label">This Month</p>
                 <h3 class="row-stat-value"><?php echo $mount['month']; ?></h3>
                 <span class="label label-success row-stat-badge">+
-                    <?php if($mount['month'] !=0) { echo number_format((($mount['last_thirty']-$mount['month'])*100)/$mount['month'],2);} else{ echo "0";} ?>% from previous previous 30 days</span>
+                    <?php if($mount['month'] !=0) { echo number_format((($mount['last_thirty']-$mount['month'])*100)/$mount['month'],2);} else{ echo "0";} ?>% from previous 30 days</span>
               </div> <!-- /.row-stat -->
             </div> <!-- /.col -->
 
@@ -246,7 +246,7 @@
                 <p class="row-stat-label">This Month</p>
                 <h3 class="row-stat-value"><?php echo $Evans['month']; ?></h3>
                 <span class="label label-success row-stat-badge">+
-                    <?php if($Evans['month'] !=0) { echo number_format((($Evans['last_thirty']-$Evans['month'])*100)/$Evans['month'],2);} else{ echo "0";} ?>% from previous previous 30 days</span>
+                    <?php if($Evans['month'] !=0) { echo number_format((($Evans['last_thirty']-$Evans['month'])*100)/$Evans['month'],2);} else{ echo "0";} ?>% from previous 30 days</span>
               </div> <!-- /.row-stat -->
             </div> <!-- /.col -->
 
