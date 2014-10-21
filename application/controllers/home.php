@@ -12,7 +12,7 @@ class Home extends CI_Controller {
         parent::__construct();
         $this->load->model('et_model');
         $this->load->model('sync_model');
-	 $this->load->model('mdb_model');
+        $this->load->model('mdb_model');
         $this->load->model('bb_model');
     }
 
@@ -35,9 +35,9 @@ class Home extends CI_Controller {
             $data['autosync'] = $this->sync_model->checkautosync();
             $data['getLastSystemSyncsub'] = $this->sync_model->getLastSystemSyncsub('ET');
             $data['bbSyncsub'] = $this->sync_model->getLastSystemSyncsub('BB');
-             $data['UnSubscriber'] = $this->sync_model->get_UnSubscriber();
-             $data['AllUnSubscriber'] = $this->sync_model->get_AllUnSubscriber();
-             $data['getAutoSyncUpdate'] = $this->sync_model->get_getAutoSyncUpdate();
+            $data['UnSubscriber'] = $this->sync_model->get_UnSubscriber();
+            $data['AllUnSubscriber'] = $this->sync_model->get_AllUnSubscriber();
+            $data['getAutoSyncUpdate'] = $this->sync_model->get_getAutoSyncUpdate();
 //            var_dump($data['getAutoSyncUpdate']);die;
             $this->load->view('/common/header.php');
             $this->load->view('/common/navbar.php');
@@ -70,6 +70,7 @@ class Home extends CI_Controller {
             redirect('login/index');
         }
     }
+
     public function black_boxx() {
 
         if ($this->session->userdata('logged_in')) {
@@ -95,9 +96,9 @@ class Home extends CI_Controller {
             redirect('login/index');
         }
     }
-    
-    public function master(){
-         if ($this->session->userdata('logged_in')) {
+
+    public function master() {
+        if ($this->session->userdata('logged_in')) {
 
             $data['list'] = $this->et_model->getList();
             $data['Subscriber'] = $this->mdb_model->get_mdbSubscriber();
@@ -112,6 +113,32 @@ class Home extends CI_Controller {
             $this->load->view('/common/navbar.php');
             $this->load->view('/common/sub_navbar.php');
             $this->load->view('/master.php', $data);
+            $this->load->view('/common/footer.php');
+        } else {
+            redirect('login/index');
+        }
+    }
+
+    public function bepoz() {
+        if ($this->session->userdata('logged_in')) {
+            $data['list'] = $this->et_model->getList();
+            $data['Subscriberdetail'] = $this->bb_model->get_bbSubscriberDetail();
+            $data['Subscriber'] = $this->bb_model->get_bpSubscriber();
+            $data['mcSubscriber'] = $this->bb_model->get_bbListFilterSubscriber(351487); //McWilliams Wine
+            $data['brandsSubscriber'] = $this->bb_model->get_bbListFilterSubscriber(351484); //Brands Laira
+            $data['mount'] = $this->bb_model->get_bbListFilterSubscriber(351488); //Mount Pleasant
+            $data['Evans'] = $this->bb_model->get_bbListFilterSubscriber(351486); //Evans & Tate
+//            var_dump($data['Subscriberdetail']);die;
+            $data['UnSubscriber'] = $this->bb_model->get_bbUnSubscriber();
+            $data['FilterSubscriber'] = $this->bb_model->get_bbFilterSubscriber();
+            $data['FilterUnSubscriber'] = $this->et_model->get_etFilterUnSubscriber();
+            $data['checkSystemSync'] = $this->et_model->checkSystemSync();
+            $data['getLastSystemSyncsub'] = $this->et_model->getLastSystemSyncsub();
+//            var_dump($data['getLastSystemSyncsub']);die;
+            $this->load->view('/common/header.php');
+            $this->load->view('/common/navbar.php');
+            $this->load->view('/common/sub_navbar.php');
+            $this->load->view('/bepoz.php', $data);
             $this->load->view('/common/footer.php');
         } else {
             redirect('login/index');
