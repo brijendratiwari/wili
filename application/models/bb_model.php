@@ -177,4 +177,18 @@ class Bb_model extends CI_Model {
             }
         }
     }
+    
+     public function get_bpSubscriber(){
+        $this->db->select('*');
+        $this->db->group_by('`et_subscriber_list_rel`.`SubscriberID`');
+        $this->db->where_in('ListID', array('351487', '351484', '351488','351486'));
+        $this->db->from('et_subscriber_list_rel');
+        $this->db->join('et_subscriber','et_subscriber.SubscriberID=et_subscriber_list_rel.SubscriberID');
+        $res = $this->db->get();
+        if ($res->num_rows() > 0) {
+            return $res->result_array();
+        } else {
+            return NULL;
+        }
+    }
 }
