@@ -48,6 +48,15 @@
            
           </li>
           
+          <li class="dropdown">
+
+            <a href="<?php echo base_url();?>index.php/home/bepoz">
+            Bepoz
+            </a>
+
+           
+          </li>
+          
           <li class="dropdown" data-target="sync">
 
             <a href="<?php echo base_url();?>index.php/home/sync">
