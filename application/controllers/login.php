@@ -8,7 +8,7 @@
 
 class Login extends CI_Controller {
 
-    public function __construct() {
+    public function __construct() { 
         parent::__construct();
         $this->load->model('login_model');
         $this->load->model('bb_model');
@@ -66,6 +66,10 @@ class Login extends CI_Controller {
         $this->load->view('sign-up/sign_up.php');
     }
 
+    public function bepoz_sign_up() {
+        $this->load->view('sign-up/bepoz_signup.php');
+    }
+
     public function thank_you() {
         $this->load->view('sign-up/thankyou.php');
     }
@@ -83,7 +87,7 @@ class Login extends CI_Controller {
             $update_info = $this->bb_model->update_bb_customer($_POST['email'], $data);
             //*********************************
             if ($update_info) {
-                 redirect('login/thank_you');
+                redirect('login/thank_you');
             }
         } else {
             // add customer in BB .....
@@ -102,32 +106,62 @@ class Login extends CI_Controller {
                 "mobile_number" => $_POST['mobile_number'],
                 "created" => $user_data["updated_at"],
                 "bb_id" => 2,
-               "Status" => "Active"
+                "Status" => "Active"
             );
             $res = $this->bb_model->insert_bb_customer($bb_customer);
             if ($res) {
 //                $this->et_model->insert_mastersubscriber(array("email"=>$_POST["email"],"firstname"=>$_POST["firstname"],"lastname"=>$_POST["lastname"],"DOB" => $_POST['birthDay'] . "/" . $_POST['birthMonth'] . "/" . $_POST['birthYear'],"status"=>1,"CreatedDate" => $user_data["updated_at"]),$user_data["email"]);
-                $this->bb_model->insert_bb_customer_rel($_POST['pref'],$user_data["email"],$user_data["id"]);
+                $this->bb_model->insert_bb_customer_rel($_POST['pref'], $user_data["email"], $user_data["id"]);
                 // add subscriber in ET...... if exist then upadate status to "Active"
                 $res1 = $this->et_model->get_et_subscriber($user_data["email"]);
                 if ($res1) {
                     $data = array("EmailAddress" => $_POST['email'], "SubscriberKey" => $res1[0]['SubscriberID']);
                     $response = $exact_target->add_email_list($_POST['pref'], $data);
-                    var_dump($response);
                     if ($response[0]->StatusCode == "OK") {
-                        $this->et_model->add_etsubscriber_rel($_POST['pref'],$res1[0]['SubscriberID']);
+                        $this->et_model->add_etsubscriber_rel($_POST['pref'], $res1[0]['SubscriberID']);
                     }
                 } else {
-                    $subkey=time();
+                    $subkey = time();
                     $subs[] = array("EmailAddress" => $_POST['email'], "SubscriberKey" => $subkey, "Attributes" => array(array("Name" => "First Name", "Value" => $_POST['firstname']), array("Name" => "Last Name", "Value" => $_POST['lastname'])));
                     $response = $exact_target->add_email_list($_POST['pref'], $subs);
 //                    var_dump($response);die;
                     if ($response[0]->StatusCode == "OK") {
                         $data = array("FirstName" => $_POST['firstname'], "LastName" => $_POST['lastname'], "DOB" => $_POST['birthDay'] . "/" . $_POST['birthMonth'] . "/" . $_POST['birthYear'], "SubscriberID" => $subkey, "EmailAddress" => $_POST['email'], "Status" => "Active", "CreatedDate" => date("Y-m-d h:m:s", time()));
                         $this->et_model->add_etsubscriber($data);
-                        $this->et_model->add_etsubscriber_rel($_POST['pref'],$subkey);
+                        $this->et_model->add_etsubscriber_rel($_POST['pref'], $subkey);
                     }
                 }
+            }
+        }
+        redirect('login/thank_you');
+    }
+
+    public function createbb() {
+        $exact_target = new Exact_target();
+        
+        if(isset($_POST['pref']))
+        {
+        array_push($_POST['pref'], '352396');
+        }
+        else{
+            $_POST['pref'] = array('352396');
+        }
+         $res1 = $this->et_model->get_et_subscriber($_POST["email"]);
+        if ($res1) {
+            $data = array("EmailAddress" => $_POST['email'], "SubscriberKey" => $res1[0]['SubscriberID']);
+            $response = $exact_target->add_email_list($_POST['pref'], $data);
+            if ($response[0]->StatusCode == "OK") {
+                $this->et_model->add_etsubscriber_rel($_POST['pref'], $res1[0]['SubscriberID']);
+            }
+        } else {
+            $subkey = time();
+            $subs[] = array("EmailAddress" => $_POST['email'], "SubscriberKey" => $subkey, "Attributes" => array(array("Name" => "First Name", "Value" => $_POST['firstname']), array("Name" => "Last Name", "Value" => $_POST['lastname'])));
+            $response = $exact_target->add_email_list($_POST['pref'], $subs);
+//                    var_dump($response);die;
+            if ($response[0]->StatusCode == "OK") {
+                $data = array("FirstName" => $_POST['firstname'], "LastName" => $_POST['lastname'], "DOB" => $_POST['birthDay'] . "/" . $_POST['birthMonth'] . "/" . $_POST['birthYear'], "SubscriberID" => $subkey, "EmailAddress" => $_POST['email'], "Status" => "Active", "CreatedDate" => date("Y-m-d h:m:s", time()));
+                $this->et_model->add_etsubscriber($data);
+                $this->et_model->add_etsubscriber_rel($_POST['pref'], $subkey);
             }
         }
         redirect('login/thank_you');

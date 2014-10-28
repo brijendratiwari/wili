@@ -33,12 +33,19 @@ class Home extends CI_Controller {
     public function sync() {
         if ($this->session->userdata('logged_in')) {
             $data['autosync'] = $this->sync_model->checkautosync();
+            $data['Subscriber'] = $this->mdb_model->get_mdbSubscriber();
+            $data['bbCustomer'] = $this->sync_model->get_bb_customer();
+            $data['etSubscriber'] = $this->sync_model->get_etSubscriber();
+            $data['bpSubscriber'] = $this->sync_model->get_bpSubscriber();
+            $data['mdbSubscriber'] = $this->sync_model->get_mdbSubscriber();
             $data['getLastSystemSyncsub'] = $this->sync_model->getLastSystemSyncsub('ET');
             $data['bbSyncsub'] = $this->sync_model->getLastSystemSyncsub('BB');
+            $data['mdbSyncsub'] = $this->sync_model->getLastSystemSyncsub('MDB');
+//            var_dump($data['Subscriber']);die;
+            
             $data['UnSubscriber'] = $this->sync_model->get_UnSubscriber();
             $data['AllUnSubscriber'] = $this->sync_model->get_AllUnSubscriber();
             $data['getAutoSyncUpdate'] = $this->sync_model->get_getAutoSyncUpdate();
-//            var_dump($data['getAutoSyncUpdate']);die;
             $this->load->view('/common/header.php');
             $this->load->view('/common/navbar.php');
             $this->load->view('/common/sub_navbar.php');
@@ -122,15 +129,15 @@ class Home extends CI_Controller {
     public function bepoz() {
         if ($this->session->userdata('logged_in')) {
             $data['list'] = $this->et_model->getList();
-            $data['Subscriberdetail'] = $this->bb_model->get_bbSubscriberDetail();
+            $data['Subscriberdetail'] = $this->bb_model->get_bpSubscriberDetail();
             $data['Subscriber'] = $this->bb_model->get_bpSubscriber();
-            $data['mcSubscriber'] = $this->bb_model->get_bbListFilterSubscriber(351487); //McWilliams Wine
-            $data['brandsSubscriber'] = $this->bb_model->get_bbListFilterSubscriber(351484); //Brands Laira
-            $data['mount'] = $this->bb_model->get_bbListFilterSubscriber(351488); //Mount Pleasant
-            $data['Evans'] = $this->bb_model->get_bbListFilterSubscriber(351486); //Evans & Tate
+            $data['mcSubscriber'] = $this->bb_model->get_bpListFilterSubscriber(351487); //McWilliams Wine
+            $data['brandsSubscriber'] = $this->bb_model->get_bpListFilterSubscriber(351484); //Brands Laira
+            $data['mount'] = $this->bb_model->get_bpListFilterSubscriber(351488); //Mount Pleasant
+            $data['Evans'] = $this->bb_model->get_bpListFilterSubscriber(351486); //Evans & Tate
 //            var_dump($data['Subscriberdetail']);die;
             $data['UnSubscriber'] = $this->bb_model->get_bbUnSubscriber();
-            $data['FilterSubscriber'] = $this->bb_model->get_bbFilterSubscriber();
+            $data['FilterSubscriber'] = $this->bb_model->get_bpallFilterSubscriber();
             $data['FilterUnSubscriber'] = $this->et_model->get_etFilterUnSubscriber();
             $data['checkSystemSync'] = $this->et_model->checkSystemSync();
             $data['getLastSystemSyncsub'] = $this->et_model->getLastSystemSyncsub();

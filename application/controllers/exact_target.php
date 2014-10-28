@@ -4,7 +4,7 @@ require 'application/libraries/ET_Client.php';
 
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
-
+    
 class Exact_target extends CI_Controller {
 
     /**
@@ -61,19 +61,17 @@ class Exact_target extends CI_Controller {
         if ($next != FALSE)
             $getList->filter = array('Property' => 'ObjectID', 'SimpleOperator' => 'greaterThan', 'Value' => $next);
 
-        if ($arr == FALSE)
-        {
+        if ($arr == FALSE) {
             $arr = array();
             $arr1 = array();
-        }
-        else{
+        } else {
             $arr1 = $arr;
         }
         $response = $getList->get();
-        
+
         if (count($response->results) && is_array($response->results)) {
             foreach ($response->results as $value) {
-                
+
                 $arr1[count($arr1)]['ObjectID'] = $value->ObjectID;
                 $arr[$value->ObjectID]['ObjectID'] = $value->ObjectID;
                 $arr[$value->ObjectID]['main_id'] = $value->ID;
@@ -254,14 +252,13 @@ class Exact_target extends CI_Controller {
         $this->et_model->update_mdb();
     }
 
-    public function unsubscribe_email($email,$subkey) {
+    public function unsubscribe_email($email, $subkey) {
 
         $myclient = new ET_Client(false);
         $subPatch = new ET_Subscriber();
         $subPatch->authStub = $myclient;
-        $subPatch->props = array("EmailAddress" => $email, "SubscriberKey" =>$subkey, "Status" => "Unsubscribed");
+        $subPatch->props = array("EmailAddress" => $email, "SubscriberKey" => $subkey, "Status" => "Unsubscribed");
         $patchResult = $subPatch->patch();
-      
     }
 
     public function get_bounce() {
@@ -400,7 +397,7 @@ class Exact_target extends CI_Controller {
     }
 
     public function unSubscriberfromlist($SubscriberTestEmail) {
-        
+
         $subPatch = new ET_Subscriber();
         $subPatch->authStub = $myclient;
         $subPatch->props = array("EmailAddress" => $SubscriberTestEmail, "Status" => "Unsubscribed");
@@ -415,25 +412,68 @@ class Exact_target extends CI_Controller {
     }
 
     public function test() {
-        $myclient = new ET_Client();
-        $bounceevent = new ET_BounceEvent();
-        $bounceevent->authStub = $myclient;         
-        $response = $bounceevent->get();
+//        $myclient = new ET_Client();
+//        $bounceevent = new ET_BounceEvent();
+//        $bounceevent->authStub = $myclient;         
+//        $response = $bounceevent->get();
+//        echo '<pre>';
+//        print_r($response);   
+//        
+//        
+//        $myclient = new ET_Client();
+//        $clickevent = new ET_ClickEvent();
+//        $clickevent->authStub = $myclient;
+//        $response = $clickevent->get();
+//        print_r($response);
+//        
+//        $myclient = new ET_Client();
+//        $openevent = new ET_OpenEvent();
+//        $openevent->authStub = $myclient;           
+//        $response = $openevent->get();
+//        print_r($response);   
+//        echo '</pre>';
+
+ $myclient = new ET_Client(false);
+        $list = new ET_List();
+        $list->authStub = $myclient;
+        $list->filter = array('Property' => 'CustomerKey','SimpleOperator' => 'equals','Value' => 'BP_LIST_EXT');
+        $response = $list->get();
+
+//        $arr = array();
+//        if (count($response->results) && is_array($response->results)) {
+//            foreach ($response->results as $value) {
+//
+//                $key = count($arr);
+//
+//                $arr[$key]['ListID'] = $value->ID;
+//                $arr[$key]['CustomerKey'] = $value->CustomerKey;
+//                $arr[$key]['ListName'] = $value->ListName;
+//                $arr[$key]['Category'] = $value->Category;
+//                $arr[$key]['Type'] = $value->Type;
+//                $arr[$key]['CreatedDate'] = $value->CreatedDate;
+//                $arr[$key]['ModifiedDate'] = $value->ModifiedDate;
+//                $arr[$key]['ListClassification'] = $value->ListClassification;
+//                $arr[$key]['Description'] = $value->Description;
+//                $arr[$key]['CleintID'] = $value->Client->ID;
+//            }
+//        }
+//
+//        return $arr;
+        
+        
+//         $myclient = new ET_Client(false);
+//        $postContent = new ET_List();
+//        $postContent->authStub = $myclient;
+//        $postContent->props = array("ListName" => "Bepoz List", "Description" => "Bepoz List", "Type" => 'Private',"CustomerKey"=>"BP_LIST_EXT");
+//        $postResponse = $postContent->post();
+//        if ($postResponse->status) {
+//            echo $postResponse->results[0]->NewID;
+//        } else {
+//            echo 'failed to create list';
+//        }
+//        
         echo '<pre>';
-        print_r($response);   
-        
-        
-        $myclient = new ET_Client();
-        $clickevent = new ET_ClickEvent();
-        $clickevent->authStub = $myclient;
-        $response = $clickevent->get();
         print_r($response);
-        
-        $myclient = new ET_Client();
-        $openevent = new ET_OpenEvent();
-        $openevent->authStub = $myclient;           
-        $response = $openevent->get();
-        print_r($response);   
         echo '</pre>';
     }
 
