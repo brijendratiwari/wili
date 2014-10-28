@@ -8,12 +8,12 @@
         <h4 class="portlet-title">
           <u>Total Customers All Stores</u>
         </h4>
-
+     
         <div class="portlet-body">
 
           <div class="row">
 
-            <div class="col-sm-6 col-md-3">
+              <div class="col-sm-6 col-md-3">
               <div class="row-stat">
                 <p class="row-stat-label">Total Customers</p>
                 <h3 class="row-stat-value"><?php echo count($Subscriber); ?></h3>
@@ -426,7 +426,7 @@
           <table id="table-exact-target" class="table table-striped table-bordered">
             <thead>
               <tr>
-                <th style="width: 8%">UID</th>
+                <!--<th style="width: 8%">UID</th>-->
                 <th style="width: 15%">First Name</th>
                 <th style="width: 15%">Last Name</th>
                 <th style="width: 20%">Email</th>
@@ -441,7 +441,7 @@
                     foreach ($Subscriberdetail as $key => $value) {
                         ?>
                 <tr>
-                            <td style="width: 8%"><?php echo $value['ID']?></td>
+                            <!--<td style="width: 8%"><?php echo $value['ID']?></td>-->
                             <td style="width: 15%"><?php echo $value['FirstName']?></td>
                             <td style="width: 15%"><?php echo $value['LastName']?></td>
                             <td style="width: 20%"><?php echo $value['EmailAddress']?></td>
@@ -455,7 +455,7 @@
             </tbody>
             <tfoot>
               <tr>
-                <th style="width: 8%">UID</th>
+                <!--<th style="width: 8%">UID</th>-->
                 <th style="width: 15%">First Name</th>
                 <th style="width: 15%">Last Name</th>
                 <th style="width: 20%">Email</th>

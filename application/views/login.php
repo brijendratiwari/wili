@@ -17,7 +17,7 @@
 
       <h5>Please sign in to get access.</h5>
 
-      <form class="form account-form" method="POST" action="<?php echo base_url(); ?>/index.php/login">
+      <form class="form account-form" method="POST" action="<?php echo base_url(); ?>index.php/login"> 
 
         <div class="form-group">
           <label for="login-username" class="placeholder-hidden">Username</label>
