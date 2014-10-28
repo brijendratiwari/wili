@@ -80,12 +80,12 @@ class Login extends CI_Controller {
         $this->load->view('sign-up/bb_signup');
     }
 
-    public function bepoz_sign_up() {
-        $this->load->view('sign-up/bepoz_signup_new.php');
-    }
+//    public function bepoz_sign_up() {
+//        $this->load->view('sign-up/bepoz_signup_new.php');
+//    }
 
     public function bepoz_sign_up() {
-        $this->load->view('sign-up/bepoz_signup.php');
+        $this->load->view('sign-up/bepoz_signup_new.php');
     }
 
     public function thank_you() {
@@ -254,37 +254,6 @@ class Login extends CI_Controller {
         // close this connection and file handler
         ftp_close($ftp_conn);
         fclose($fp);
-
-    public function createbb() {
-        $exact_target = new Exact_target();
-        
-        if(isset($_POST['pref']))
-        {
-        array_push($_POST['pref'], '352396');
-        }
-        else{
-            $_POST['pref'] = array('352396');
-        }
-         $res1 = $this->et_model->get_et_subscriber($_POST["email"]);
-        if ($res1) {
-            $data = array("EmailAddress" => $_POST['email'], "SubscriberKey" => $res1[0]['SubscriberID']);
-            $response = $exact_target->add_email_list($_POST['pref'], $data);
-            if ($response[0]->StatusCode == "OK") {
-                $this->et_model->add_etsubscriber_rel($_POST['pref'], $res1[0]['SubscriberID']);
-            }
-        } else {
-            $subkey = time();
-            $subs[] = array("EmailAddress" => $_POST['email'], "SubscriberKey" => $subkey, "Attributes" => array(array("Name" => "First Name", "Value" => $_POST['firstname']), array("Name" => "Last Name", "Value" => $_POST['lastname'])));
-            $response = $exact_target->add_email_list($_POST['pref'], $subs);
-//                    var_dump($response);die;
-            if ($response[0]->StatusCode == "OK") {
-                $data = array("FirstName" => $_POST['firstname'], "LastName" => $_POST['lastname'], "DOB" => $_POST['birthDay'] . "/" . $_POST['birthMonth'] . "/" . $_POST['birthYear'], "SubscriberID" => $subkey, "EmailAddress" => $_POST['email'], "Status" => "Active", "CreatedDate" => date("Y-m-d h:m:s", time()));
-                $this->et_model->add_etsubscriber($data);
-                $this->et_model->add_etsubscriber_rel($_POST['pref'], $subkey);
-            }
-        }
-        redirect('login/thank_you');
-
     }
-
+ 
 }
