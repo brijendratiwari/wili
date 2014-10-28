@@ -1,3 +1,4 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
@@ -14,6 +15,7 @@
                 var month = document.getElementById('txtMonth').value;
                 var year = document.getElementById('txtYear').value;
                 var email = document.getElementById('txtEmail').value;
+                var password = document.getElementById('txtPassword').value;
                 var pattern = /^\w+([\+\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
                 if (email == "" || email.match(pattern) == false) {
@@ -23,6 +25,15 @@
                 else
                 {
                     document.getElementById('emailerror2').style.display = 'none';
+                    flag1 = 0;
+                }
+                if (password == "" || password.length < 5) {
+                    document.getElementById('passworderror2').style.display = 'block';
+                    flag1 = 1;
+                }
+                else
+                {
+                    document.getElementById('passworderror2').style.display = 'none';
                     flag1 = 0;
                 }
 
@@ -208,7 +219,7 @@
                                                         <label for="password">
                                                             <input type="password" required="" placeholder="Password" id="txtPassword" name="password" style="width:190px !important;"/>
                                                         </label>
-                                                        <span id="password" style="font-family: Arial, Helvetica, sans-serif; font-size: 10px; color: #ff0000; display:none;">Please enter a Mobile Number.</span> </p>
+                                                        <span id="passworderror2" style="font-family: Arial, Helvetica, sans-serif; font-size: 10px; color: #ff0000; display:none;">Password at least have minimum 5 Character.</span> </p>
                                                 </td>    
                                             <td width="200"><p> Mobile Number *<br />
                                                         <label for="mobile_number">

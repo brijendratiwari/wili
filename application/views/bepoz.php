@@ -8,12 +8,12 @@
         <h4 class="portlet-title">
           <u>Total Customers All Stores</u>
         </h4>
-
+     
         <div class="portlet-body">
 
           <div class="row">
 
-            <div class="col-sm-6 col-md-3">
+              <div class="col-sm-6 col-md-3">
               <div class="row-stat">
                 <p class="row-stat-label">Total Customers</p>
                 <h3 class="row-stat-value"><?php echo count($Subscriber); ?></h3>

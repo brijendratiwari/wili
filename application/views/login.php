@@ -13,11 +13,11 @@
 
     <div class="account-body">
 
-      <h3>Welcome back to Confluence.</h3>
+      <h3>McWilliams Wine Group</h3>
 
       <h5>Please sign in to get access.</h5>
 
-      <form class="form account-form" method="POST" action="<?php echo base_url(); ?>/index.php/login">
+      <form class="form account-form" method="POST" action="<?php echo base_url(); ?>index.php/login"> 
 
         <div class="form-group">
           <label for="login-username" class="placeholder-hidden">Username</label>
@@ -43,7 +43,7 @@
 
         <div class="form-group">
           <button type="submit" class="btn btn-primary btn-block btn-lg" tabindex="4">
-            Signin &nbsp; <i class="fa fa-play-circle"></i>
+            Sign in &nbsp; <i class="fa fa-play-circle"></i>
           </button>
         </div> <!-- /.form-group -->
 <?php echo validation_errors(); ?>

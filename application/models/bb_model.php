@@ -137,11 +137,55 @@ class Bb_model extends CI_Model {
 
         return $data;
     }
+    public function get_bpListFilterSubscriber($list_id) {
+//        echo date("Y-m", strtotime("-0 months"));die;
+        $data = array();
+        $query6 = "select * from et_subscriber_list_rel where `ListID` = '" . $list_id . "' and `ListID` = '352396'";
+        $query = "select * from et_subscriber_list_rel where `CreatedDate` between '" . date("Y", strtotime("-1 year")) . "-01-01' and '" . date("Y", strtotime("-0 year")) . "-01-01' and `ListID` = '352396' and `ListID` = '" . $list_id . "' ";
+        $query1 = "select * from et_subscriber_list_rel where `CreatedDate` > DATE_SUB(NOW(), INTERVAL 1 MONTH) and `ListID` = '352396'  and  `ListID`  = '" . $list_id . "'";
+        $query2 = "select * from et_subscriber_list_rel where `CreatedDate` between '" . date("Y-m", strtotime("-2 months")) . "-01' and '" . date("Y-m", strtotime("-1 months")) . "-01' and `ListID` = '352396' and `ListID`  = '" . $list_id . "'";
+        $query3 = "select * from et_subscriber_list_rel where `CreatedDate` between '" . date("Y-m-d", strtotime("-30 days")) . "' and '" . date("Y-m-d", strtotime("-0 days")) . "' and `ListID` = '352396' and `ListID`  = '" . $list_id . "'";
+        $query4 = "select * from et_subscriber_list_rel where `CreatedDate` between '" . date("Y-m-d", strtotime("-60 days")) . "' and '" . date("Y-m-d", strtotime("-30 days")) . "' and `ListID` = '352396'  and `ListID`  = '" . $list_id . "'";
+        $query5 = "select * from et_subscriber_list_rel where `CreatedDate` > DATE_SUB(NOW(), INTERVAL 1 DAY) and `ListID` = '352396' and  `ListID`  = '" . $list_id . "'";
+
+//        $query1 = "select count(id) from et_subscriber where CreatedDate >= DATEADD(MONTH, -1, GETDATE()) " ;
+//        echo $query;
+//        die;
+        $res = $this->db->query($query);
+        $res1 = $this->db->query($query1);
+        $res2 = $this->db->query($query2);
+        $res3 = $this->db->query($query3);
+        $res4 = $this->db->query($query4);
+        $res5 = $this->db->query($query5);
+        $res6 = $this->db->query($query6);
+        $data['year'] = $res->num_rows();
+        $data['month'] = $res1->num_rows();
+        $data['previous_month'] = $res2->num_rows();
+        $data['last_thirty'] = $res3->num_rows();
+        $data['previous_thirty'] = $res4->num_rows();
+        $data['today'] = $res5->num_rows();
+        $data['total'] = $res6->num_rows();
+
+        return $data;
+    }
 
     public function get_bbSubscriberDetail() {
         $this->db->select('*');
         $this->db->group_by('`et_subscriber_list_rel`.`SubscriberID`');
         $this->db->where_in('ListID', array('351484', '351485', '351487'));
+        $this->db->from('et_subscriber_list_rel');
+        $this->db->join('et_subscriber','et_subscriber.SubscriberID=et_subscriber_list_rel.SubscriberID');
+        $res = $this->db->get();
+        if ($res->num_rows() > 0) {
+            return $res->result_array();
+        } else {
+            return NULL;
+        }
+    }
+    public function get_bpSubscriberDetail() {
+        $this->db->select('*');
+        $this->db->group_by('`et_subscriber_list_rel`.`SubscriberID`');
+        $this->db->where_in('ListID', array('352396'));
         $this->db->from('et_subscriber_list_rel');
         $this->db->join('et_subscriber','et_subscriber.SubscriberID=et_subscriber_list_rel.SubscriberID');
         $res = $this->db->get();
@@ -181,7 +225,7 @@ class Bb_model extends CI_Model {
      public function get_bpSubscriber(){
         $this->db->select('*');
         $this->db->group_by('`et_subscriber_list_rel`.`SubscriberID`');
-        $this->db->where_in('ListID', array('351487', '351484', '351488','351486'));
+        $this->db->where_in('ListID', array('352396'));
         $this->db->from('et_subscriber_list_rel');
         $this->db->join('et_subscriber','et_subscriber.SubscriberID=et_subscriber_list_rel.SubscriberID');
         $res = $this->db->get();
@@ -190,5 +234,54 @@ class Bb_model extends CI_Model {
         } else {
             return NULL;
         }
+    }
+    
+        public function get_bpallFilterSubscriber() {
+
+        $data = array();
+        $query = "select * from et_subscriber_list_rel where `CreatedDate` between '" . date("Y", strtotime("-1 year")) . "-01-01' and '" . date("Y", strtotime("-0 year")) . "-01-01' and `ListID` = '352396' ";
+        $query1 = "select * from et_subscriber_list_rel where `CreatedDate` > DATE_SUB(NOW(), INTERVAL 1 MONTH) and `ListID` = '352396'";
+        $query2 = "select * from et_subscriber_list_rel where `CreatedDate` between '" . date("Y-m", strtotime("-2 months")) . "-01' and `ListID` = '352396' and '" . date("Y-m", strtotime("-1 months")) . "-01' ";
+        $query3 = "select * from et_subscriber_list_rel where `CreatedDate` between '" . date("Y-m-d", strtotime("-30 days")) . "' and '" . date("Y-m-d", strtotime("-0 days")) . "' and `ListID` = '352396' ";
+        $query4 = "select * from et_subscriber_list_rel where `CreatedDate` between '" . date("Y-m-d", strtotime("-60 days")) . "' and '" . date("Y-m-d", strtotime("-30 days")) . "' and `ListID` = '352396' ";
+        $query5 = "select * from et_subscriber_list_rel where `CreatedDate` > DATE_SUB(NOW(), INTERVAL 1 DAY) and `ListID` = '352396'";
+//        $query1 = "select count(id) from et_subscriber where CreatedDate >= DATEADD(MONTH, -1, GETDATE()) " ;
+        $res = $this->db->query($query);
+        $res1 = $this->db->query($query1);
+        $res2 = $this->db->query($query2);
+        $res3 = $this->db->query($query3);
+        $res4 = $this->db->query($query4);
+        $res5 = $this->db->query($query5);
+        $data['year'] = $res->num_rows();
+        $data['month'] = $res1->num_rows();
+        $data['previous_month'] = $res2->num_rows();
+        $data['last_thirty'] = $res3->num_rows();
+        $data['previous_thirty'] = $res4->num_rows();
+        $data['today'] = $res5->num_rows();
+        return $data;
+    }
+        public function get_bpFilterSubscriber() {
+
+        $data = array();
+        $query = "select * from et_subscriber_list_rel where `CreatedDate` between '" . date("Y", strtotime("-1 year")) . "-01-01' and '" . date("Y", strtotime("-0 year")) . "-01-01' and `ListID` = '352396' and `ListID` IN('351487', '351484', '351488', '351486') ";
+        $query1 = "select * from et_subscriber_list_rel where `CreatedDate` > DATE_SUB(NOW(), INTERVAL 1 MONTH) and `ListID` = '352396' and  `ListID` IN('351487', '351484', '351488', '351486')";
+        $query2 = "select * from et_subscriber_list_rel where `CreatedDate` between '" . date("Y-m", strtotime("-2 months")) . "-01' and `ListID` = '352396' and '" . date("Y-m", strtotime("-1 months")) . "-01' and `ListID` IN('351487', '351484', '351488', '351486')";
+        $query3 = "select * from et_subscriber_list_rel where `CreatedDate` between '" . date("Y-m-d", strtotime("-30 days")) . "' and '" . date("Y-m-d", strtotime("-0 days")) . "' and `ListID` = '352396' and `ListID` IN('351487', '351484', '351488', '351486')";
+        $query4 = "select * from et_subscriber_list_rel where `CreatedDate` between '" . date("Y-m-d", strtotime("-60 days")) . "' and '" . date("Y-m-d", strtotime("-30 days")) . "' and `ListID` = '352396' and `ListID` IN('351487', '351484', '351488', '351486')";
+        $query5 = "select * from et_subscriber_list_rel where `CreatedDate` > DATE_SUB(NOW(), INTERVAL 1 DAY) and `ListID` = '352396' and  `ListID` IN('351487', '351484', '351488', '351486')";
+//        $query1 = "select count(id) from et_subscriber where CreatedDate >= DATEADD(MONTH, -1, GETDATE()) " ;
+        $res = $this->db->query($query);
+        $res1 = $this->db->query($query1);
+        $res2 = $this->db->query($query2);
+        $res3 = $this->db->query($query3);
+        $res4 = $this->db->query($query4);
+        $res5 = $this->db->query($query5);
+        $data['year'] = $res->num_rows();
+        $data['month'] = $res1->num_rows();
+        $data['previous_month'] = $res2->num_rows();
+        $data['last_thirty'] = $res3->num_rows();
+        $data['previous_thirty'] = $res4->num_rows();
+        $data['today'] = $res5->num_rows();
+        return $data;
     }
 }
